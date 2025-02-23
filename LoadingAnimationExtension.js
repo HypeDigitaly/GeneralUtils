@@ -38,73 +38,73 @@ export const LoadingAnimationExtension = {
       cs: {
         SMT: ['Připravuji svou odpověď.'],
         KB_WS: [
-          'Zpracovávám dotaz',
-          'Hledám informace ve své databázi',
-          'Prohledávám webové zdroje',
-          'Analyzuji informace',
-          'Připravuji odpověď'
+          'Zpracovávám dotaz.',
+          'Hledám informace ve své databázi.',
+          'Prohledávám webové zdroje.',
+          'Analyzuji informace.',
+          'Připravuji odpověď.'
         ],
-        OTHER: ['Analyzuji dotaz', 'Nalezen dotaz na nevhodné téma'],
-        SWEARS: ['Analyzuji dotaz', 'Nalezen nevhodný výraz'],
+        OTHER: ['Analyzuji dotaz.', 'Nalezen dotaz na nevhodné téma.'],
+        SWEARS: ['Analyzuji dotaz.', 'Nalezen nevhodný výraz.'],
         KB: [
-          'Zpracovávám dotaz',
-          'Hledám informace ve své databázi',
-          'Analyzuji informace',
-          'Připravuji odpověď'
+          'Zpracovávám dotaz.',
+          'Hledám informace ve své databázi.',
+          'Analyzuji informace.',
+          'Připravuji odpověď.'
         ]
       },
       en: {
         SMT: ['Preparing my response.'],
         KB_WS: [
-          'Processing query',
-          'Searching information in database',
-          'Searching web sources',
-          'Analyzing information',
-          'Preparing response'
+          'Processing query.',
+          'Searching information in database.',
+          'Searching web sources.',
+          'Analyzing information.',
+          'Preparing response.'
         ],
-        OTHER: ['Analyzing query', 'Inappropriate topic detected'],
-        SWEARS: ['Analyzing query', 'Inappropriate expression detected'],
+        OTHER: ['Analyzing query.', 'Inappropriate topic detected.'],
+        SWEARS: ['Analyzing query.', 'Inappropriate expression detected.'],
         KB: [
-          'Processing query',
-          'Searching information in database',
-          'Analyzing information',
-          'Preparing response'
+          'Processing query.',
+          'Searching information in database.',
+          'Analyzing information.',
+          'Preparing response.'
         ]
       },
       de: {
         SMT: ['Ich bereite meine Antwort vor.'],
         KB_WS: [
-          'Verarbeite Anfrage',
-          'Suche Informationen in der Datenbank',
-          'Durchsuche Webquellen',
-          'Analysiere Informationen',
-          'Bereite Antwort vor'
+          'Verarbeite Anfrage.',
+          'Suche Informationen in der Datenbank.',
+          'Durchsuche Webquellen.',
+          'Analysiere Informationen.',
+          'Bereite Antwort vor.'
         ],
-        OTHER: ['Analysiere Anfrage', 'Unangemessenes Thema erkannt'],
-        SWEARS: ['Analysiere Anfrage', 'Unangemessener Ausdruck erkannt'],
+        OTHER: ['Analysiere Anfrage.', 'Unangemessenes Thema erkannt.'],
+        SWEARS: ['Analysiere Anfrage.', 'Unangemessener Ausdruck erkannt.'],
         KB: [
-          'Verarbeite Anfrage',
-          'Suche Informationen in der Datenbank',
-          'Analysiere Informationen',
-          'Bereite Antwort vor'
+          'Verarbeite Anfrage.',
+          'Suche Informationen in der Datenbank.',
+          'Analysiere Informationen.',
+          'Bereite Antwort vor.'
         ]
       },
       uk: {
         SMT: ['Готую відповідь.'],
         KB_WS: [
-          'Обробляю запит',
-          'Шукаю інформацію в базі даних',
-          'Шукаю веб-джерела',
-          'Аналізую інформацію',
-          'Готую відповідь'
+          'Обробляю запит.',
+          'Шукаю інформацію в базі даних.',
+          'Шукаю веб-джерела.',
+          'Аналізую інформацію.',
+          'Готую відповідь.'
         ],
-        OTHER: ['Аналізую запит', 'Виявлено неприйнятну тему'],
-        SWEARS: ['Аналізую запит', 'Виявлено неприйнятний вираз'],
+        OTHER: ['Аналізую запит.', 'Виявлено неприйнятну тему.'],
+        SWEARS: ['Аналізую запит.', 'Виявлено неприйнятний вираз.'],
         KB: [
-          'Обробляю запит',
-          'Шукаю інформацію в базі даних',
-          'Аналізую інформацію',
-          'Готую відповідь'
+          'Обробляю запит.',
+          'Шукаю інформацію в базі даних.',
+          'Аналізую інформацію.',
+          'Готую відповідь.'
         ]
       }
     };
@@ -132,6 +132,7 @@ export const LoadingAnimationExtension = {
 
         .vfrc-message.vfrc-message--extension.LoadingAnimation.hide {
           opacity: 0;
+          visibility: hidden;
           pointer-events: none;
         }
 
@@ -156,6 +157,11 @@ export const LoadingAnimationExtension = {
           width: 50px;
           height: 24px;
           flex-shrink: 0;
+          transition: visibility 0.3s ease-out;
+        }
+
+        .loading-animation.hide {
+          visibility: hidden;
         }
 
         .loading-circle {
@@ -257,28 +263,22 @@ export const LoadingAnimationExtension = {
 
       // Set up the hide timeout
       const hideTimeout = setTimeout(() => {
-        container.classList.add('hide');
+        // Only hide the animation circles
+        animationContainer.classList.add('hide');
         
-        // Clean up after transition
-        setTimeout(() => {
-          if (container.parentNode) {
-            container.parentNode.removeChild(container);
-          }
-        }, 300); // matches transition duration
-
-        // Clear the interval if it's still running
+        // Clear any remaining intervals
         if (interval) {
           clearInterval(interval);
         }
       }, totalDuration);
 
-      // Enhanced cleanup when element is removed
+      // Enhanced cleanup observer
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
           mutation.removedNodes.forEach((node) => {
-            if (node.contains(container)) {
-              clearInterval(interval);
-              clearTimeout(hideTimeout);
+            if (node === container || node.contains(container)) {
+              if (interval) clearInterval(interval);
+              if (hideTimeout) clearTimeout(hideTimeout);
               observer.disconnect();
             }
           });

@@ -183,7 +183,14 @@ export const LoadingAnimationExtension = {
           position: relative;
           width: 24px;
           height: 24px;
-          flex: 0 0 24px; /* Fixed width, won't grow or shrink */
+          flex: 0 0 24px;
+          opacity: 1;
+          transition: opacity 0.3s ease-out;
+        }
+
+        .loading-animation.hide {
+          opacity: 0;
+          visibility: hidden;
         }
 
         .loading-ring {
@@ -273,8 +280,11 @@ export const LoadingAnimationExtension = {
 
       // Set up the hide timeout
       const hideTimeout = setTimeout(() => {
-        // Only hide the animation circles
-        animationContainer.classList.add('hide');
+        // Only hide the animation circle
+        const animationElement = container.querySelector('.loading-animation');
+        if (animationElement) {
+          animationElement.classList.add('hide');
+        }
         
         // Clear any remaining intervals
         if (interval) {

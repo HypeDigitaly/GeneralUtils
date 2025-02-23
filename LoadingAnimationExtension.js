@@ -136,7 +136,8 @@ export const LoadingAnimationExtension = {
         .vfrc-message.vfrc-message--extension.LoadingAnimation {
           opacity: 1;
           transition: opacity 0.3s ease-out;
-          width: 100%; /* Fix for issue #3 - full width */
+          width: 100%;
+          display: block;
         }
 
         .vfrc-message.vfrc-message--extension.LoadingAnimation.hide {
@@ -148,11 +149,13 @@ export const LoadingAnimationExtension = {
         .loading-container {
           display: flex;
           align-items: center;
+          justify-content: space-between;
           gap: 15px;
           padding: 12px 16px;
           border-radius: 8px;
           margin: 8px 0;
-          width: 100%; /* Fix for issue #3 - full width */
+          width: 100%;
+          box-sizing: border-box;
         }
 
         .loading-text {
@@ -162,7 +165,8 @@ export const LoadingAnimationExtension = {
           opacity: 1;
           transform: translateY(0);
           transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-          flex: 1; /* Fix for issue #3 - take remaining space */
+          flex: 1;
+          min-width: 0; /* Prevents flex item from overflowing */
         }
 
         .loading-text.changing {
@@ -179,7 +183,7 @@ export const LoadingAnimationExtension = {
           position: relative;
           width: 24px;
           height: 24px;
-          flex-shrink: 0;
+          flex: 0 0 24px; /* Fixed width, won't grow or shrink */
         }
 
         .loading-ring {
@@ -218,16 +222,14 @@ export const LoadingAnimationExtension = {
       textElement.className = 'loading-text';
       loadingContainer.appendChild(textElement);
 
-      // Create animation container
+      // Create animation container with the ring
       const animationContainer = document.createElement('div');
       animationContainer.className = 'loading-animation';
-
-      // Create circles
-      for (let i = 0; i < 3; i++) {
-        const circle = document.createElement('div');
-        circle.className = 'loading-circle';
-        animationContainer.appendChild(circle);
-      }
+      
+      // Create the ring element
+      const ring = document.createElement('div');
+      ring.className = 'loading-ring';
+      animationContainer.appendChild(ring);
 
       loadingContainer.appendChild(animationContainer);
       container.appendChild(loadingContainer);

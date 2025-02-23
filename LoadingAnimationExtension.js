@@ -136,6 +136,7 @@ export const LoadingAnimationExtension = {
         .vfrc-message.vfrc-message--extension.LoadingAnimation {
           opacity: 1;
           transition: opacity 0.3s ease-out;
+          width: 100%; /* Fix for issue #3 - full width */
         }
 
         .vfrc-message.vfrc-message--extension.LoadingAnimation.hide {
@@ -151,9 +152,7 @@ export const LoadingAnimationExtension = {
           padding: 12px 16px;
           border-radius: 8px;
           margin: 8px 0;
-          opacity: 1;
-          transform: translateY(0);
-          transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+          width: 100%; /* Fix for issue #3 - full width */
         }
 
         .loading-text {
@@ -163,6 +162,7 @@ export const LoadingAnimationExtension = {
           opacity: 1;
           transform: translateY(0);
           transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+          flex: 1; /* Fix for issue #3 - take remaining space */
         }
 
         .loading-text.changing {
@@ -190,9 +190,9 @@ export const LoadingAnimationExtension = {
           animation: rotate 1.5s linear infinite;
           background: conic-gradient(
             from 0deg,
-            rgba(0, 0, 0, 0.1) 0%,
-            rgba(0, 0, 0, 0.8) 50%,
-            rgba(0, 0, 0, 0.1) 100%
+            #e0e0e0 0%,
+            #333333 50%,
+            #e0e0e0 100%
           );
           mask: radial-gradient(transparent 55%, black 55%);
           -webkit-mask: radial-gradient(transparent 55%, black 55%);
@@ -235,7 +235,7 @@ export const LoadingAnimationExtension = {
       console.log('Created container structure:', container); // Log the created structure
 
       let currentIndex = 0;
-      const messageInterval = 2000; // Fixed 2-second interval between messages
+      const messageInterval = 2000;
       
       const updateText = (newText) => {
         const textElement = container.querySelector('.loading-text');
@@ -259,8 +259,13 @@ export const LoadingAnimationExtension = {
       let interval;
       if (messages.length > 1) {
         interval = setInterval(() => {
-          currentIndex = (currentIndex + 1) % messages.length;
-          updateText(messages[currentIndex]);
+          if (currentIndex < messages.length - 1) {
+            currentIndex++;
+            updateText(messages[currentIndex]);
+          } else {
+            // Stop the interval when we reach the last message
+            clearInterval(interval);
+          }
         }, messageInterval);
       }
 

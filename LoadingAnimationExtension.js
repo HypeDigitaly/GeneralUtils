@@ -24,6 +24,15 @@ export const LoadingAnimationExtension = {
 
     console.log('Normalized values - Language:', lang, 'Type:', type);
 
+    // Define fixed durations for each type (in milliseconds)
+    const typeDurations = {
+      KB: 10000,      // 10 seconds
+      KB_WS: 15000,   // 15 seconds
+      SMT: 4000,      // 4 seconds
+      OTHER: 4000,    // 4 seconds
+      SWEARS: 4000    // 4 seconds
+    };
+
     // Message sequences for different types and languages
     const messageSequences = {
       cs: {
@@ -103,6 +112,7 @@ export const LoadingAnimationExtension = {
     // Error handling for missing messages
     try {
       const messages = messageSequences[lang]?.[type];
+      const totalDuration = typeDurations[type] || 4000; // default to 4s if type not found
 
       if (!messages) {
         console.error(`No messages found for lang: ${lang}, type: ${type}`);
@@ -113,7 +123,6 @@ export const LoadingAnimationExtension = {
       const container = document.createElement('div');
       container.className = 'vfrc-message vfrc-message--extension LoadingAnimation';
       
-      // Create the HTML structure explicitly instead of using innerHTML
       const style = document.createElement('style');
       style.textContent = `
         .loading-container {
@@ -124,6 +133,13 @@ export const LoadingAnimationExtension = {
           background: #f8f8f8;
           border-radius: 8px;
           margin: 8px 0;
+          opacity: 1;
+          transition: opacity 0.3s ease-out;
+        }
+
+        .loading-container.hide {
+          opacity: 0;
+          pointer-events: none;
         }
 
         .loading-text {
@@ -134,38 +150,55 @@ export const LoadingAnimationExtension = {
 
         .loading-animation {
           position: relative;
-          width: 24px;
+          width: 50px;
           height: 24px;
           flex-shrink: 0;
         }
 
         .loading-circle {
           position: absolute;
-          width: 100%;
-          height: 100%;
+          width: 8px;
+          height: 8px;
           border-radius: 50%;
-          border: 2px solid transparent;
-          animation: rotate 1.5s linear infinite;
+          background-color: #333;
+          animation: moveCircle 1.5s infinite ease-in-out;
         }
 
         .loading-circle:nth-child(1) {
-          border-top-color: #333;
+          left: 0;
           animation-delay: 0s;
+          background-color: #555;
         }
 
         .loading-circle:nth-child(2) {
-          border-right-color: #666;
-          animation-delay: 0.5s;
+          left: 20px;
+          animation-delay: 0.15s;
+          background-color: #777;
         }
 
         .loading-circle:nth-child(3) {
-          border-bottom-color: #999;
-          animation-delay: 1s;
+          left: 40px;
+          animation-delay: 0.3s;
+          background-color: #999;
         }
 
-        @keyframes rotate {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+        @keyframes moveCircle {
+          0%, 100% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+          }
+          25% {
+            transform: translateY(-10px) scale(1.2);
+            opacity: 0.8;
+          }
+          50% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+          }
+          75% {
+            transform: translateY(10px) scale(0.8);
+            opacity: 0.8;
+          }
         }
       `;
       container.appendChild(style);
@@ -196,44 +229,71 @@ export const LoadingAnimationExtension = {
       console.log('Created container structure:', container); // Log the created structure
 
       let currentIndex = 0;
+      const messageInterval = 2000; // Fixed 2-second interval between messages
+      
       const updateText = () => {
         textElement.textContent = messages[currentIndex];
-        currentIndex = (currentIndex + 1) % messages.length;
+        currentIndex++;
+        
+        // If we've shown all messages except the last one, stop the interval
+        if (currentIndex >= messages.length - 1) {
+          clearInterval(interval);
+          // Set the last message
+          textElement.textContent = messages[messages.length - 1];
+        }
       };
 
       // Initial text update
       updateText();
 
       // Set up interval for multiple messages
+      let interval;
       if (messages.length > 1) {
-        const interval = setInterval(updateText, 2000);
+        interval = setInterval(updateText, messageInterval);
+      }
 
-        // Cleanup when element is removed
-        const observer = new MutationObserver((mutations) => {
-          mutations.forEach((mutation) => {
-            mutation.removedNodes.forEach((node) => {
-              if (node.contains(container)) {
-                clearInterval(interval);
-                observer.disconnect();
-              }
-            });
+      // Set up the hide timeout
+      const hideTimeout = setTimeout(() => {
+        loadingContainer.classList.add('hide');
+        
+        // Clean up after transition
+        setTimeout(() => {
+          if (container.parentNode) {
+            container.parentNode.removeChild(container);
+          }
+        }, 300); // matches transition duration
+
+        // Clear the interval if it's still running
+        if (interval) {
+          clearInterval(interval);
+        }
+      }, totalDuration);
+
+      // Enhanced cleanup when element is removed
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          mutation.removedNodes.forEach((node) => {
+            if (node.contains(container)) {
+              clearInterval(interval);
+              clearTimeout(hideTimeout);
+              observer.disconnect();
+            }
           });
         });
+      });
 
-        observer.observe(element.parentElement || document.body, { 
-          childList: true,
-          subtree: true 
-        });
-      }
+      observer.observe(element.parentElement || document.body, { 
+        childList: true,
+        subtree: true 
+      });
 
       // Make sure we're appending to the correct element
       if (element) {
-        console.log('Appending to element:', element); // Log before append
+        console.log('Appending to element:', element);
         element.appendChild(container);
-        console.log('Container appended successfully'); // Log after append
+        console.log('Container appended successfully');
         
-        // Force a reflow to ensure animation starts
-        void container.offsetHeight;
+        void container.offsetHeight; // Force reflow
       } else {
         console.error('Target element is not available');
       }

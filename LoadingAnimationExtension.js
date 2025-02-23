@@ -125,6 +125,16 @@ export const LoadingAnimationExtension = {
       
       const style = document.createElement('style');
       style.textContent = `
+        .vfrc-message.vfrc-message--extension.LoadingAnimation {
+          opacity: 1;
+          transition: opacity 0.3s ease-out;
+        }
+
+        .vfrc-message.vfrc-message--extension.LoadingAnimation.hide {
+          opacity: 0;
+          pointer-events: none;
+        }
+
         .loading-container {
           display: flex;
           align-items: center;
@@ -133,13 +143,6 @@ export const LoadingAnimationExtension = {
           background: #f8f8f8;
           border-radius: 8px;
           margin: 8px 0;
-          opacity: 1;
-          transition: opacity 0.3s ease-out;
-        }
-
-        .loading-container.hide {
-          opacity: 0;
-          pointer-events: none;
         }
 
         .loading-text {
@@ -254,7 +257,7 @@ export const LoadingAnimationExtension = {
 
       // Set up the hide timeout
       const hideTimeout = setTimeout(() => {
-        loadingContainer.classList.add('hide');
+        container.classList.add('hide');
         
         // Clean up after transition
         setTimeout(() => {

@@ -4,7 +4,16 @@ export const LoadingAnimationExtension = {
   match: ({ trace }) =>
     trace.type === 'ext_loadingAnimation' || trace.payload?.name === 'ext_loadingAnimation',
   render: ({ trace, element }) => {
+    // Log the entire trace and payload
+    console.log('Full trace object:', trace);
+    console.log('Full payload object:', trace.payload);
+
     const { lang = 'cs', type = 'SMT' } = trace.payload
+    
+    // Log individual fields
+    console.log('Language:', lang);
+    console.log('Type:', type);
+    console.log('Element:', element);
 
     // Message sequences for different types and languages
     const messageSequences = {
@@ -82,25 +91,36 @@ export const LoadingAnimationExtension = {
       }
     }
 
+    // Log selected message sequence
+    console.log('Selected messages:', messageSequences[lang][type]);
+
+    // Create container div with class for styling
     const container = document.createElement('div')
+    container.className = 'vfrc-message vfrc-message--extension LoadingAnimation'
+    
     container.innerHTML = `
       <style>
         .loading-container {
           display: flex;
           align-items: center;
           gap: 15px;
-          font-family: sans-serif;
+          padding: 12px 16px;
+          background: #f8f8f8;
+          border-radius: 8px;
+          margin: 8px 0;
         }
 
         .loading-text {
           color: #333;
           font-size: 14px;
+          font-family: sans-serif;
         }
 
         .loading-animation {
           position: relative;
           width: 24px;
           height: 24px;
+          flex-shrink: 0;
         }
 
         .loading-circle {
@@ -156,10 +176,11 @@ export const LoadingAnimationExtension = {
     if (messages.length > 1) {
       const interval = setInterval(updateText, 2000)
 
+      // Cleanup when element is removed
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
           mutation.removedNodes.forEach((node) => {
-            if (node === container) {
+            if (node.contains(container)) {
               clearInterval(interval)
               observer.disconnect()
             }
@@ -167,9 +188,18 @@ export const LoadingAnimationExtension = {
         })
       })
 
-      observer.observe(element, { childList: true })
+      observer.observe(element.parentElement || document.body, { 
+        childList: true,
+        subtree: true 
+      })
     }
 
-    element.appendChild(container)
+    // Make sure we're appending to the correct element
+    if (element) {
+      element.appendChild(container)
+      
+      // Force a reflow to ensure animation starts
+      void container.offsetHeight
+    }
   }
 }

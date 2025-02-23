@@ -18,42 +18,51 @@ export const LoadingAnimationExtension = {
             styleTag = document.createElement('style')
             styleTag.id = 'vf-loading-animation-style'
             styleTag.textContent = `
+              .layyscc1 {
+                display: flex;
+                align-items: center;
+                padding: 12px;
+              }
+
               .vfrc-typing-indicator {
                 display: flex;
                 align-items: center;
                 gap: 8px;
-                padding: 12px;
               }
 
-              .loading-dot {
-                width: 8px;
-                height: 8px;
+              .xaffbq2 {
+                position: relative;
+                width: 20px;
+                height: 20px;
+                border: 2px solid transparent;
                 border-radius: 50%;
-                animation: loadingAnimation 1.5s infinite;
-                background: #000;
-                opacity: 0.2;
+                animation: rotateCircle 2s infinite linear;
               }
 
-              .loading-dot:nth-child(2) {
-                animation-delay: 0.2s;
+              .xaffbq3 {
+                border-top-color: #333;
+                animation-delay: 0s;
               }
 
-              .loading-dot:nth-child(3) {
-                animation-delay: 0.4s;
+              .xaffbq4 {
+                border-right-color: #666;
+                animation-delay: -0.5s;
               }
 
-              @keyframes loadingAnimation {
+              .xaffbq5 {
+                border-left-color: #999;
+                animation-delay: -1s;
+              }
+
+              @keyframes rotateCircle {
                 0% {
-                  transform: scale(1);
-                  opacity: 0.2;
+                  transform: rotate(0deg) scale(0.8);
                 }
-                20% {
-                  transform: scale(1.2);
-                  opacity: 0.6;
+                50% {
+                  transform: rotate(180deg) scale(1.2);
                 }
-                40% {
-                  transform: scale(1);
-                  opacity: 0.2;
+                100% {
+                  transform: rotate(360deg) scale(0.8);
                 }
               }
 
@@ -64,29 +73,14 @@ export const LoadingAnimationExtension = {
             shadowRoot.appendChild(styleTag)
           }
 
-          // Find or create the typing indicator
+          // Find the existing typing indicator
           let typingIndicator = shadowRoot.querySelector('.vfrc-typing-indicator')
-          if (!typingIndicator) {
-            typingIndicator = document.createElement('div')
-            typingIndicator.className = 'vfrc-typing-indicator'
-            typingIndicator.innerHTML = `
-              <div class="loading-dot"></div>
-              <div class="loading-dot"></div>
-              <div class="loading-dot"></div>
-            `
-            
-            // Find the chat messages container and append the typing indicator
-            const messagesContainer = shadowRoot.querySelector('.vfrc-chat-messages')
-            if (messagesContainer) {
-              messagesContainer.appendChild(typingIndicator)
-            }
-          }
-
+          
           // Toggle visibility based on isLoading state
           if (isLoading) {
-            typingIndicator.classList.remove('hidden')
+            typingIndicator?.classList.remove('hidden')
           } else {
-            typingIndicator.classList.add('hidden')
+            typingIndicator?.classList.add('hidden')
           }
         } else {
           console.error('Shadow root not found')

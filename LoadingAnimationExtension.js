@@ -149,7 +149,6 @@ export const LoadingAnimationExtension = {
         .loading-container {
           display: flex;
           align-items: center;
-          justify-content: space-between;
           gap: 15px;
           padding: 12px 16px;
           border-radius: 8px;
@@ -185,37 +184,44 @@ export const LoadingAnimationExtension = {
           height: 24px;
           flex: 0 0 24px;
           opacity: 1;
-          transition: opacity 0.3s ease-out;
+          transition: all 0.3s ease-out;
+          display: grid;
+          grid-template-columns: repeat(3, 6px);
+          grid-template-rows: repeat(3, 6px);
+          gap: 2px;
         }
 
         .loading-animation.hide {
           opacity: 0;
           visibility: hidden;
+          width: 0;
+          margin-right: 0;
+          flex: 0 0 0;
         }
 
-        .loading-ring {
-          width: 100%;
-          height: 100%;
-          border-radius: 50%;
-          position: relative;
-          animation: rotate 1s linear infinite;
-          background: conic-gradient(
-            from 0deg,
-            rgba(128, 128, 128, 0.1) 0%,
-            rgba(128, 128, 128, 1) 20%,
-            rgba(128, 128, 128, 1) 40%,
-            rgba(128, 128, 128, 0.1) 60%
-          );
-          mask: radial-gradient(transparent 55%, black 55%);
-          -webkit-mask: radial-gradient(transparent 55%, black 55%);
+        .loading-square {
+          width: 6px;
+          height: 6px;
+          background-color: #808080;
+          animation: wave 1s infinite;
         }
 
-        @keyframes rotate {
-          from {
-            transform: rotate(0deg);
+        .loading-square:nth-child(1) { animation-delay: 0s; }
+        .loading-square:nth-child(2) { animation-delay: 0.1s; }
+        .loading-square:nth-child(3) { animation-delay: 0.2s; }
+        .loading-square:nth-child(6) { animation-delay: 0.3s; }
+        .loading-square:nth-child(9) { animation-delay: 0.4s; }
+        .loading-square:nth-child(8) { animation-delay: 0.5s; }
+        .loading-square:nth-child(7) { animation-delay: 0.6s; }
+        .loading-square:nth-child(4) { animation-delay: 0.7s; }
+        .loading-square:nth-child(5) { animation-delay: 0.8s; }
+
+        @keyframes wave {
+          0%, 100% {
+            background-color: #E6E6E6;
           }
-          to {
-            transform: rotate(360deg);
+          50% {
+            background-color: #808080;
           }
         }
       `;
@@ -225,14 +231,16 @@ export const LoadingAnimationExtension = {
       const loadingContainer = document.createElement('div');
       loadingContainer.className = 'loading-container';
 
-      // Create animation container with the ring
+      // Create animation container
       const animationContainer = document.createElement('div');
       animationContainer.className = 'loading-animation';
       
-      // Create the ring element
-      const ring = document.createElement('div');
-      ring.className = 'loading-ring';
-      animationContainer.appendChild(ring);
+      // Create nine squares in a grid
+      for (let i = 0; i < 9; i++) {
+        const square = document.createElement('div');
+        square.className = 'loading-square';
+        animationContainer.appendChild(square);
+      }
 
       // First append the animation
       loadingContainer.appendChild(animationContainer);
@@ -283,11 +291,16 @@ export const LoadingAnimationExtension = {
 
       // Set up the hide timeout
       const hideTimeout = setTimeout(() => {
-        // Only hide the animation circle
+        // Hide the animation and remove its space
         const animationElement = container.querySelector('.loading-animation');
         if (animationElement) {
           animationElement.classList.add('hide');
         }
+        
+        // Remove the gap after animation is hidden
+        setTimeout(() => {
+          loadingContainer.style.gap = '0';
+        }, 300); // Match the transition duration
         
         // Clear any remaining intervals
         if (interval) {

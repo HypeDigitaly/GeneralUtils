@@ -4,16 +4,25 @@ export const LoadingAnimationExtension = {
   match: ({ trace }) =>
     trace.type === 'ext_loadingAnimation' || trace.payload?.name === 'ext_loadingAnimation',
   render: ({ trace, element }) => {
-    // Log the entire trace and payload
     console.log('Full trace object:', trace);
     console.log('Full payload object:', trace.payload);
+    console.log('Target element:', element); // Log the target element
 
-    const { lang = 'cs', type = 'SMT' } = trace.payload
+    const payload = trace.payload || {};
     
-    // Log individual fields
-    console.log('Language:', lang);
-    console.log('Type:', type);
-    console.log('Element:', element);
+    // Normalize and detect language
+    const incomingLang = (payload.lang || 'cs').toLowerCase();
+    let lang;
+    if (incomingLang.includes('cs')) lang = 'cs';
+    else if (incomingLang.includes('en')) lang = 'en';
+    else if (incomingLang.includes('de')) lang = 'de';
+    else if (incomingLang.includes('uk')) lang = 'uk';
+    else lang = 'cs'; // default to Czech
+
+    // Normalize type
+    const type = (payload.type || 'SMT').toUpperCase();
+
+    console.log('Normalized values - Language:', lang, 'Type:', type);
 
     // Message sequences for different types and languages
     const messageSequences = {
@@ -89,17 +98,24 @@ export const LoadingAnimationExtension = {
           'Готую відповідь'
         ]
       }
-    }
+    };
 
-    // Log selected message sequence
-    console.log('Selected messages:', messageSequences[lang][type]);
+    // Error handling for missing messages
+    try {
+      const messages = messageSequences[lang]?.[type];
 
-    // Create container div with class for styling
-    const container = document.createElement('div')
-    container.className = 'vfrc-message vfrc-message--extension LoadingAnimation'
-    
-    container.innerHTML = `
-      <style>
+      if (!messages) {
+        console.error(`No messages found for lang: ${lang}, type: ${type}`);
+        return;
+      }
+
+      // Create container div with class for styling
+      const container = document.createElement('div');
+      container.className = 'vfrc-message vfrc-message--extension LoadingAnimation';
+      
+      // Create the HTML structure explicitly instead of using innerHTML
+      const style = document.createElement('style');
+      style.textContent = `
         .loading-container {
           display: flex;
           align-items: center;
@@ -151,55 +167,78 @@ export const LoadingAnimationExtension = {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
-      </style>
-      <div class="loading-container">
-        <span class="loading-text"></span>
-        <div class="loading-animation">
-          <div class="loading-circle"></div>
-          <div class="loading-circle"></div>
-          <div class="loading-circle"></div>
-        </div>
-      </div>
-    `
+      `;
+      container.appendChild(style);
 
-    const textElement = container.querySelector('.loading-text')
-    const messages = messageSequences[lang][type]
-    let currentIndex = 0
+      // Create loading container
+      const loadingContainer = document.createElement('div');
+      loadingContainer.className = 'loading-container';
 
-    const updateText = () => {
-      textElement.textContent = messages[currentIndex]
-      currentIndex = (currentIndex + 1) % messages.length
-    }
+      // Create text element
+      const textElement = document.createElement('span');
+      textElement.className = 'loading-text';
+      loadingContainer.appendChild(textElement);
 
-    updateText()
+      // Create animation container
+      const animationContainer = document.createElement('div');
+      animationContainer.className = 'loading-animation';
 
-    if (messages.length > 1) {
-      const interval = setInterval(updateText, 2000)
+      // Create circles
+      for (let i = 0; i < 3; i++) {
+        const circle = document.createElement('div');
+        circle.className = 'loading-circle';
+        animationContainer.appendChild(circle);
+      }
 
-      // Cleanup when element is removed
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          mutation.removedNodes.forEach((node) => {
-            if (node.contains(container)) {
-              clearInterval(interval)
-              observer.disconnect()
-            }
-          })
-        })
-      })
+      loadingContainer.appendChild(animationContainer);
+      container.appendChild(loadingContainer);
 
-      observer.observe(element.parentElement || document.body, { 
-        childList: true,
-        subtree: true 
-      })
-    }
+      console.log('Created container structure:', container); // Log the created structure
 
-    // Make sure we're appending to the correct element
-    if (element) {
-      element.appendChild(container)
-      
-      // Force a reflow to ensure animation starts
-      void container.offsetHeight
+      let currentIndex = 0;
+      const updateText = () => {
+        textElement.textContent = messages[currentIndex];
+        currentIndex = (currentIndex + 1) % messages.length;
+      };
+
+      // Initial text update
+      updateText();
+
+      // Set up interval for multiple messages
+      if (messages.length > 1) {
+        const interval = setInterval(updateText, 2000);
+
+        // Cleanup when element is removed
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            mutation.removedNodes.forEach((node) => {
+              if (node.contains(container)) {
+                clearInterval(interval);
+                observer.disconnect();
+              }
+            });
+          });
+        });
+
+        observer.observe(element.parentElement || document.body, { 
+          childList: true,
+          subtree: true 
+        });
+      }
+
+      // Make sure we're appending to the correct element
+      if (element) {
+        console.log('Appending to element:', element); // Log before append
+        element.appendChild(container);
+        console.log('Container appended successfully'); // Log after append
+        
+        // Force a reflow to ensure animation starts
+        void container.offsetHeight;
+      } else {
+        console.error('Target element is not available');
+      }
+    } catch (error) {
+      console.error('Error in LoadingAnimation extension:', error);
     }
   }
-}
+};

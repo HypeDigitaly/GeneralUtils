@@ -149,72 +149,61 @@ export const LoadingAnimationExtension = {
           align-items: center;
           gap: 15px;
           padding: 12px 16px;
-          background: #f8f8f8;
           border-radius: 8px;
           margin: 8px 0;
+          opacity: 1;
+          transform: translateY(0);
+          transition: opacity 0.3s ease-out, transform 0.3s ease-out;
         }
 
         .loading-text {
           color: #333;
           font-size: 14px;
           font-family: sans-serif;
+          opacity: 1;
+          transform: translateY(0);
+          transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+
+        .loading-text.changing {
+          opacity: 0;
+          transform: translateY(-5px);
+        }
+
+        .loading-text.entering {
+          opacity: 0;
+          transform: translateY(5px);
         }
 
         .loading-animation {
           position: relative;
-          width: 50px;
+          width: 24px;
           height: 24px;
           flex-shrink: 0;
-          transition: visibility 0.3s ease-out;
         }
 
-        .loading-animation.hide {
-          visibility: hidden;
-        }
-
-        .loading-circle {
-          position: absolute;
-          width: 8px;
-          height: 8px;
+        .loading-ring {
+          width: 100%;
+          height: 100%;
           border-radius: 50%;
-          background-color: #333;
-          animation: moveCircle 1.5s infinite ease-in-out;
+          position: relative;
+          animation: rotate 1.5s linear infinite;
+          background: conic-gradient(
+            from 0deg,
+            rgba(0, 0, 0, 0.1) 0%,
+            rgba(0, 0, 0, 0.8) 50%,
+            rgba(0, 0, 0, 0.1) 100%
+          );
+          mask: radial-gradient(transparent 55%, black 55%);
+          -webkit-mask: radial-gradient(transparent 55%, black 55%);
         }
 
-        .loading-circle:nth-child(1) {
-          left: 0;
-          animation-delay: 0s;
-          background-color: #555;
-        }
-
-        .loading-circle:nth-child(2) {
-          left: 20px;
-          animation-delay: 0.15s;
-          background-color: #777;
-        }
-
-        .loading-circle:nth-child(3) {
-          left: 40px;
-          animation-delay: 0.3s;
-          background-color: #999;
-        }
-
-        @keyframes moveCircle {
-          0%, 100% {
-            transform: translateY(0) scale(1);
-            opacity: 1;
+        @keyframes rotate {
+          from {
+            transform: rotate(0deg);
           }
-          25% {
-            transform: translateY(-10px) scale(1.2);
-            opacity: 0.8;
-          }
-          50% {
-            transform: translateY(0) scale(1);
-            opacity: 1;
-          }
-          75% {
-            transform: translateY(10px) scale(0.8);
-            opacity: 0.8;
+          to {
+            transform: rotate(360deg);
           }
         }
       `;
@@ -248,25 +237,31 @@ export const LoadingAnimationExtension = {
       let currentIndex = 0;
       const messageInterval = 2000; // Fixed 2-second interval between messages
       
-      const updateText = () => {
-        textElement.textContent = messages[currentIndex];
-        currentIndex++;
+      const updateText = (newText) => {
+        const textElement = container.querySelector('.loading-text');
+        textElement.classList.add('changing');
         
-        // If we've shown all messages except the last one, stop the interval
-        if (currentIndex >= messages.length - 1) {
-          clearInterval(interval);
-          // Set the last message
-          textElement.textContent = messages[messages.length - 1];
-        }
+        setTimeout(() => {
+          textElement.textContent = newText;
+          textElement.classList.remove('changing');
+          textElement.classList.add('entering');
+          
+          requestAnimationFrame(() => {
+            textElement.classList.remove('entering');
+          });
+        }, 300);
       };
 
       // Initial text update
-      updateText();
+      updateText(messages[currentIndex]);
 
       // Set up interval for multiple messages
       let interval;
       if (messages.length > 1) {
-        interval = setInterval(updateText, messageInterval);
+        interval = setInterval(() => {
+          currentIndex = (currentIndex + 1) % messages.length;
+          updateText(messages[currentIndex]);
+        }, messageInterval);
       }
 
       // Set up the hide timeout

@@ -36,7 +36,7 @@ export const LoadingAnimationExtension = {
     // Message sequences for different types and languages
     const messageSequences = {
       cs: {
-        SMT: ['Připravuji svou odpověď.', 'Analyzuji informace.'],
+        SMT: ['Analyzuji dotaz.', 'Níže začnu vypisovat svou odpověď.'],
         KB_WS: [
           'Zpracovávám dotaz.',
           'Hledám informace ve své databázi.',
@@ -198,12 +198,13 @@ export const LoadingAnimationExtension = {
           height: 100%;
           border-radius: 50%;
           position: relative;
-          animation: rotate 1.5s linear infinite;
+          animation: rotate 1s linear infinite;
           background: conic-gradient(
             from 0deg,
-            #e0e0e0 0%,
-            #333333 50%,
-            #e0e0e0 100%
+            rgba(128, 128, 128, 0.1) 0%,
+            rgba(128, 128, 128, 1) 20%,
+            rgba(128, 128, 128, 1) 40%,
+            rgba(128, 128, 128, 0.1) 60%
           );
           mask: radial-gradient(transparent 55%, black 55%);
           -webkit-mask: radial-gradient(transparent 55%, black 55%);
@@ -224,11 +225,6 @@ export const LoadingAnimationExtension = {
       const loadingContainer = document.createElement('div');
       loadingContainer.className = 'loading-container';
 
-      // Create text element
-      const textElement = document.createElement('span');
-      textElement.className = 'loading-text';
-      loadingContainer.appendChild(textElement);
-
       // Create animation container with the ring
       const animationContainer = document.createElement('div');
       animationContainer.className = 'loading-animation';
@@ -238,7 +234,14 @@ export const LoadingAnimationExtension = {
       ring.className = 'loading-ring';
       animationContainer.appendChild(ring);
 
+      // First append the animation
       loadingContainer.appendChild(animationContainer);
+
+      // Then create and append text element
+      const textElement = document.createElement('span');
+      textElement.className = 'loading-text';
+      loadingContainer.appendChild(textElement);
+
       container.appendChild(loadingContainer);
 
       console.log('Created container structure:', container); // Log the created structure

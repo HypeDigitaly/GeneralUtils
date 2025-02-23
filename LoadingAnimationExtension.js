@@ -36,13 +36,14 @@ export const LoadingAnimationExtension = {
     // Message sequences for different types and languages
     const messageSequences = {
       cs: {
-        SMT: ['Připravuji svou odpověď.'],
+        SMT: ['Připravuji svou odpověď.', 'Analyzuji informace.'],
         KB_WS: [
           'Zpracovávám dotaz.',
           'Hledám informace ve své databázi.',
           'Prohledávám webové zdroje.',
           'Analyzuji informace.',
-          'Připravuji odpověď.'
+          'Připravuji odpověď.',
+          'Níže začnu vypisovat svou odpověď.'
         ],
         OTHER: ['Analyzuji dotaz.', 'Nalezen dotaz na nevhodné téma.'],
         SWEARS: ['Analyzuji dotaz.', 'Nalezen nevhodný výraz.'],
@@ -50,17 +51,19 @@ export const LoadingAnimationExtension = {
           'Zpracovávám dotaz.',
           'Hledám informace ve své databázi.',
           'Analyzuji informace.',
-          'Připravuji odpověď.'
+          'Připravuji odpověď.',
+          'Níže začnu vypisovat svou odpověď.'
         ]
       },
       en: {
-        SMT: ['Preparing my response.'],
+        SMT: ['Preparing my response.', 'Analyzing information.'],
         KB_WS: [
           'Processing query.',
           'Searching information in database.',
           'Searching web sources.',
           'Analyzing information.',
-          'Preparing response.'
+          'Preparing response.',
+          'I will start writing my response below.'
         ],
         OTHER: ['Analyzing query.', 'Inappropriate topic detected.'],
         SWEARS: ['Analyzing query.', 'Inappropriate expression detected.'],
@@ -68,17 +71,19 @@ export const LoadingAnimationExtension = {
           'Processing query.',
           'Searching information in database.',
           'Analyzing information.',
-          'Preparing response.'
+          'Preparing response.',
+          'I will start writing my response below.'
         ]
       },
       de: {
-        SMT: ['Ich bereite meine Antwort vor.'],
+        SMT: ['Ich bereite meine Antwort vor.', 'Analysiere Informationen.'],
         KB_WS: [
           'Verarbeite Anfrage.',
           'Suche Informationen in der Datenbank.',
           'Durchsuche Webquellen.',
           'Analysiere Informationen.',
-          'Bereite Antwort vor.'
+          'Bereite Antwort vor.',
+          'Ich beginne unten mit meiner Antwort.'
         ],
         OTHER: ['Analysiere Anfrage.', 'Unangemessenes Thema erkannt.'],
         SWEARS: ['Analysiere Anfrage.', 'Unangemessener Ausdruck erkannt.'],
@@ -86,17 +91,19 @@ export const LoadingAnimationExtension = {
           'Verarbeite Anfrage.',
           'Suche Informationen in der Datenbank.',
           'Analysiere Informationen.',
-          'Bereite Antwort vor.'
+          'Bereite Antwort vor.',
+          'Ich beginne unten mit meiner Antwort.'
         ]
       },
       uk: {
-        SMT: ['Готую відповідь.'],
+        SMT: ['Готую відповідь.', 'Аналізую інформацію.'],
         KB_WS: [
           'Обробляю запит.',
           'Шукаю інформацію в базі даних.',
           'Шукаю веб-джерела.',
           'Аналізую інформацію.',
-          'Готую відповідь.'
+          'Готую відповідь.',
+          'Нижче почну писати свою відповідь.'
         ],
         OTHER: ['Аналізую запит.', 'Виявлено неприйнятну тему.'],
         SWEARS: ['Аналізую запит.', 'Виявлено неприйнятний вираз.'],
@@ -104,7 +111,8 @@ export const LoadingAnimationExtension = {
           'Обробляю запит.',
           'Шукаю інформацію в базі даних.',
           'Аналізую інформацію.',
-          'Готую відповідь.'
+          'Готую відповідь.',
+          'Нижче почну писати свою відповідь.'
         ]
       }
     };

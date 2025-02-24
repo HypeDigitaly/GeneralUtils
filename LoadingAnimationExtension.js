@@ -323,20 +323,25 @@ export const LoadingAnimationExtension = {
         }
         
         // Function to recursively set padding/margin to 0 and hide elements
-        const hideElement = (element) => {
-          element.style.padding = '0';
-          element.style.margin = '0';
-          element.style.opacity = '0';
-          element.style.visibility = 'hidden';
-          element.style.height = '0';
-          element.style.overflow = 'hidden';
-          Array.from(element.children).forEach(child => hideElement(child));
-        };
-
-        // Hide everything after animation
+        // Hide the entire extension component after animation
         setTimeout(() => {
-          loadingContainer.style.gap = '0';
-          hideElement(container);
+          // Get the extension's root element (the vfrc-message element)
+          const extensionRoot = element.querySelector('.vfrc-message--extension');
+          if (extensionRoot) {
+            extensionRoot.style.display = 'none';
+            extensionRoot.style.visibility = 'hidden';
+            extensionRoot.style.opacity = '0';
+            extensionRoot.style.height = '0';
+            extensionRoot.style.overflow = 'hidden';
+            // Also remove it from layout flow
+            extensionRoot.style.position = 'absolute';
+            extensionRoot.style.pointerEvents = 'none';
+          }
+          // Also hide the container element itself
+          element.style.display = 'none';
+          element.style.visibility = 'hidden';
+          element.style.opacity = '0';
+          element.style.height = '0';
         }, 300); // Match the transition duration
         
         // Clear any remaining intervals

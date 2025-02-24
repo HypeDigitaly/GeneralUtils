@@ -119,7 +119,7 @@ export const LoadingAnimationExtension = {
     };
 
     // Adjust duration if there's only one message
-    if (phase === 'output' && (messageSequences[lang]?.output?.[type]?.length === 1 || type === 'SWEARS' || type === 'OTHER')) {
+    if (phase === 'output' && messageSequences[lang]?.output?.[type]?.length === 1) {
       phaseDurations.output = 1500; // 1.5 seconds for single message
     }
 

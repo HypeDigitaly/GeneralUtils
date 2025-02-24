@@ -42,17 +42,17 @@ export const LoadingAnimationExtension = {
         output: {
           SMT: ['Dokončuji odpověď.'],
           KB_WS: [
-            'Hledám v databázi.',
+            'Prohledávám svou databázi.',
             'Prohledávám webové zdroje.',
-            'Připravuji odpověď.',
-            'Píši odpověď.'
+            'Ověřuji informace.',
+            'Připravuji svoji odpověď.'
           ],
           OTHER: ['Nacházím nevhodný výraz.'],
           SWEARS: ['Nacházím nevhodný výraz.'],
           KB: [
-            'Hledám v databázi.',
-            'Připravuji odpověď.',
-            'Píši odpověď.'
+            'Prohledávám svou databázi.',
+            'Ověřuji informace.',
+            'Připravuji svoji odpověď.'
           ]
         }
       },

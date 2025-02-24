@@ -25,14 +25,6 @@ export const LoadingAnimationExtension = {
     // Normalize type
     const type = (payload.type || 'SMT').toUpperCase();
 
-    // Use the new message sequences only when phase is 'all'
-    const useNewSequences = phase === 'all';
-    
-    // Override the phase to 'output' when it's 'all' since we'll be using the output messages
-    if (phase === 'all') {
-        phase = 'output';
-    }
-
     console.log('Normalized values - Language:', lang, 'Type:', type);
 
     // Define fixed durations for each phase (in milliseconds)
@@ -43,7 +35,7 @@ export const LoadingAnimationExtension = {
     };
 
     // Message sequences for different phases and types
-    const defaultMessageSequences = {
+    const messageSequences = {
       cs: {
         analysis: ['Analyzuji Váš dotaz.', 'Klasifikuji Váš dotaz.'],
         rewrite: ['Snažím se pochopit, co přesně hledáte.'],
@@ -126,89 +118,6 @@ export const LoadingAnimationExtension = {
       }
     };
 
-    const newMessageSequences = {
-      cs: {
-        analysis: ['Analyzuji Váš dotaz.', 'Klasifikuji Váš dotaz.'],
-        rewrite: ['Snažím se pochopit, co přesně hledáte.'],
-        output: {
-          SMT: ['Dokončuji odpověď.'],
-          KB_WS: [
-            'Prohledávám svou databázi.',
-            'Prohledávám webové zdroje.',
-            'Ověřuji informace.',
-            'Připravuji svoji odpověď.'
-          ],
-          OTHER: ['Nacházím nevhodný výraz.'],
-          SWEARS: ['Nacházím nevhodný výraz.'],
-          KB: [
-            'Prohledávám svou databázi.',
-            'Ověřuji informace.',
-            'Připravuji svoji odpověď.'
-          ]
-        }
-      },
-      en: {
-        analysis: ['I am analyzing your query.', 'I am classifying your query.'],
-        rewrite: ['I am trying to understand what you are looking for.'],
-        output: {
-          SMT: ['I am completing my response.'],
-          KB_WS: [
-            'I am searching my database.',
-            'I am searching web sources.',
-            'I am verifying information.',
-            'I am preparing my response.'
-          ],
-          OTHER: ['I am detecting inappropriate content.'],
-          SWEARS: ['I am detecting inappropriate content.'],
-          KB: [
-            'I am searching my database.',
-            'I am verifying information.',
-            'I am preparing my response.'
-          ]
-        }
-      },
-      de: {
-        analysis: ['Ich bin dabei, Ihre Anfrage zu analysieren.', 'Ich bin dabei, Ihre Anfrage zu klassifizieren.'],
-        rewrite: ['Ich bin dabei zu verstehen, wonach Sie suchen.'],
-        output: {
-          SMT: ['Ich bin dabei, meine Antwort fertigzustellen.'],
-          KB_WS: [
-            'Ich durchsuche meine Datenbank.',
-            'Ich durchsuche Web-Quellen.',
-            'Ich überprüfe die Informationen.',
-            'Ich bereite meine Antwort vor.'
-          ],
-          OTHER: ['Ich bin dabei, unangemessenen Inhalt zu erkennen.'],
-          SWEARS: ['Ich bin dabei, unangemessenen Inhalt zu erkennen.'],
-          KB: [
-            'Ich durchsuche meine Datenbank.',
-            'Ich überprüfe die Informationen.',
-            'Ich bereite meine Antwort vor.'
-          ]
-        }
-      },
-      uk: {
-        analysis: ['Зараз аналізую ваш запит.', 'Зараз класифікую ваш запит.'],
-        rewrite: ['Зараз намагаюся зрозуміти, що ви шукаєте.'],
-        output: {
-          SMT: ['Зараз завершую відповідь.'],
-          KB_WS: [
-            'Шукаю у своїй базі даних.',
-            'Шукаю у веб-джерелах.',
-            'Перевіряю інформацію.',
-            'Готую свою відповідь.'
-          ],
-          OTHER: ['Зараз виявляю недоречний зміст.'],
-          SWEARS: ['Зараз виявляю недоречний зміст.'],
-          KB: [
-            'Шукаю у своїй базі даних.',
-            'Перевіряю інформацію.',
-            'Готую свою відповідь.'
-          ]
-        }
-      }
-    };
-
     // Adjust duration if there's only one message
     if (phase === 'output' && messageSequences[lang]?.output?.[type]?.length === 1) {
       phaseDurations.output = 1500; // 1.5 seconds for single message
@@ -219,11 +128,10 @@ export const LoadingAnimationExtension = {
       const totalDuration = phaseDurations[phase];
 
       let messages;
-      const sequences = useNewSequences ? newMessageSequences : defaultMessageSequences;
       if (phase === 'output') {
-        messages = sequences[lang]?.output?.[type];
+        messages = messageSequences[lang]?.output?.[type];
       } else {
-        messages = sequences[lang]?.[phase];
+        messages = messageSequences[lang]?.[phase];
       }
 
       if (!messages) {

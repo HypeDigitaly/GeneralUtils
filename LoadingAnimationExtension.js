@@ -40,7 +40,7 @@ export const LoadingAnimationExtension = {
         analysis: ['Analyzuji Váš dotaz.', 'Klasifikuji Váš dotaz.'],
         rewrite: ['Snažím se pochopit, co přesně hledáte.'],
         output: {
-          SMT: ['Dokončuji odpověď.', 'Píši odpověď.'],
+          SMT: ['Dokončuji odpověď.'],
           KB_WS: [
             'Hledám v databázi.',
             'Prohledávám webové zdroje.',
@@ -60,7 +60,7 @@ export const LoadingAnimationExtension = {
         analysis: ['I am analyzing your query.', 'I am classifying your query.'],
         rewrite: ['I am trying to understand what you are looking for.'],
         output: {
-          SMT: ['I am completing my response.', 'I am writing my response.'],
+          SMT: ['I am completing my response.'],
           KB_WS: [
             'I am searching the database.',
             'I am searching web sources.',
@@ -80,7 +80,7 @@ export const LoadingAnimationExtension = {
         analysis: ['Ich bin dabei, Ihre Anfrage zu analysieren.', 'Ich bin dabei, Ihre Anfrage zu klassifizieren.'],
         rewrite: ['Ich bin dabei zu verstehen, wonach Sie suchen.'],
         output: {
-          SMT: ['Ich bin dabei, meine Antwort fertigzustellen.', 'Ich bin dabei, meine Antwort zu schreiben.'],
+          SMT: ['Ich bin dabei, meine Antwort fertigzustellen.'],
           KB_WS: [
             'Ich bin dabei, die Datenbank zu durchsuchen.',
             'Ich bin dabei, Web-Quellen zu durchsuchen.',
@@ -100,7 +100,7 @@ export const LoadingAnimationExtension = {
         analysis: ['Зараз аналізую ваш запит.', 'Зараз класифікую ваш запит.'],
         rewrite: ['Зараз намагаюся зрозуміти, що ви шукаєте.'],
         output: {
-          SMT: ['Зараз завершую відповідь.', 'Зараз пишу відповідь.'],
+          SMT: ['Зараз завершую відповідь.'],
           KB_WS: [
             'Зараз шукаю в базі даних.',
             'Зараз шукаю веб-джерела.',

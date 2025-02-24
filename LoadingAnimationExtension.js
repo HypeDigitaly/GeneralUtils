@@ -155,15 +155,18 @@ export const LoadingAnimationExtension = {
           margin: 0;
           width: 100%;
           box-sizing: border-box;
-          background-color: #F5F5F5;
+          background-color: #F1F2F2;  /* matching the exact color */
         }
 
         .loading-text {
-          color: #1A1A1A;  /* darker text color to match */
-          font-size: 14px;  /* adjusted to match the message below */
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;  /* system font stack */
-          line-height: 1.4;  /* adjusted line height */
-          font-weight: 400;  /* regular weight */
+          color: #1a1e23;  /* matching exact color from CSS */
+          font-size: 14px;
+          line-height: 20px;  /* exact line height from CSS */
+          font-family: var(--_1bof89na);  /* using the same font variable */
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          max-width: 100%;
           opacity: 1;
           transform: translateY(0);
           transition: opacity 0.3s ease-out, transform 0.3s ease-out;

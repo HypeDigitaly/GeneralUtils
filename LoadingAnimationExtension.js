@@ -183,8 +183,8 @@ export const LoadingAnimationExtension = {
 
         .loading-text {
           color: rgba(26, 30, 35, 0.6);  /* less prominent text color */
-          font-size: 13px;
-          line-height: 18px;
+          font-size: 11px;
+          line-height: 16px;
           font-family: var(--_1bof89na);
           position: relative;
           display: flex;

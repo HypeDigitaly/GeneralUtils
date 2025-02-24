@@ -325,26 +325,29 @@ export const LoadingAnimationExtension = {
         // Function to recursively set padding/margin to 0 and hide elements
         // Hide the entire extension component after animation
         setTimeout(() => {
-          // Target the root container directly
-          const rootElement = element.closest('.g3dqfd4');
-          if (rootElement) {
-            rootElement.style.cssText = `
-              display: none;
-              visibility: hidden;
-              opacity: 0;
+          // Target all parent elements up to the root
+          let currentElement = element;
+          while (currentElement) {
+            currentElement.style.cssText = `
+              display: none !important;
+              visibility: hidden !important;
+              opacity: 0 !important;
               height: 0 !important;
               width: 0 !important;
               margin: 0 !important;
               padding: 0 !important;
               border: 0 !important;
-              position: absolute;
-              pointer-events: none;
+              position: absolute !important;
+              pointer-events: none !important;
               min-height: 0 !important;
               max-height: 0 !important;
-              overflow: hidden;
+              overflow: hidden !important;
+              flex: 0 0 0 !important;
+              flex-basis: 0 !important;
             `;
+            currentElement = currentElement.parentElement;
           }
-          // Ensure child elements are also hidden
+          // Also ensure the container itself is hidden
           container.style.cssText = `
             display: none;
             visibility: hidden;

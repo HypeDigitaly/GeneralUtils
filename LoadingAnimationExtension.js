@@ -150,17 +150,20 @@ export const LoadingAnimationExtension = {
           display: flex;
           align-items: center;
           gap: 6px;
-          padding: 4px 8px;  /* much more compact padding */
-          border-radius: 4px;  /* smaller radius to match */
-          margin: 0;  /* removed margins completely */
+          padding: 4px 8px;
+          border-radius: 4px;
+          margin: 0;
           width: 100%;
           box-sizing: border-box;
+          background-color: #F5F5F5;
         }
 
         .loading-text {
-          color: #333;
-          font-size: 13px;  /* slightly smaller font */
-          font-family: sans-serif;
+          color: #1A1A1A;  /* darker text color to match */
+          font-size: 14px;  /* adjusted to match the message below */
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;  /* system font stack */
+          line-height: 1.4;  /* adjusted line height */
+          font-weight: 400;  /* regular weight */
           opacity: 1;
           transform: translateY(0);
           transition: opacity 0.3s ease-out, transform 0.3s ease-out;

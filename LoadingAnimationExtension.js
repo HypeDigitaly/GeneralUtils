@@ -322,17 +322,21 @@ export const LoadingAnimationExtension = {
           animationElement.classList.add('hide');
         }
         
-        // Function to recursively set padding and margin to 0
-        const resetSpacing = (element) => {
+        // Function to recursively set padding/margin to 0 and hide elements
+        const hideElement = (element) => {
           element.style.padding = '0';
           element.style.margin = '0';
-          Array.from(element.children).forEach(child => resetSpacing(child));
+          element.style.opacity = '0';
+          element.style.visibility = 'hidden';
+          element.style.height = '0';
+          element.style.overflow = 'hidden';
+          Array.from(element.children).forEach(child => hideElement(child));
         };
 
-        // Remove the gap after animation is hidden and reset all spacing
+        // Hide everything after animation
         setTimeout(() => {
           loadingContainer.style.gap = '0';
-          resetSpacing(container);
+          hideElement(container);
         }, 300); // Match the transition duration
         
         // Clear any remaining intervals

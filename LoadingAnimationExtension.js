@@ -40,7 +40,7 @@ export const LoadingAnimationExtension = {
         analysis: ['Analyzuji povahu Vašeho dotazu.', 'Klasifikuji Váš dotaz.'],
         rewrite: ['Snažím se pochopit co přesně hledáte.'],
         output: {
-          SMT: ['Dokončuji svoji odpověď.', 'Zde vypisuji svoji odpověď.'],
+          SMT: ['Kompletuji svoji odpověď.', 'Zde vypisuji svoji odpověď.'],
           KB_WS: [
             'Hledám informace ve své databázi.',
             'Prohledám webové zdroje.',

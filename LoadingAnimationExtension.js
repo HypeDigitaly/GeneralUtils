@@ -150,12 +150,10 @@ export const LoadingAnimationExtension = {
           display: flex;
           align-items: center;
           gap: 6px;
-          padding: 4px 8px;
-          border-radius: 4px;
+          padding: 0;
           margin: 0;
           width: 100%;
           box-sizing: border-box;
-          background-color: #F1F2F2;  /* matching the exact color */
         }
 
         .loading-text {

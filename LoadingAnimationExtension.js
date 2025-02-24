@@ -325,29 +325,25 @@ export const LoadingAnimationExtension = {
         // Function to recursively set padding/margin to 0 and hide elements
         // Hide the entire extension component after animation
         setTimeout(() => {
-          // Target all parent elements up to the root
+          // Completely remove the element and its parents from DOM
           let currentElement = element;
-          while (currentElement) {
-            currentElement.style.cssText = `
-              display: none !important;
-              visibility: hidden !important;
-              opacity: 0 !important;
-              height: 0 !important;
-              width: 0 !important;
-              margin: 0 !important;
-              padding: 0 !important;
-              border: 0 !important;
-              position: absolute !important;
-              pointer-events: none !important;
-              min-height: 0 !important;
-              max-height: 0 !important;
-              overflow: hidden !important;
-              flex: 0 0 0 !important;
-              flex-basis: 0 !important;
-            `;
-            currentElement = currentElement.parentElement;
+          while (currentElement && currentElement.parentElement) {
+            const parent = currentElement.parentElement;
+            if (currentElement.remove) {
+              currentElement.remove();
+            } else {
+              parent.removeChild(currentElement);
+            }
+            // Force layout recalculation
+            void parent.offsetHeight;
+            currentElement = parent;
           }
-          // Also ensure the container itself is hidden
+          // Ensure container is also removed
+          if (container.remove) {
+            container.remove();
+          } else if (container.parentElement) {
+            container.parentElement.removeChild(container);
+          }
           container.style.cssText = `
             display: none;
             visibility: hidden;

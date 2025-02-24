@@ -7,12 +7,12 @@ export const LoadingAnimationExtension = {
     console.log('Full trace object:', trace);
     console.log('Full payload object:', trace.payload);
     console.log('Target element:', element);
-    
+
     const payload = trace.payload || {};
     const phase = payload.phase || 'output'; // default to output if not specified
-    
+
     console.log('Phase:', phase); // Added phase logging
-    
+
     // Normalize and detect language
     const incomingLang = (payload.lang || 'cs').toLowerCase();
     let lang;
@@ -38,7 +38,7 @@ export const LoadingAnimationExtension = {
     const messageSequences = {
       cs: {
         analysis: ['Analyzuji povahu Vašeho dotazu.', 'Klasifikuji Váš dotaz.'],
-        rewrite: ['Optimalizuji Váš dotaz pro vyhledávání.'],
+        rewrite: ['Snažím se pochopit co přesně hledáte.'],
         output: {
           SMT: ['Dokončuji svoji odpověď.', 'Zde vypisuji svoji odpověď.'],
           KB_WS: [
@@ -133,7 +133,7 @@ export const LoadingAnimationExtension = {
     // Error handling for missing messages
     try {
       const totalDuration = phaseDurations[phase];
-      
+
       let messages;
       if (phase === 'output') {
         messages = messageSequences[lang]?.output?.[type];
@@ -152,7 +152,7 @@ export const LoadingAnimationExtension = {
       // Create container div with class for styling
       const container = document.createElement('div');
       container.className = 'vfrc-message vfrc-message--extension LoadingAnimation';
-      
+
       const style = document.createElement('style');
       style.textContent = `
         .vfrc-message.vfrc-message--extension.LoadingAnimation {
@@ -261,7 +261,7 @@ export const LoadingAnimationExtension = {
       // Create animation container
       const animationContainer = document.createElement('div');
       animationContainer.className = 'loading-animation';
-      
+
       // Create nine squares in a grid
       for (let i = 0; i < 9; i++) {
         const square = document.createElement('div');
@@ -282,16 +282,16 @@ export const LoadingAnimationExtension = {
       console.log('Created container structure:', container); // Log the created structure
 
       let currentIndex = 0;
-      
+
       const updateText = (newText) => {
         const textElement = container.querySelector('.loading-text');
         textElement.classList.add('changing');
-        
+
         setTimeout(() => {
           textElement.textContent = newText;
           textElement.classList.remove('changing');
           textElement.classList.add('entering');
-          
+
           requestAnimationFrame(() => {
             textElement.classList.remove('entering');
           });
@@ -321,12 +321,12 @@ export const LoadingAnimationExtension = {
         if (animationElement) {
           animationElement.classList.add('hide');
         }
-        
+
         // Remove the gap after animation is hidden
         setTimeout(() => {
           loadingContainer.style.gap = '0';
         }, 300); // Match the transition duration
-        
+
         // Clear any remaining intervals
         if (interval) {
           clearInterval(interval);
@@ -356,7 +356,7 @@ export const LoadingAnimationExtension = {
         console.log('Appending to element:', element);
         element.appendChild(container);
         console.log('Container appended successfully');
-        
+
         void container.offsetHeight; // Force reflow
       } else {
         console.error('Target element is not available');

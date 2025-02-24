@@ -54,6 +54,19 @@ export const LoadingAnimationExtension = {
             'Připravuji odpověď.',
             'Píši odpověď.'
           ]
+        },
+        all: {
+          KB: [
+            'Prohledávám svou databázi.',
+            'Ověřuji informace.',
+            'Připravuji svoji odpověď.'
+          ],
+          KB_WS: [
+            'Prohledávám svou databázi.',
+            'Prohledávám webové zdroje.',
+            'Ověřuji informace.',
+            'Připravuji svoji odpověď.'
+          ]
         }
       },
       en: {
@@ -73,6 +86,19 @@ export const LoadingAnimationExtension = {
             'I am searching the database.',
             'I am preparing my response.',
             'I am writing my response.'
+          ]
+        },
+        all: {
+          KB: [
+            'I am searching my database.',
+            'I am verifying information.',
+            'I am preparing my response.'
+          ],
+          KB_WS: [
+            'I am searching my database.',
+            'I am searching web sources.',
+            'I am verifying information.',
+            'I am preparing my response.'
           ]
         }
       },
@@ -94,6 +120,19 @@ export const LoadingAnimationExtension = {
             'Ich bin dabei, meine Antwort vorzubereiten.',
             'Ich bin dabei, meine Antwort zu schreiben.'
           ]
+        },
+        all: {
+          KB: [
+            'Ich durchsuche meine Datenbank.',
+            'Ich überprüfe die Informationen.',
+            'Ich bereite meine Antwort vor.'
+          ],
+          KB_WS: [
+            'Ich durchsuche meine Datenbank.',
+            'Ich durchsuche Web-Quellen.',
+            'Ich überprüfe die Informationen.',
+            'Ich bereite meine Antwort vor.'
+          ]
         }
       },
       uk: {
@@ -114,6 +153,19 @@ export const LoadingAnimationExtension = {
             'Зараз готую відповідь.',
             'Зараз пишу відповідь.'
           ]
+        },
+        all: {
+          KB: [
+            'Шукаю у своїй базі даних.',
+            'Перевіряю інформацію.',
+            'Готую свою відповідь.'
+          ],
+          KB_WS: [
+            'Шукаю у своїй базі даних.',
+            'Шукаю веб-джерела.',
+            'Перевіряю інформацію.',
+            'Готую свою відповідь.'
+          ]
         }
       }
     };
@@ -128,7 +180,9 @@ export const LoadingAnimationExtension = {
       const totalDuration = phaseDurations[phase];
 
       let messages;
-      if (phase === 'output') {
+      if (phase === 'all' && (type === 'KB' || type === 'KB_WS')) {
+        messages = messageSequences[lang]?.all?.[type];
+      } else if (phase === 'output') {
         messages = messageSequences[lang]?.output?.[type];
       } else {
         messages = messageSequences[lang]?.[phase];

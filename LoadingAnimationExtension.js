@@ -148,15 +148,21 @@ export const LoadingAnimationExtension = {
           transition: opacity 0.3s ease-out;
           width: 100%;
           display: block;
+          background: transparent !important; /* Force transparent background */
         }
 
         .vfrc-message.vfrc-message--extension.LoadingAnimation.hide {
           opacity: 0;
           visibility: hidden;
           pointer-events: none;
+          height: 0 !important;    /* Force height to 0 when hiding */
+          margin: 0 !important;    /* Remove any margins */
+          padding: 0 !important;   /* Remove any padding */
+          overflow: hidden;        /* Hide any overflow */
         }
 
         .loading-container {
+          background: transparent !important;
           display: flex;
           align-items: center;
           gap: 6px;
@@ -167,6 +173,7 @@ export const LoadingAnimationExtension = {
         }
 
         .loading-text {
+          background: transparent !important;
           color: #1a1e23;  /* matching exact color from CSS */
           font-size: 14px;
           line-height: 20px;  /* exact line height from CSS */
@@ -304,34 +311,35 @@ export const LoadingAnimationExtension = {
 
       // Set up the hide timeout
       const hideTimeout = setTimeout(() => {
-        // First verify we have the correct container
         const mainContainer = container.closest('.vfrc-message.vfrc-message--extension.LoadingAnimation');
         if (!mainContainer) {
           console.error('Could not find main container to remove');
           return;
         }
 
-        // Hide the animation and remove its space
+        // Immediately ensure transparent background
+        mainContainer.style.background = 'transparent';
+        
+        // Hide the animation
         const animationElement = mainContainer.querySelector('.loading-animation');
         if (animationElement) {
           animationElement.classList.add('hide');
         }
-        
-        // Remove the gap after animation is hidden
-        setTimeout(() => {
-          loadingContainer.style.gap = '0';
-        }, 300);
 
-        // Add fade-out and remove the entire container
+        // Force immediate removal after transitions
         setTimeout(() => {
           mainContainer.classList.add('hide');
+          
+          // Force removal after transition
           setTimeout(() => {
-            mainContainer.remove(); // This will remove the entire loading animation container
-            console.log('Loading animation container removed from DOM');
+            if (mainContainer && mainContainer.parentNode) {
+              mainContainer.parentNode.removeChild(mainContainer);
+              console.log('Loading animation container fully removed from DOM');
+            }
           }, 300);
         }, 300);
-        
-        // Clear any remaining intervals
+
+        // Clear intervals
         if (interval) {
           clearInterval(interval);
         }

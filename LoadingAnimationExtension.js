@@ -145,106 +145,22 @@ export const LoadingAnimationExtension = {
       style.textContent = `
         .vfrc-message.vfrc-message--extension.LoadingAnimation {
           opacity: 1;
-          transition: opacity 0.3s ease-out;
+          transition: all 0.3s ease-out;
           width: 100%;
           display: block;
-          background: transparent !important; /* Force transparent background */
-        }
-
-        .vfrc-message.vfrc-message--extension.LoadingAnimation.hide {
-          opacity: 0;
-          visibility: hidden;
-          pointer-events: none;
-          height: 0 !important;    /* Force height to 0 when hiding */
-          margin: 0 !important;    /* Remove any margins */
-          padding: 0 !important;   /* Remove any padding */
-          overflow: hidden;        /* Hide any overflow */
-        }
-
-        .loading-container {
           background: transparent !important;
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          padding: 0;
-          margin: 0;
-          width: 100%;
-          box-sizing: border-box;
         }
 
-        .loading-text {
-          background: transparent !important;
-          color: #1a1e23;  /* matching exact color from CSS */
-          font-size: 14px;
-          line-height: 20px;  /* exact line height from CSS */
-          font-family: var(--_1bof89na);  /* using the same font variable */
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          max-width: 100%;
-          opacity: 1;
-          transform: translateY(0);
-          transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-          flex: 1;
-          min-width: 0;
+        .vfrc-message.vfrc-message--extension.LoadingAnimation.empty {
+          background-color: white !important;
+          min-height: 0 !important;
+          height: auto !important;
+          padding: 0 !important;
+          margin: 0 !important;
         }
 
-        .loading-text.changing {
-          opacity: 0;
-          transform: translateY(-5px);
-        }
-
-        .loading-text.entering {
-          opacity: 0;
-          transform: translateY(5px);
-        }
-
-        .loading-animation {
-          position: relative;
-          width: 16px;
-          height: 16px;
-          flex: 0 0 16px;
-          opacity: 1;
-          transition: all 0.3s ease-out;
-          display: grid;
-          grid-template-columns: repeat(3, 4px);
-          grid-template-rows: repeat(3, 4px);
-          gap: 1px;
-          margin-top: 2px;
-        }
-
-        .loading-animation.hide {
-          opacity: 0;
-          visibility: hidden;
-          width: 0;
-          margin-right: 0;
-          flex: 0 0 0;
-        }
-
-        .loading-square {
-          width: 4px;
-          height: 4px;
-          background-color: #808080;
-          animation: wave 1s infinite;
-        }
-
-        .loading-square:nth-child(1) { animation-delay: 0s; }
-        .loading-square:nth-child(2) { animation-delay: 0.1s; }
-        .loading-square:nth-child(3) { animation-delay: 0.2s; }
-        .loading-square:nth-child(6) { animation-delay: 0.3s; }
-        .loading-square:nth-child(9) { animation-delay: 0.4s; }
-        .loading-square:nth-child(8) { animation-delay: 0.5s; }
-        .loading-square:nth-child(7) { animation-delay: 0.6s; }
-        .loading-square:nth-child(4) { animation-delay: 0.7s; }
-        .loading-square:nth-child(5) { animation-delay: 0.8s; }
-
-        @keyframes wave {
-          0%, 100% {
-            background-color: #E6E6E6;
-          }
-          50% {
-            background-color: #808080;
-          }
+        .vfrc-message.vfrc-message--extension.LoadingAnimation.empty * {
+          display: none !important;
         }
       `;
       container.appendChild(style);
@@ -309,7 +225,7 @@ export const LoadingAnimationExtension = {
         }, messageInterval);
       }
 
-      // Set up the hide timeout
+      // Update the hide timeout logic
       const hideTimeout = setTimeout(() => {
         const mainContainer = container.closest('.vfrc-message.vfrc-message--extension.LoadingAnimation');
         if (!mainContainer) {
@@ -317,27 +233,11 @@ export const LoadingAnimationExtension = {
           return;
         }
 
-        // Immediately ensure transparent background
+        // Instead of removing, empty the container and make it transparent
+        mainContainer.innerHTML = '';
+        mainContainer.classList.add('empty');
+        mainContainer.style.backgroundColor = 'white';
         mainContainer.style.background = 'transparent';
-        
-        // Hide the animation
-        const animationElement = mainContainer.querySelector('.loading-animation');
-        if (animationElement) {
-          animationElement.classList.add('hide');
-        }
-
-        // Force immediate removal after transitions
-        setTimeout(() => {
-          mainContainer.classList.add('hide');
-          
-          // Force removal after transition
-          setTimeout(() => {
-            if (mainContainer && mainContainer.parentNode) {
-              mainContainer.parentNode.removeChild(mainContainer);
-              console.log('Loading animation container fully removed from DOM');
-            }
-          }, 300);
-        }, 300);
 
         // Clear intervals
         if (interval) {

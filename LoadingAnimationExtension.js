@@ -172,9 +172,8 @@ export const LoadingAnimationExtension = {
           display: flex;
           align-items: center;
           gap: 6px;
-          padding: 8px 12px;
-          margin: 0;
           padding: 6px 12px;
+          margin: 0;
           width: 100%;
           box-sizing: border-box;
           background: rgba(0, 0, 0, 0.03);

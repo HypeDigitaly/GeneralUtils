@@ -37,22 +37,22 @@ export const LoadingAnimationExtension = {
     // Message sequences for different phases and types
     const messageSequences = {
       cs: {
-        analysis: ['Právě analyzuji Váš dotaz.', 'Právě klasifikuji Váš dotaz.'],
-        rewrite: ['Právě se snažím pochopit, co přesně hledáte.'],
+        analysis: ['Analyzuji Váš dotaz.', 'Klasifikuji Váš dotaz.'],
+        rewrite: ['Snažím se pochopit, co přesně hledáte.'],
         output: {
-          SMT: ['Právě dokončuji odpověď.', 'Právě píši odpověď.'],
+          SMT: ['Dokončuji odpověď.', 'Píši odpověď.'],
           KB_WS: [
-            'Právě hledám v databázi.',
-            'Právě prohledávám webové zdroje.',
-            'Právě připravuji odpověď.',
-            'Právě píši odpověď.'
+            'Hledám v databázi.',
+            'Prohledávám webové zdroje.',
+            'Připravuji odpověď.',
+            'Píši odpověď.'
           ],
-          OTHER: ['Právě analyzuji dotaz.', 'Právě nacházím nevhodný výraz.'],
-          SWEARS: ['Právě analyzuji dotaz.', 'Právě nacházím nevhodný výraz.'],
+          OTHER: ['Analyzuji dotaz.', 'Nacházím nevhodný výraz.'],
+          SWEARS: ['Analyzuji dotaz.', 'Nacházím nevhodný výraz.'],
           KB: [
-            'Právě hledám v databázi.',
-            'Právě připravuji odpověď.',
-            'Právě píši odpověď.'
+            'Hledám v databázi.',
+            'Připravuji odpověď.',
+            'Píši odpověď.'
           ]
         }
       },

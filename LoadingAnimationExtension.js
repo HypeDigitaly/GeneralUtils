@@ -149,23 +149,23 @@ export const LoadingAnimationExtension = {
         .loading-container {
           display: flex;
           align-items: center;
-          gap: 15px;
-          padding: 12px 16px;
-          border-radius: 8px;
-          margin: 8px 0;
+          gap: 6px;
+          padding: 4px 8px;  /* much more compact padding */
+          border-radius: 4px;  /* smaller radius to match */
+          margin: 0;  /* removed margins completely */
           width: 100%;
           box-sizing: border-box;
         }
 
         .loading-text {
           color: #333;
-          font-size: 14px;
+          font-size: 13px;  /* slightly smaller font */
           font-family: sans-serif;
           opacity: 1;
           transform: translateY(0);
           transition: opacity 0.3s ease-out, transform 0.3s ease-out;
           flex: 1;
-          min-width: 0; /* Prevents flex item from overflowing */
+          min-width: 0;
         }
 
         .loading-text.changing {
@@ -180,15 +180,15 @@ export const LoadingAnimationExtension = {
 
         .loading-animation {
           position: relative;
-          width: 24px;
-          height: 24px;
-          flex: 0 0 24px;
+          width: 16px;  /* even smaller animation */
+          height: 16px;
+          flex: 0 0 16px;
           opacity: 1;
           transition: all 0.3s ease-out;
           display: grid;
-          grid-template-columns: repeat(3, 6px);
-          grid-template-rows: repeat(3, 6px);
-          gap: 2px;
+          grid-template-columns: repeat(3, 4px);
+          grid-template-rows: repeat(3, 4px);
+          gap: 1px;
         }
 
         .loading-animation.hide {
@@ -200,8 +200,8 @@ export const LoadingAnimationExtension = {
         }
 
         .loading-square {
-          width: 6px;
-          height: 6px;
+          width: 4px;
+          height: 4px;
           background-color: #808080;
           animation: wave 1s infinite;
         }

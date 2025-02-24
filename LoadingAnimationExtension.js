@@ -172,17 +172,20 @@ export const LoadingAnimationExtension = {
           display: flex;
           align-items: center;
           gap: 6px;
-          padding: 0;
+          padding: 8px 12px;
           margin: 0;
           width: 100%;
           box-sizing: border-box;
+          background: rgba(0, 0, 0, 0.03);
+          border-radius: 6px;
+          border: 1px solid rgba(0, 0, 0, 0.08);
         }
 
         .loading-text {
-          color: #1a1e23;  /* matching exact color from CSS */
-          font-size: 14px;
-          line-height: 20px;  /* exact line height from CSS */
-          font-family: var(--_1bof89na);  /* using the same font variable */
+          color: rgba(26, 30, 35, 0.6);  /* less prominent text color */
+          font-size: 13px;
+          line-height: 18px;
+          font-family: var(--_1bof89na);
           position: relative;
           display: flex;
           flex-direction: column;
@@ -192,6 +195,7 @@ export const LoadingAnimationExtension = {
           transition: opacity 0.3s ease-out, transform 0.3s ease-out;
           flex: 1;
           min-width: 0;
+          font-style: italic;
         }
 
         .loading-text.changing {
@@ -229,7 +233,7 @@ export const LoadingAnimationExtension = {
         .loading-square {
           width: 4px;
           height: 4px;
-          background-color: #808080;
+          background-color: rgba(128, 128, 128, 0.6);
           animation: wave 1s infinite;
         }
 
@@ -245,10 +249,10 @@ export const LoadingAnimationExtension = {
 
         @keyframes wave {
           0%, 100% {
-            background-color: #E6E6E6;
+            background-color: rgba(230, 230, 230, 0.6);
           }
           50% {
-            background-color: #808080;
+            background-color: rgba(128, 128, 128, 0.6);
           }
         }
       `;

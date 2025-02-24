@@ -57,74 +57,62 @@ export const LoadingAnimationExtension = {
         }
       },
       en: {
-        analysis: ['Preparing my response.', 'Analyzing information.'],
-        rewrite: ['Optimalizing my response for searching'],
+        analysis: ['Analyzing the nature of your query.', 'Classifying your query.'],
+        rewrite: ['Trying to understand exactly what you are looking for.'],
         output: {
-          SMT: ['Preparing my response.', 'Analyzing information.'],
+          SMT: ['Completing my response.', 'Here I write my response.'],
           KB_WS: [
-            'Processing query.',
-            'Searching information in database.',
+            'Searching information in my database.',
             'Searching web sources.',
-            'Analyzing information.',
-            'Preparing response.',
-            'I will start writing my response below.'
+            'Preparing my response.',
+            'Here I write my response.'
           ],
-          OTHER: ['Analyzing query.', 'Inappropriate topic detected.'],
-          SWEARS: ['Analyzing query.', 'Inappropriate expression detected.'],
+          OTHER: ['Query analyzed.', 'Inappropriate expression found off-topic.'],
+          SWEARS: ['Query analyzed.', 'Inappropriate expression found off-topic.'],
           KB: [
-            'Processing query.',
-            'Searching information in database.',
-            'Analyzing information.',
-            'Preparing response.',
-            'I will start writing my response below.'
+            'Searching information in my database.',
+            'Preparing my response.',
+            'Here I write my response.'
           ]
         }
       },
       de: {
-        analysis: ['Ich bereite meine Antwort vor.', 'Analysiere Informationen.'],
-        rewrite: ['Optimalizeren Sie meine Antwort für die Suche'],
+        analysis: ['Analysiere die Art Ihrer Anfrage.', 'Klassifiziere Ihre Anfrage.'],
+        rewrite: ['Versuche zu verstehen, wonach Sie genau suchen.'],
         output: {
-          SMT: ['Ich bereite meine Antwort vor.', 'Analysiere Informationen.'],
+          SMT: ['Vervollständige meine Antwort.', 'Hier schreibe ich meine Antwort.'],
           KB_WS: [
-            'Verarbeite Anfrage.',
-            'Suche Informationen in der Datenbank.',
-            'Durchsuche Webquellen.',
-            'Analysiere Informationen.',
-            'Bereite Antwort vor.',
-            'Ich beginne unten mit meiner Antwort.'
+            'Suche Informationen in meiner Datenbank.',
+            'Durchsuche Web-Quellen.',
+            'Bereite meine Antwort vor.',
+            'Hier schreibe ich meine Antwort.'
           ],
-          OTHER: ['Analysiere Anfrage.', 'Unangemessenes Thema erkannt.'],
-          SWEARS: ['Analysiere Anfrage.', 'Unangemessener Ausdruck erkannt.'],
+          OTHER: ['Anfrage analysiert.', 'Unangemessener Ausdruck gefunden.'],
+          SWEARS: ['Anfrage analysiert.', 'Unangemessener Ausdruck gefunden.'],
           KB: [
-            'Verarbeite Anfrage.',
-            'Suche Informationen in der Datenbank.',
-            'Analysiere Informationen.',
-            'Bereite Antwort vor.',
-            'Ich beginne unten mit meiner Antwort.'
+            'Suche Informationen in meiner Datenbank.',
+            'Bereite meine Antwort vor.',
+            'Hier schreibe ich meine Antwort.'
           ]
         }
       },
       uk: {
-        analysis: ['Готую відповідь.', 'Аналізую інформацію.'],
-        rewrite: ['Оптимізую відповідь для пошуку'],
+        analysis: ['Аналізую характер вашого запиту.', 'Класифікую ваш запит.'],
+        rewrite: ['Намагаюся зрозуміти, що саме ви шукаєте.'],
         output: {
-          SMT: ['Готую відповідь.', 'Аналізую інформацію.'],
+          SMT: ['Завершую свою відповідь.', 'Ось пишу свою відповідь.'],
           KB_WS: [
-            'Обробляю запит.',
-            'Шукаю інформацію в базі даних.',
+            'Шукаю інформацію у своїй базі даних.',
             'Шукаю веб-джерела.',
-            'Аналізую інформацію.',
-            'Готую відповідь.',
-            'Нижче почну писати свою відповідь.'
+            'Готую свою відповідь.',
+            'Ось пишу свою відповідь.'
           ],
-          OTHER: ['Аналізую запит.', 'Виявлено неприйнятну тему.'],
-          SWEARS: ['Аналізую запит.', 'Виявлено неприйнятний вираз.'],
+          OTHER: ['Запит проаналізовано.', 'Знайдено недоречний вираз не за темою.'],
+          SWEARS: ['Запит проаналізовано.', 'Знайдено недоречний вираз не за темою.'],
           KB: [
-            'Обробляю запит.',
-            'Шукаю інформацію в базі даних.',
-            'Аналізую інформацію.',
-            'Готую відповідь.',
-            'Нижче почну писати свою відповідь.'
+            'Шукаю інформацію у своїй базі даних.',
+            'Готую свою відповідь.',
+            'Ось пишу свою відповідь.'
           ]
         }
       }

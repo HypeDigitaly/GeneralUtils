@@ -6,9 +6,12 @@ export const LoadingAnimationExtension = {
   render: ({ trace, element }) => {
     console.log('Full trace object:', trace);
     console.log('Full payload object:', trace.payload);
-    console.log('Target element:', element); // Log the target element
-
+    console.log('Target element:', element);
+    
     const payload = trace.payload || {};
+    const phase = payload.phase || 'output'; // default to output if not specified
+    
+    console.log('Phase:', phase); // Added phase logging
     
     // Normalize and detect language
     const incomingLang = (payload.lang || 'cs').toLowerCase();
@@ -24,108 +27,127 @@ export const LoadingAnimationExtension = {
 
     console.log('Normalized values - Language:', lang, 'Type:', type);
 
-    // Define fixed durations for each type (in milliseconds)
-    const typeDurations = {
-      KB: 10000,      // 10 seconds
-      KB_WS: 15000,   // 15 seconds
-      SMT: 4000,      // 4 seconds
-      OTHER: 4000,    // 4 seconds
-      SWEARS: 4000    // 4 seconds
+    // Define fixed durations for each phase (in milliseconds)
+    const phaseDurations = {
+      analysis: 3000,  // 3 seconds
+      output: 6000,    // 6 seconds
+      rewrite: 3000    // 3 seconds
     };
 
-    // Message sequences for different types and languages
+    // Message sequences for different phases and types
     const messageSequences = {
       cs: {
-        SMT: ['Analyzuji dotaz.', 'Níže začnu vypisovat svou odpověď.'],
-        KB_WS: [
-          'Zpracovávám dotaz.',
-          'Hledám informace ve své databázi.',
-          'Prohledávám webové zdroje.',
-          'Analyzuji informace.',
-          'Připravuji odpověď.',
-          'Níže začnu vypisovat svou odpověď.'
-        ],
-        OTHER: ['Analyzuji dotaz.', 'Nalezen dotaz na nevhodné téma.'],
-        SWEARS: ['Analyzuji dotaz.', 'Nalezen nevhodný výraz.'],
-        KB: [
-          'Zpracovávám dotaz.',
-          'Hledám informace ve své databázi.',
-          'Analyzuji informace.',
-          'Připravuji odpověď.',
-          'Níže začnu vypisovat svou odpověď.'
-        ]
+        analysis: ['Analyzuji povahu Vašeho dotazu', 'Klasifikuji Váš dotaz'],
+        rewrite: ['Optimalizuji Váš dotaz pro vyhledávání'],
+        output: {
+          SMT: ['Dokončuji svoji odpověď.', 'Zde vypisuji svoji odpověď.'],
+          KB_WS: [
+            'Hledám informace ve své databázi.',
+            'Prohledám webové zdroje.',
+            'Připravuji svoji odpověď.',
+            'Zde vypisuji svoji odpověď.'
+          ],
+          OTHER: ['Dotaz analyzován.', 'Nalezen nevhodný výraz mimo téma.'],
+          SWEARS: ['Dotaz analyzován.', 'Nalezen nevhodný výraz mimo téma.'],
+          KB: [
+            'Hledám informace ve své databázi.',
+            'Připravuji svoji odpověď.',
+            'Zde vypisuji svoji odpověď.'
+          ]
+        }
       },
       en: {
-        SMT: ['Preparing my response.', 'Analyzing information.'],
-        KB_WS: [
-          'Processing query.',
-          'Searching information in database.',
-          'Searching web sources.',
-          'Analyzing information.',
-          'Preparing response.',
-          'I will start writing my response below.'
-        ],
-        OTHER: ['Analyzing query.', 'Inappropriate topic detected.'],
-        SWEARS: ['Analyzing query.', 'Inappropriate expression detected.'],
-        KB: [
-          'Processing query.',
-          'Searching information in database.',
-          'Analyzing information.',
-          'Preparing response.',
-          'I will start writing my response below.'
-        ]
+        analysis: ['Preparing my response.', 'Analyzing information.'],
+        rewrite: ['Optimalizing my response for searching'],
+        output: {
+          SMT: ['Preparing my response.', 'Analyzing information.'],
+          KB_WS: [
+            'Processing query.',
+            'Searching information in database.',
+            'Searching web sources.',
+            'Analyzing information.',
+            'Preparing response.',
+            'I will start writing my response below.'
+          ],
+          OTHER: ['Analyzing query.', 'Inappropriate topic detected.'],
+          SWEARS: ['Analyzing query.', 'Inappropriate expression detected.'],
+          KB: [
+            'Processing query.',
+            'Searching information in database.',
+            'Analyzing information.',
+            'Preparing response.',
+            'I will start writing my response below.'
+          ]
+        }
       },
       de: {
-        SMT: ['Ich bereite meine Antwort vor.', 'Analysiere Informationen.'],
-        KB_WS: [
-          'Verarbeite Anfrage.',
-          'Suche Informationen in der Datenbank.',
-          'Durchsuche Webquellen.',
-          'Analysiere Informationen.',
-          'Bereite Antwort vor.',
-          'Ich beginne unten mit meiner Antwort.'
-        ],
-        OTHER: ['Analysiere Anfrage.', 'Unangemessenes Thema erkannt.'],
-        SWEARS: ['Analysiere Anfrage.', 'Unangemessener Ausdruck erkannt.'],
-        KB: [
-          'Verarbeite Anfrage.',
-          'Suche Informationen in der Datenbank.',
-          'Analysiere Informationen.',
-          'Bereite Antwort vor.',
-          'Ich beginne unten mit meiner Antwort.'
-        ]
+        analysis: ['Ich bereite meine Antwort vor.', 'Analysiere Informationen.'],
+        rewrite: ['Optimalizeren Sie meine Antwort für die Suche'],
+        output: {
+          SMT: ['Ich bereite meine Antwort vor.', 'Analysiere Informationen.'],
+          KB_WS: [
+            'Verarbeite Anfrage.',
+            'Suche Informationen in der Datenbank.',
+            'Durchsuche Webquellen.',
+            'Analysiere Informationen.',
+            'Bereite Antwort vor.',
+            'Ich beginne unten mit meiner Antwort.'
+          ],
+          OTHER: ['Analysiere Anfrage.', 'Unangemessenes Thema erkannt.'],
+          SWEARS: ['Analysiere Anfrage.', 'Unangemessener Ausdruck erkannt.'],
+          KB: [
+            'Verarbeite Anfrage.',
+            'Suche Informationen in der Datenbank.',
+            'Analysiere Informationen.',
+            'Bereite Antwort vor.',
+            'Ich beginne unten mit meiner Antwort.'
+          ]
+        }
       },
       uk: {
-        SMT: ['Готую відповідь.', 'Аналізую інформацію.'],
-        KB_WS: [
-          'Обробляю запит.',
-          'Шукаю інформацію в базі даних.',
-          'Шукаю веб-джерела.',
-          'Аналізую інформацію.',
-          'Готую відповідь.',
-          'Нижче почну писати свою відповідь.'
-        ],
-        OTHER: ['Аналізую запит.', 'Виявлено неприйнятну тему.'],
-        SWEARS: ['Аналізую запит.', 'Виявлено неприйнятний вираз.'],
-        KB: [
-          'Обробляю запит.',
-          'Шукаю інформацію в базі даних.',
-          'Аналізую інформацію.',
-          'Готую відповідь.',
-          'Нижче почну писати свою відповідь.'
-        ]
+        analysis: ['Готую відповідь.', 'Аналізую інформацію.'],
+        rewrite: ['Оптимізую відповідь для пошуку'],
+        output: {
+          SMT: ['Готую відповідь.', 'Аналізую інформацію.'],
+          KB_WS: [
+            'Обробляю запит.',
+            'Шукаю інформацію в базі даних.',
+            'Шукаю веб-джерела.',
+            'Аналізую інформацію.',
+            'Готую відповідь.',
+            'Нижче почну писати свою відповідь.'
+          ],
+          OTHER: ['Аналізую запит.', 'Виявлено неприйнятну тему.'],
+          SWEARS: ['Аналізую запит.', 'Виявлено неприйнятний вираз.'],
+          KB: [
+            'Обробляю запит.',
+            'Шукаю інформацію в базі даних.',
+            'Аналізую інформацію.',
+            'Готую відповідь.',
+            'Нижче почну писати свою відповідь.'
+          ]
+        }
       }
     };
 
     // Error handling for missing messages
     try {
-      const messages = messageSequences[lang]?.[type];
-      const totalDuration = typeDurations[type] || 4000; // default to 4s if type not found
+      const totalDuration = phaseDurations[phase];
+      
+      let messages;
+      if (phase === 'output') {
+        messages = messageSequences[lang]?.output?.[type];
+      } else {
+        messages = messageSequences[lang]?.[phase];
+      }
 
       if (!messages) {
-        console.error(`No messages found for lang: ${lang}, type: ${type}`);
+        console.error(`No messages found for lang: ${lang}, phase: ${phase}, type: ${type}`);
         return;
       }
+
+      // Calculate interval between messages to distribute evenly
+      const messageInterval = totalDuration / (messages.length);
 
       // Create container div with class for styling
       const container = document.createElement('div');
@@ -260,7 +282,6 @@ export const LoadingAnimationExtension = {
       console.log('Created container structure:', container); // Log the created structure
 
       let currentIndex = 0;
-      const messageInterval = 2000;
       
       const updateText = (newText) => {
         const textElement = container.querySelector('.loading-text');
@@ -288,7 +309,6 @@ export const LoadingAnimationExtension = {
             currentIndex++;
             updateText(messages[currentIndex]);
           } else {
-            // Stop the interval when we reach the last message
             clearInterval(interval);
           }
         }, messageInterval);

@@ -30,9 +30,14 @@ export const LoadingAnimationExtension = {
     // Define fixed durations for each phase (in milliseconds)
     const phaseDurations = {
       analysis: 3000,  // 3 seconds
-      output: 6000,    // 6 seconds
+      output: 6000,    // 6 seconds for multiple messages
       rewrite: 3000    // 3 seconds
     };
+
+    // Adjust duration if there's only one message
+    if (phase === 'output' && messageSequences[lang]?.output?.[type]?.length === 1) {
+      phaseDurations.output = 1500; // 1.5 seconds for single message
+    }
 
     // Message sequences for different phases and types
     const messageSequences = {

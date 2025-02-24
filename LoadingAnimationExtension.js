@@ -47,8 +47,8 @@ export const LoadingAnimationExtension = {
             'Připravuji odpověď.',
             'Píši odpověď.'
           ],
-          OTHER: ['Analyzuji dotaz.', 'Nacházím nevhodný výraz.'],
-          SWEARS: ['Analyzuji dotaz.', 'Nacházím nevhodný výraz.'],
+          OTHER: ['Nacházím nevhodný výraz.'],
+          SWEARS: ['Nacházím nevhodný výraz.'],
           KB: [
             'Hledám v databázi.',
             'Připravuji odpověď.',
@@ -67,8 +67,8 @@ export const LoadingAnimationExtension = {
             'I am preparing my response.',
             'I am writing my response.'
           ],
-          OTHER: ['I am analyzing your query.', 'I am detecting inappropriate content.'],
-          SWEARS: ['I am analyzing your query.', 'I am detecting inappropriate content.'],
+          OTHER: ['I am detecting inappropriate content.'],
+          SWEARS: ['I am detecting inappropriate content.'],
           KB: [
             'I am searching the database.',
             'I am preparing my response.',
@@ -87,8 +87,8 @@ export const LoadingAnimationExtension = {
             'Ich bin dabei, meine Antwort vorzubereiten.',
             'Ich bin dabei, meine Antwort zu schreiben.'
           ],
-          OTHER: ['Ich bin dabei, die Anfrage zu analysieren.', 'Ich bin dabei, unangemessenen Inhalt zu erkennen.'],
-          SWEARS: ['Ich bin dabei, die Anfrage zu analysieren.', 'Ich bin dabei, unangemessenen Inhalt zu erkennen.'],
+          OTHER: ['Ich bin dabei, unangemessenen Inhalt zu erkennen.'],
+          SWEARS: ['Ich bin dabei, unangemessenen Inhalt zu erkennen.'],
           KB: [
             'Ich bin dabei, die Datenbank zu durchsuchen.',
             'Ich bin dabei, meine Antwort vorzubereiten.',
@@ -107,8 +107,8 @@ export const LoadingAnimationExtension = {
             'Зараз готую відповідь.',
             'Зараз пишу відповідь.'
           ],
-          OTHER: ['Зараз аналізую запит.', 'Зараз виявляю недоречний зміст.'],
-          SWEARS: ['Зараз аналізую запит.', 'Зараз виявляю недоречний зміст.'],
+          OTHER: ['Зараз виявляю недоречний зміст.'],
+          SWEARS: ['Зараз виявляю недоречний зміст.'],
           KB: [
             'Зараз шукаю в базі даних.',
             'Зараз готую відповідь.',

@@ -322,9 +322,17 @@ export const LoadingAnimationExtension = {
           animationElement.classList.add('hide');
         }
         
-        // Remove the gap after animation is hidden
+        // Function to recursively set padding and margin to 0
+        const resetSpacing = (element) => {
+          element.style.padding = '0';
+          element.style.margin = '0';
+          Array.from(element.children).forEach(child => resetSpacing(child));
+        };
+
+        // Remove the gap after animation is hidden and reset all spacing
         setTimeout(() => {
           loadingContainer.style.gap = '0';
+          resetSpacing(container);
         }, 300); // Match the transition duration
         
         // Clear any remaining intervals

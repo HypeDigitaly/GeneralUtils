@@ -325,23 +325,25 @@ export const LoadingAnimationExtension = {
         // Function to recursively set padding/margin to 0 and hide elements
         // Hide the entire extension component after animation
         setTimeout(() => {
-          // Get the extension's root element (the vfrc-message element)
-          const extensionRoot = element.querySelector('.vfrc-message--extension');
-          if (extensionRoot) {
-            extensionRoot.style.display = 'none';
-            extensionRoot.style.visibility = 'hidden';
-            extensionRoot.style.opacity = '0';
-            extensionRoot.style.height = '0';
-            extensionRoot.style.overflow = 'hidden';
-            // Also remove it from layout flow
-            extensionRoot.style.position = 'absolute';
-            extensionRoot.style.pointerEvents = 'none';
+          // Target the LoadingAnimation container directly
+          const loadingAnimation = container.querySelector('.LoadingAnimation');
+          if (loadingAnimation) {
+            loadingAnimation.style.display = 'none';
+            loadingAnimation.style.visibility = 'hidden';
+            loadingAnimation.style.opacity = '0';
+            loadingAnimation.style.height = '0';
+            loadingAnimation.style.margin = '0';
+            loadingAnimation.style.padding = '0';
+            loadingAnimation.style.position = 'absolute';
+            loadingAnimation.style.pointerEvents = 'none';
           }
-          // Also hide the container element itself
-          element.style.display = 'none';
-          element.style.visibility = 'hidden';
-          element.style.opacity = '0';
-          element.style.height = '0';
+          // Hide container as well for complete removal
+          container.style.display = 'none';
+          container.style.visibility = 'hidden';
+          container.style.opacity = '0';
+          container.style.height = '0';
+          container.style.margin = '0';
+          container.style.padding = '0';
         }, 300); // Match the transition duration
         
         // Clear any remaining intervals

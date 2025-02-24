@@ -325,19 +325,19 @@ export const LoadingAnimationExtension = {
         // Function to recursively set padding/margin to 0 and hide elements
         // Hide the entire extension component after animation
         setTimeout(() => {
-          // Target the LoadingAnimation container directly
-          const loadingAnimation = container.querySelector('.LoadingAnimation');
-          if (loadingAnimation) {
-            loadingAnimation.style.display = 'none';
-            loadingAnimation.style.visibility = 'hidden';
-            loadingAnimation.style.opacity = '0';
-            loadingAnimation.style.height = '0';
-            loadingAnimation.style.margin = '0';
-            loadingAnimation.style.padding = '0';
-            loadingAnimation.style.position = 'absolute';
-            loadingAnimation.style.pointerEvents = 'none';
+          // Target the root container directly
+          const rootElement = element.closest('.g3dqfd4');
+          if (rootElement) {
+            rootElement.style.display = 'none';
+            rootElement.style.visibility = 'hidden';
+            rootElement.style.opacity = '0';
+            rootElement.style.height = '0';
+            rootElement.style.margin = '0';
+            rootElement.style.padding = '0';
+            rootElement.style.position = 'absolute';
+            rootElement.style.pointerEvents = 'none';
           }
-          // Hide container as well for complete removal
+          // Ensure child elements are also hidden
           container.style.display = 'none';
           container.style.visibility = 'hidden';
           container.style.opacity = '0';

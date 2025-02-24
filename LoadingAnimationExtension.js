@@ -30,7 +30,7 @@ export const LoadingAnimationExtension = {
     // Define fixed durations for each phase (in milliseconds)
     const phaseDurations = {
       analysis: 3000,  // 3 seconds
-      output: 6000,    // 6 seconds for multiple messages
+      output: 9000,    // 9 seconds for multiple messages
       rewrite: 3000    // 3 seconds
     };
 

@@ -174,6 +174,7 @@ export const LoadingAnimationExtension = {
           gap: 6px;
           padding: 8px 12px;
           margin: 0;
+          padding: 6px 12px;
           width: 100%;
           box-sizing: border-box;
           background: rgba(0, 0, 0, 0.03);
@@ -219,7 +220,7 @@ export const LoadingAnimationExtension = {
           grid-template-columns: repeat(3, 4px);
           grid-template-rows: repeat(3, 4px);
           gap: 1px;
-          margin-top: 2px;
+          margin: 0;
         }
 
         .loading-animation.hide {

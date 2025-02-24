@@ -328,22 +328,36 @@ export const LoadingAnimationExtension = {
           // Target the root container directly
           const rootElement = element.closest('.g3dqfd4');
           if (rootElement) {
-            rootElement.style.display = 'none';
-            rootElement.style.visibility = 'hidden';
-            rootElement.style.opacity = '0';
-            rootElement.style.height = '0';
-            rootElement.style.margin = '0';
-            rootElement.style.padding = '0';
-            rootElement.style.position = 'absolute';
-            rootElement.style.pointerEvents = 'none';
+            rootElement.style.cssText = `
+              display: none;
+              visibility: hidden;
+              opacity: 0;
+              height: 0 !important;
+              width: 0 !important;
+              margin: 0 !important;
+              padding: 0 !important;
+              border: 0 !important;
+              position: absolute;
+              pointer-events: none;
+              min-height: 0 !important;
+              max-height: 0 !important;
+              overflow: hidden;
+            `;
           }
           // Ensure child elements are also hidden
-          container.style.display = 'none';
-          container.style.visibility = 'hidden';
-          container.style.opacity = '0';
-          container.style.height = '0';
-          container.style.margin = '0';
-          container.style.padding = '0';
+          container.style.cssText = `
+            display: none;
+            visibility: hidden;
+            opacity: 0;
+            height: 0 !important;
+            width: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
+            min-height: 0 !important;
+            max-height: 0 !important;
+            overflow: hidden;
+          `;
         }, 300); // Match the transition duration
         
         // Clear any remaining intervals

@@ -40,7 +40,7 @@ export const LoadingAnimationExtension = {
         analysis: ['Analyzuji povahu Vašeho dotazu', 'Klasifikuji Váš dotaz'],
         rewrite: ['Optimalizuji Váš dotaz pro vyhledávání'],
         output: {
-          SMT: ['Dotaz analyzován.', 'Dokončuji svoji odpověď.'],
+          SMT: ['Dokončuji svoji odpověď.', 'Zde vypisuji svoji odpověď.'],
           KB_WS: [
             'Hledám informace ve své databázi.',
             'Prohledám webové zdroje.',
@@ -60,17 +60,21 @@ export const LoadingAnimationExtension = {
         analysis: ['Preparing my response.', 'Analyzing information.'],
         rewrite: ['Optimalizing my response for searching'],
         output: {
-          SMT: ['Query analyzed.', 'Finalizing my response.'],
+          SMT: ['Preparing my response.', 'Analyzing information.'],
           KB_WS: [
+            'Processing query.',
             'Searching information in database.',
             'Searching web sources.',
+            'Analyzing information.',
             'Preparing response.',
             'I will start writing my response below.'
           ],
-          OTHER: ['Query analyzed.', 'Inappropriate topic detected.'],
-          SWEARS: ['Query analyzed.', 'Inappropriate expression detected.'],
+          OTHER: ['Analyzing query.', 'Inappropriate topic detected.'],
+          SWEARS: ['Analyzing query.', 'Inappropriate expression detected.'],
           KB: [
+            'Processing query.',
             'Searching information in database.',
+            'Analyzing information.',
             'Preparing response.',
             'I will start writing my response below.'
           ]
@@ -80,17 +84,21 @@ export const LoadingAnimationExtension = {
         analysis: ['Ich bereite meine Antwort vor.', 'Analysiere Informationen.'],
         rewrite: ['Optimalizeren Sie meine Antwort für die Suche'],
         output: {
-          SMT: ['Anfrage analysiert.', 'Stelle Antwort fertig.'],
+          SMT: ['Ich bereite meine Antwort vor.', 'Analysiere Informationen.'],
           KB_WS: [
+            'Verarbeite Anfrage.',
             'Suche Informationen in der Datenbank.',
             'Durchsuche Webquellen.',
+            'Analysiere Informationen.',
             'Bereite Antwort vor.',
             'Ich beginne unten mit meiner Antwort.'
           ],
-          OTHER: ['Anfrage analysiert.', 'Unangemessenes Thema erkannt.'],
-          SWEARS: ['Anfrage analysiert.', 'Unangemessener Ausdruck erkannt.'],
+          OTHER: ['Analysiere Anfrage.', 'Unangemessenes Thema erkannt.'],
+          SWEARS: ['Analysiere Anfrage.', 'Unangemessener Ausdruck erkannt.'],
           KB: [
+            'Verarbeite Anfrage.',
             'Suche Informationen in der Datenbank.',
+            'Analysiere Informationen.',
             'Bereite Antwort vor.',
             'Ich beginne unten mit meiner Antwort.'
           ]
@@ -100,17 +108,21 @@ export const LoadingAnimationExtension = {
         analysis: ['Готую відповідь.', 'Аналізую інформацію.'],
         rewrite: ['Оптимізую відповідь для пошуку'],
         output: {
-          SMT: ['Запит проаналізовано.', 'Завершую відповідь.'],
+          SMT: ['Готую відповідь.', 'Аналізую інформацію.'],
           KB_WS: [
+            'Обробляю запит.',
             'Шукаю інформацію в базі даних.',
             'Шукаю веб-джерела.',
+            'Аналізую інформацію.',
             'Готую відповідь.',
             'Нижче почну писати свою відповідь.'
           ],
-          OTHER: ['Запит проаналізовано.', 'Виявлено неприйнятну тему.'],
-          SWEARS: ['Запит проаналізовано.', 'Виявлено неприйнятний вираз.'],
+          OTHER: ['Аналізую запит.', 'Виявлено неприйнятну тему.'],
+          SWEARS: ['Аналізую запит.', 'Виявлено неприйнятний вираз.'],
           KB: [
+            'Обробляю запит.',
             'Шукаю інформацію в базі даних.',
+            'Аналізую інформацію.',
             'Готую відповідь.',
             'Нижче почну писати свою відповідь.'
           ]
@@ -145,22 +157,99 @@ export const LoadingAnimationExtension = {
       style.textContent = `
         .vfrc-message.vfrc-message--extension.LoadingAnimation {
           opacity: 1;
-          transition: all 0.3s ease-out;
+          transition: opacity 0.3s ease-out;
           width: 100%;
           display: block;
-          background: transparent !important;
         }
 
-        .vfrc-message.vfrc-message--extension.LoadingAnimation.empty {
-          background-color: white !important;
-          min-height: 0 !important;
-          height: auto !important;
-          padding: 0 !important;
-          margin: 0 !important;
+        .vfrc-message.vfrc-message--extension.LoadingAnimation.hide {
+          opacity: 0;
+          visibility: hidden;
+          pointer-events: none;
         }
 
-        .vfrc-message.vfrc-message--extension.LoadingAnimation.empty * {
-          display: none !important;
+        .loading-container {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          padding: 0;
+          margin: 0;
+          width: 100%;
+          box-sizing: border-box;
+        }
+
+        .loading-text {
+          color: #1a1e23;  /* matching exact color from CSS */
+          font-size: 14px;
+          line-height: 20px;  /* exact line height from CSS */
+          font-family: var(--_1bof89na);  /* using the same font variable */
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          max-width: 100%;
+          opacity: 1;
+          transform: translateY(0);
+          transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+          flex: 1;
+          min-width: 0;
+        }
+
+        .loading-text.changing {
+          opacity: 0;
+          transform: translateY(-5px);
+        }
+
+        .loading-text.entering {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+
+        .loading-animation {
+          position: relative;
+          width: 16px;
+          height: 16px;
+          flex: 0 0 16px;
+          opacity: 1;
+          transition: all 0.3s ease-out;
+          display: grid;
+          grid-template-columns: repeat(3, 4px);
+          grid-template-rows: repeat(3, 4px);
+          gap: 1px;
+          margin-top: 2px;
+        }
+
+        .loading-animation.hide {
+          opacity: 0;
+          visibility: hidden;
+          width: 0;
+          margin-right: 0;
+          flex: 0 0 0;
+        }
+
+        .loading-square {
+          width: 4px;
+          height: 4px;
+          background-color: #808080;
+          animation: wave 1s infinite;
+        }
+
+        .loading-square:nth-child(1) { animation-delay: 0s; }
+        .loading-square:nth-child(2) { animation-delay: 0.1s; }
+        .loading-square:nth-child(3) { animation-delay: 0.2s; }
+        .loading-square:nth-child(6) { animation-delay: 0.3s; }
+        .loading-square:nth-child(9) { animation-delay: 0.4s; }
+        .loading-square:nth-child(8) { animation-delay: 0.5s; }
+        .loading-square:nth-child(7) { animation-delay: 0.6s; }
+        .loading-square:nth-child(4) { animation-delay: 0.7s; }
+        .loading-square:nth-child(5) { animation-delay: 0.8s; }
+
+        @keyframes wave {
+          0%, 100% {
+            background-color: #E6E6E6;
+          }
+          50% {
+            background-color: #808080;
+          }
         }
       `;
       container.appendChild(style);
@@ -225,21 +314,20 @@ export const LoadingAnimationExtension = {
         }, messageInterval);
       }
 
-      // Update the hide timeout logic
+      // Set up the hide timeout
       const hideTimeout = setTimeout(() => {
-        const mainContainer = container.closest('.vfrc-message.vfrc-message--extension.LoadingAnimation');
-        if (!mainContainer) {
-          console.error('Could not find main container to remove');
-          return;
+        // Hide the animation and remove its space
+        const animationElement = container.querySelector('.loading-animation');
+        if (animationElement) {
+          animationElement.classList.add('hide');
         }
-
-        // Instead of removing, empty the container and make it transparent
-        mainContainer.innerHTML = '';
-        mainContainer.classList.add('empty');
-        mainContainer.style.backgroundColor = 'white';
-        mainContainer.style.background = 'transparent';
-
-        // Clear intervals
+        
+        // Remove the gap after animation is hidden
+        setTimeout(() => {
+          loadingContainer.style.gap = '0';
+        }, 300); // Match the transition duration
+        
+        // Clear any remaining intervals
         if (interval) {
           clearInterval(interval);
         }

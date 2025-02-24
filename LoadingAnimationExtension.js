@@ -40,7 +40,7 @@ export const LoadingAnimationExtension = {
         analysis: ['Analyzuji povahu Vašeho dotazu', 'Klasifikuji Váš dotaz'],
         rewrite: ['Optimalizuji Váš dotaz pro vyhledávání'],
         output: {
-          SMT: ['Dokončuji svoji odpověď.', 'Zde vypisuji svoji odpověď.'],
+          SMT: ['Dotaz analyzován.', 'Dokončuji svoji odpověď.'],
           KB_WS: [
             'Hledám informace ve své databázi.',
             'Prohledám webové zdroje.',
@@ -60,21 +60,17 @@ export const LoadingAnimationExtension = {
         analysis: ['Preparing my response.', 'Analyzing information.'],
         rewrite: ['Optimalizing my response for searching'],
         output: {
-          SMT: ['Preparing my response.', 'Analyzing information.'],
+          SMT: ['Query analyzed.', 'Finalizing my response.'],
           KB_WS: [
-            'Processing query.',
             'Searching information in database.',
             'Searching web sources.',
-            'Analyzing information.',
             'Preparing response.',
             'I will start writing my response below.'
           ],
-          OTHER: ['Analyzing query.', 'Inappropriate topic detected.'],
-          SWEARS: ['Analyzing query.', 'Inappropriate expression detected.'],
+          OTHER: ['Query analyzed.', 'Inappropriate topic detected.'],
+          SWEARS: ['Query analyzed.', 'Inappropriate expression detected.'],
           KB: [
-            'Processing query.',
             'Searching information in database.',
-            'Analyzing information.',
             'Preparing response.',
             'I will start writing my response below.'
           ]
@@ -84,21 +80,17 @@ export const LoadingAnimationExtension = {
         analysis: ['Ich bereite meine Antwort vor.', 'Analysiere Informationen.'],
         rewrite: ['Optimalizeren Sie meine Antwort für die Suche'],
         output: {
-          SMT: ['Ich bereite meine Antwort vor.', 'Analysiere Informationen.'],
+          SMT: ['Anfrage analysiert.', 'Stelle Antwort fertig.'],
           KB_WS: [
-            'Verarbeite Anfrage.',
             'Suche Informationen in der Datenbank.',
             'Durchsuche Webquellen.',
-            'Analysiere Informationen.',
             'Bereite Antwort vor.',
             'Ich beginne unten mit meiner Antwort.'
           ],
-          OTHER: ['Analysiere Anfrage.', 'Unangemessenes Thema erkannt.'],
-          SWEARS: ['Analysiere Anfrage.', 'Unangemessener Ausdruck erkannt.'],
+          OTHER: ['Anfrage analysiert.', 'Unangemessenes Thema erkannt.'],
+          SWEARS: ['Anfrage analysiert.', 'Unangemessener Ausdruck erkannt.'],
           KB: [
-            'Verarbeite Anfrage.',
             'Suche Informationen in der Datenbank.',
-            'Analysiere Informationen.',
             'Bereite Antwort vor.',
             'Ich beginne unten mit meiner Antwort.'
           ]
@@ -108,21 +100,17 @@ export const LoadingAnimationExtension = {
         analysis: ['Готую відповідь.', 'Аналізую інформацію.'],
         rewrite: ['Оптимізую відповідь для пошуку'],
         output: {
-          SMT: ['Готую відповідь.', 'Аналізую інформацію.'],
+          SMT: ['Запит проаналізовано.', 'Завершую відповідь.'],
           KB_WS: [
-            'Обробляю запит.',
             'Шукаю інформацію в базі даних.',
             'Шукаю веб-джерела.',
-            'Аналізую інформацію.',
             'Готую відповідь.',
             'Нижче почну писати свою відповідь.'
           ],
-          OTHER: ['Аналізую запит.', 'Виявлено неприйнятну тему.'],
-          SWEARS: ['Аналізую запит.', 'Виявлено неприйнятний вираз.'],
+          OTHER: ['Запит проаналізовано.', 'Виявлено неприйнятну тему.'],
+          SWEARS: ['Запит проаналізовано.', 'Виявлено неприйнятний вираз.'],
           KB: [
-            'Обробляю запит.',
             'Шукаю інформацію в базі даних.',
-            'Аналізую інформацію.',
             'Готую відповідь.',
             'Нижче почну писати свою відповідь.'
           ]
@@ -316,8 +304,15 @@ export const LoadingAnimationExtension = {
 
       // Set up the hide timeout
       const hideTimeout = setTimeout(() => {
+        // First verify we have the correct container
+        const mainContainer = container.closest('.vfrc-message.vfrc-message--extension.LoadingAnimation');
+        if (!mainContainer) {
+          console.error('Could not find main container to remove');
+          return;
+        }
+
         // Hide the animation and remove its space
-        const animationElement = container.querySelector('.loading-animation');
+        const animationElement = mainContainer.querySelector('.loading-animation');
         if (animationElement) {
           animationElement.classList.add('hide');
         }
@@ -325,7 +320,16 @@ export const LoadingAnimationExtension = {
         // Remove the gap after animation is hidden
         setTimeout(() => {
           loadingContainer.style.gap = '0';
-        }, 300); // Match the transition duration
+        }, 300);
+
+        // Add fade-out and remove the entire container
+        setTimeout(() => {
+          mainContainer.classList.add('hide');
+          setTimeout(() => {
+            mainContainer.remove(); // This will remove the entire loading animation container
+            console.log('Loading animation container removed from DOM');
+          }, 300);
+        }, 300);
         
         // Clear any remaining intervals
         if (interval) {

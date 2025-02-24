@@ -184,7 +184,7 @@ export const LoadingAnimationExtension = {
 
         .loading-animation {
           position: relative;
-          width: 16px;  /* even smaller animation */
+          width: 16px;
           height: 16px;
           flex: 0 0 16px;
           opacity: 1;
@@ -193,6 +193,7 @@ export const LoadingAnimationExtension = {
           grid-template-columns: repeat(3, 4px);
           grid-template-rows: repeat(3, 4px);
           gap: 1px;
+          margin-top: 2px;
         }
 
         .loading-animation.hide {

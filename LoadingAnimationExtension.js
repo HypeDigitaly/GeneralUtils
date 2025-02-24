@@ -62,17 +62,17 @@ export const LoadingAnimationExtension = {
         output: {
           SMT: ['I am completing my response.'],
           KB_WS: [
-            'I am searching the database.',
+            'I am searching my database.',
             'I am searching web sources.',
-            'I am preparing my response.',
-            'I am writing my response.'
+            'I am verifying information.',
+            'I am preparing my response.'
           ],
           OTHER: ['I am detecting inappropriate content.'],
           SWEARS: ['I am detecting inappropriate content.'],
           KB: [
-            'I am searching the database.',
-            'I am preparing my response.',
-            'I am writing my response.'
+            'I am searching my database.',
+            'I am verifying information.',
+            'I am preparing my response.'
           ]
         }
       },
@@ -82,17 +82,17 @@ export const LoadingAnimationExtension = {
         output: {
           SMT: ['Ich bin dabei, meine Antwort fertigzustellen.'],
           KB_WS: [
-            'Ich bin dabei, die Datenbank zu durchsuchen.',
-            'Ich bin dabei, Web-Quellen zu durchsuchen.',
-            'Ich bin dabei, meine Antwort vorzubereiten.',
-            'Ich bin dabei, meine Antwort zu schreiben.'
+            'Ich durchsuche meine Datenbank.',
+            'Ich durchsuche Web-Quellen.',
+            'Ich überprüfe die Informationen.',
+            'Ich bereite meine Antwort vor.'
           ],
           OTHER: ['Ich bin dabei, unangemessenen Inhalt zu erkennen.'],
           SWEARS: ['Ich bin dabei, unangemessenen Inhalt zu erkennen.'],
           KB: [
-            'Ich bin dabei, die Datenbank zu durchsuchen.',
-            'Ich bin dabei, meine Antwort vorzubereiten.',
-            'Ich bin dabei, meine Antwort zu schreiben.'
+            'Ich durchsuche meine Datenbank.',
+            'Ich überprüfe die Informationen.',
+            'Ich bereite meine Antwort vor.'
           ]
         }
       },
@@ -102,17 +102,17 @@ export const LoadingAnimationExtension = {
         output: {
           SMT: ['Зараз завершую відповідь.'],
           KB_WS: [
-            'Зараз шукаю в базі даних.',
-            'Зараз шукаю веб-джерела.',
-            'Зараз готую відповідь.',
-            'Зараз пишу відповідь.'
+            'Шукаю у своїй базі даних.',
+            'Шукаю у веб-джерелах.',
+            'Перевіряю інформацію.',
+            'Готую свою відповідь.'
           ],
           OTHER: ['Зараз виявляю недоречний зміст.'],
           SWEARS: ['Зараз виявляю недоречний зміст.'],
           KB: [
-            'Зараз шукаю в базі даних.',
-            'Зараз готую відповідь.',
-            'Зараз пишу відповідь.'
+            'Шукаю у своїй базі даних.',
+            'Перевіряю інформацію.',
+            'Готую свою відповідь.'
           ]
         }
       }

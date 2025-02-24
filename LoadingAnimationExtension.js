@@ -37,82 +37,82 @@ export const LoadingAnimationExtension = {
     // Message sequences for different phases and types
     const messageSequences = {
       cs: {
-        analysis: ['Analyzuji povahu Vašeho dotazu.', 'Klasifikuji Váš dotaz.'],
-        rewrite: ['Snažím se pochopit co přesně hledáte.'],
+        analysis: ['Právě analyzuji Váš dotaz.', 'Právě klasifikuji Váš dotaz.'],
+        rewrite: ['Právě se snažím pochopit, co přesně hledáte.'],
         output: {
-          SMT: ['Kompletuji svoji odpověď.', 'Zde vypisuji svoji odpověď.'],
+          SMT: ['Právě dokončuji odpověď.', 'Právě píši odpověď.'],
           KB_WS: [
-            'Hledám informace ve své databázi.',
-            'Prohledám webové zdroje.',
-            'Připravuji svoji odpověď.',
-            'Zde vypisuji svoji odpověď.'
+            'Právě hledám v databázi.',
+            'Právě prohledávám webové zdroje.',
+            'Právě připravuji odpověď.',
+            'Právě píši odpověď.'
           ],
-          OTHER: ['Dotaz analyzován.', 'Nalezen nevhodný výraz mimo téma.'],
-          SWEARS: ['Dotaz analyzován.', 'Nalezen nevhodný výraz mimo téma.'],
+          OTHER: ['Právě analyzuji dotaz.', 'Právě nacházím nevhodný výraz.'],
+          SWEARS: ['Právě analyzuji dotaz.', 'Právě nacházím nevhodný výraz.'],
           KB: [
-            'Hledám informace ve své databázi.',
-            'Připravuji svoji odpověď.',
-            'Zde vypisuji svoji odpověď.'
+            'Právě hledám v databázi.',
+            'Právě připravuji odpověď.',
+            'Právě píši odpověď.'
           ]
         }
       },
       en: {
-        analysis: ['Analyzing the nature of your query.', 'Classifying your query.'],
-        rewrite: ['Trying to understand exactly what you are looking for.'],
+        analysis: ['I am analyzing your query.', 'I am classifying your query.'],
+        rewrite: ['I am trying to understand what you are looking for.'],
         output: {
-          SMT: ['Completing my response.', 'Here I write my response.'],
+          SMT: ['I am completing my response.', 'I am writing my response.'],
           KB_WS: [
-            'Searching information in my database.',
-            'Searching web sources.',
-            'Preparing my response.',
-            'Here I write my response.'
+            'I am searching the database.',
+            'I am searching web sources.',
+            'I am preparing my response.',
+            'I am writing my response.'
           ],
-          OTHER: ['Query analyzed.', 'Inappropriate expression found off-topic.'],
-          SWEARS: ['Query analyzed.', 'Inappropriate expression found off-topic.'],
+          OTHER: ['I am analyzing your query.', 'I am detecting inappropriate content.'],
+          SWEARS: ['I am analyzing your query.', 'I am detecting inappropriate content.'],
           KB: [
-            'Searching information in my database.',
-            'Preparing my response.',
-            'Here I write my response.'
+            'I am searching the database.',
+            'I am preparing my response.',
+            'I am writing my response.'
           ]
         }
       },
       de: {
-        analysis: ['Analysiere die Art Ihrer Anfrage.', 'Klassifiziere Ihre Anfrage.'],
-        rewrite: ['Versuche zu verstehen, wonach Sie genau suchen.'],
+        analysis: ['Ich bin dabei, Ihre Anfrage zu analysieren.', 'Ich bin dabei, Ihre Anfrage zu klassifizieren.'],
+        rewrite: ['Ich bin dabei zu verstehen, wonach Sie suchen.'],
         output: {
-          SMT: ['Vervollständige meine Antwort.', 'Hier schreibe ich meine Antwort.'],
+          SMT: ['Ich bin dabei, meine Antwort fertigzustellen.', 'Ich bin dabei, meine Antwort zu schreiben.'],
           KB_WS: [
-            'Suche Informationen in meiner Datenbank.',
-            'Durchsuche Web-Quellen.',
-            'Bereite meine Antwort vor.',
-            'Hier schreibe ich meine Antwort.'
+            'Ich bin dabei, die Datenbank zu durchsuchen.',
+            'Ich bin dabei, Web-Quellen zu durchsuchen.',
+            'Ich bin dabei, meine Antwort vorzubereiten.',
+            'Ich bin dabei, meine Antwort zu schreiben.'
           ],
-          OTHER: ['Anfrage analysiert.', 'Unangemessener Ausdruck gefunden.'],
-          SWEARS: ['Anfrage analysiert.', 'Unangemessener Ausdruck gefunden.'],
+          OTHER: ['Ich bin dabei, die Anfrage zu analysieren.', 'Ich bin dabei, unangemessenen Inhalt zu erkennen.'],
+          SWEARS: ['Ich bin dabei, die Anfrage zu analysieren.', 'Ich bin dabei, unangemessenen Inhalt zu erkennen.'],
           KB: [
-            'Suche Informationen in meiner Datenbank.',
-            'Bereite meine Antwort vor.',
-            'Hier schreibe ich meine Antwort.'
+            'Ich bin dabei, die Datenbank zu durchsuchen.',
+            'Ich bin dabei, meine Antwort vorzubereiten.',
+            'Ich bin dabei, meine Antwort zu schreiben.'
           ]
         }
       },
       uk: {
-        analysis: ['Аналізую характер вашого запиту.', 'Класифікую ваш запит.'],
-        rewrite: ['Намагаюся зрозуміти, що саме ви шукаєте.'],
+        analysis: ['Зараз аналізую ваш запит.', 'Зараз класифікую ваш запит.'],
+        rewrite: ['Зараз намагаюся зрозуміти, що ви шукаєте.'],
         output: {
-          SMT: ['Завершую свою відповідь.', 'Ось пишу свою відповідь.'],
+          SMT: ['Зараз завершую відповідь.', 'Зараз пишу відповідь.'],
           KB_WS: [
-            'Шукаю інформацію у своїй базі даних.',
-            'Шукаю веб-джерела.',
-            'Готую свою відповідь.',
-            'Ось пишу свою відповідь.'
+            'Зараз шукаю в базі даних.',
+            'Зараз шукаю веб-джерела.',
+            'Зараз готую відповідь.',
+            'Зараз пишу відповідь.'
           ],
-          OTHER: ['Запит проаналізовано.', 'Знайдено недоречний вираз не за темою.'],
-          SWEARS: ['Запит проаналізовано.', 'Знайдено недоречний вираз не за темою.'],
+          OTHER: ['Зараз аналізую запит.', 'Зараз виявляю недоречний зміст.'],
+          SWEARS: ['Зараз аналізую запит.', 'Зараз виявляю недоречний зміст.'],
           KB: [
-            'Шукаю інформацію у своїй базі даних.',
-            'Готую свою відповідь.',
-            'Ось пишу свою відповідь.'
+            'Зараз шукаю в базі даних.',
+            'Зараз готую відповідь.',
+            'Зараз пишу відповідь.'
           ]
         }
       }

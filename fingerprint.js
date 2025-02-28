@@ -138,7 +138,6 @@ class StableDeviceFingerprint {
         try {
             const response = await fetch('https://api.ipify.org/?format=json');
             const data = await response.json();
-            console.log("User IP Address:", data.ip);
             if (!data.ip) {
                 throw new Error('IP address not received');
             }
@@ -208,12 +207,6 @@ class StableDeviceFingerprint {
             ipAddress: this.ipAddress
         };
 
-        // Log all components that go into fingerprint calculation
-        console.log("Components used in fingerprint calculation:");
-        Object.entries(components).forEach(([key, value]) => {
-            console.log(`- ${key}:`, value);
-        });
-
         return components;
     }
 }
@@ -224,6 +217,7 @@ export const generateFingerprint = async () => {
     const fingerprint = await fingerprinter.calculateFingerprint();
     const components = fingerprinter.getAllComponents();
 
+    // Only log the fingerprint value
     console.log("Generated Device Fingerprint:", fingerprint);
     
     return {

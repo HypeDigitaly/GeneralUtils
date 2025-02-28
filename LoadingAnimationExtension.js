@@ -4,14 +4,8 @@ export const LoadingAnimationExtension = {
   match: ({ trace }) =>
     trace.type === 'ext_loadingAnimation' || trace.payload?.name === 'ext_loadingAnimation',
   render: ({ trace, element }) => {
-    console.log('Full trace object:', trace);
-    console.log('Full payload object:', trace.payload);
-    console.log('Target element:', element);
-
     const payload = trace.payload || {};
     const phase = payload.phase || 'output'; // default to output if not specified
-
-    console.log('Phase:', phase); // Added phase logging
 
     // Normalize and detect language
     const incomingLang = (payload.lang || 'cs').toLowerCase();
@@ -24,8 +18,6 @@ export const LoadingAnimationExtension = {
 
     // Normalize type
     const type = (payload.type || 'SMT').toUpperCase();
-
-    console.log('Normalized values - Language:', lang, 'Type:', type);
 
     // Define fixed durations for each phase (in milliseconds)
     const phaseDurations = {
@@ -189,7 +181,6 @@ export const LoadingAnimationExtension = {
       }
 
       if (!messages) {
-        console.error(`No messages found for lang: ${lang}, phase: ${phase}, type: ${type}`);
         return;
       }
 
@@ -330,8 +321,6 @@ export const LoadingAnimationExtension = {
 
       container.appendChild(loadingContainer);
 
-      console.log('Created container structure:', container); // Log the created structure
-
       let currentIndex = 0;
 
       const updateText = (newText) => {
@@ -404,16 +393,11 @@ export const LoadingAnimationExtension = {
 
       // Make sure we're appending to the correct element
       if (element) {
-        console.log('Appending to element:', element);
         element.appendChild(container);
-        console.log('Container appended successfully');
-
         void container.offsetHeight; // Force reflow
-      } else {
-        console.error('Target element is not available');
       }
     } catch (error) {
-      console.error('Error in LoadingAnimation extension:', error);
+      // Silently handle errors
     }
   }
 };

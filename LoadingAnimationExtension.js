@@ -367,7 +367,7 @@ export const LoadingAnimationExtension = {
 
       // Set up intervals for multiple messages with different durations
       let timeouts = [];
-      let cumulativeTime = 0;
+      let cumulativeTime = 0; // This will track the cumulative time as we add each message duration
       
       if (messages.length > 1) {
         // For each message (except the first one which is already displayed),
@@ -401,7 +401,7 @@ export const LoadingAnimationExtension = {
           loadingContainer.style.gap = '0';
         }, 300); // Match the transition duration
         
-      }, totalDuration + 300); // Add a small buffer to ensure all transitions complete
+      }, cumulativeTime + messageIntervals[messageIntervals.length - 1] + 300); // Use the total cumulative time including the last message duration plus buffer
 
       // Enhanced cleanup observer
       const observer = new MutationObserver((mutations) => {

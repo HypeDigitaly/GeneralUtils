@@ -19,12 +19,6 @@ export const LoadingAnimationExtension = {
     // Normalize type
     const type = (payload.type || 'SMT').toUpperCase();
 
-    // Get custom duration if provided (in seconds, convert to milliseconds)
-    const customDuration = payload.durationSec ? (payload.durationSec * 1000) : null;
-    
-    // Get custom messages with durations if provided
-    const customMessagesWithDurations = payload.messagesWithDurations || null;
-
     // Define fixed durations for each phase (in milliseconds)
     const phaseDurations = {
       analysis: 3000,  // 3 seconds
@@ -168,48 +162,30 @@ export const LoadingAnimationExtension = {
       }
     };
 
-    // Adjust duration if there's only one message and no custom duration
-    if (!customDuration && phase === 'output' && messageSequences[lang]?.output?.[type]?.length === 1) {
+    // Adjust duration if there's only one message
+    if (phase === 'output' && messageSequences[lang]?.output?.[type]?.length === 1) {
       phaseDurations.output = 1500; // 1.5 seconds for single message
     }
 
     // Error handling for missing messages
     try {
-      // Check if we have custom messages with durations
+      const totalDuration = phaseDurations[phase];
+
       let messages;
-      let messageIntervals = [];
-      let totalDuration;
-      
-      if (customMessagesWithDurations) {
-        // Use custom messages and their durations
-        messages = customMessagesWithDurations.map(item => item.message);
-        
-        // Convert durations from seconds to milliseconds
-        messageIntervals = customMessagesWithDurations.map(item => item.durationSec * 1000);
-        
-        // Calculate total duration as sum of all individual durations
-        totalDuration = messageIntervals.reduce((sum, duration) => sum + duration, 0);
+      if (phase === 'all' && (type === 'KB' || type === 'KB_WS')) {
+        messages = messageSequences[lang]?.all?.[type];
+      } else if (phase === 'output') {
+        messages = messageSequences[lang]?.output?.[type];
       } else {
-        // Use predefined messages based on phase and type
-        if (phase === 'all' && (type === 'KB' || type === 'KB_WS')) {
-          messages = messageSequences[lang]?.all?.[type];
-        } else if (phase === 'output') {
-          messages = messageSequences[lang]?.output?.[type];
-        } else {
-          messages = messageSequences[lang]?.[phase];
-        }
-        
-        if (!messages) {
-          return;
-        }
-        
-        // Use custom duration if provided, otherwise use phase duration
-        totalDuration = customDuration || phaseDurations[phase];
-        
-        // Calculate interval between messages to distribute evenly
-        const equalInterval = totalDuration / messages.length;
-        messageIntervals = new Array(messages.length).fill(equalInterval);
+        messages = messageSequences[lang]?.[phase];
       }
+
+      if (!messages) {
+        return;
+      }
+
+      // Calculate interval between messages to distribute evenly
+      const messageInterval = totalDuration / (messages.length);
 
       // Create container div with class for styling
       const container = document.createElement('div');
@@ -365,31 +341,21 @@ export const LoadingAnimationExtension = {
       // Initial text update
       updateText(messages[currentIndex]);
 
-      // Set up intervals for multiple messages with different durations
-      let timeouts = [];
-      let cumulativeTime = 0; // This will track the cumulative time as we add each message duration
-      
+      // Set up interval for multiple messages
+      let interval;
       if (messages.length > 1) {
-        // For each message (except the first one which is already displayed),
-        // set a timeout based on the previous message's duration
-        for (let i = 1; i < messages.length; i++) {
-          cumulativeTime += messageIntervals[i-1];
-          
-          const timeout = setTimeout(() => {
-            currentIndex = i;
-            updateText(messages[i]);
-          }, cumulativeTime);
-          
-          timeouts.push(timeout);
-        }
+        interval = setInterval(() => {
+          if (currentIndex < messages.length - 1) {
+            currentIndex++;
+            updateText(messages[currentIndex]);
+          } else {
+            clearInterval(interval);
+          }
+        }, messageInterval);
       }
 
-      // Set up the hide timeout - only hide after all messages have been displayed and their durations elapsed
+      // Set up the hide timeout
       const hideTimeout = setTimeout(() => {
-        // Clear any remaining timeouts
-        timeouts.forEach(timeout => clearTimeout(timeout));
-        
-        // Only hide the animation after the entire sequence is complete
         // Hide the animation and remove its space
         const animationElement = container.querySelector('.loading-animation');
         if (animationElement) {
@@ -400,15 +366,19 @@ export const LoadingAnimationExtension = {
         setTimeout(() => {
           loadingContainer.style.gap = '0';
         }, 300); // Match the transition duration
-        
-      }, cumulativeTime + messageIntervals[messageIntervals.length - 1] + 300); // Use the total cumulative time including the last message duration plus buffer
+
+        // Clear any remaining intervals
+        if (interval) {
+          clearInterval(interval);
+        }
+      }, totalDuration);
 
       // Enhanced cleanup observer
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
           mutation.removedNodes.forEach((node) => {
             if (node === container || node.contains(container)) {
-              timeouts.forEach(timeout => clearTimeout(timeout));
+              if (interval) clearInterval(interval);
               if (hideTimeout) clearTimeout(hideTimeout);
               observer.disconnect();
             }

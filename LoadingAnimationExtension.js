@@ -19,6 +19,9 @@ export const LoadingAnimationExtension = {
     // Normalize type
     const type = (payload.type || 'SMT').toUpperCase();
 
+    // Get custom duration if provided (in seconds, convert to milliseconds)
+    const customDuration = payload.durationSec ? (payload.durationSec * 1000) : null;
+
     // Define fixed durations for each phase (in milliseconds)
     const phaseDurations = {
       analysis: 3000,  // 3 seconds
@@ -162,14 +165,15 @@ export const LoadingAnimationExtension = {
       }
     };
 
-    // Adjust duration if there's only one message
-    if (phase === 'output' && messageSequences[lang]?.output?.[type]?.length === 1) {
+    // Adjust duration if there's only one message and no custom duration
+    if (!customDuration && phase === 'output' && messageSequences[lang]?.output?.[type]?.length === 1) {
       phaseDurations.output = 1500; // 1.5 seconds for single message
     }
 
     // Error handling for missing messages
     try {
-      const totalDuration = phaseDurations[phase];
+      // Use custom duration if provided, otherwise use phase duration
+      const totalDuration = customDuration || phaseDurations[phase];
 
       let messages;
       if (phase === 'all' && (type === 'KB' || type === 'KB_WS')) {

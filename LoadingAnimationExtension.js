@@ -349,23 +349,26 @@ export const LoadingAnimationExtension = {
             currentIndex++;
             updateText(messages[currentIndex]);
           } else {
-            clearInterval(interval);
+            // Don't clear the interval yet, let the hide timeout handle the cleanup
           }
         }, messageInterval);
       }
 
-      // Set up the hide timeout
+      // Set up the hide timeout - only hide after all messages have been displayed
       const hideTimeout = setTimeout(() => {
-        // Hide the animation and remove its space
-        const animationElement = container.querySelector('.loading-animation');
-        if (animationElement) {
-          animationElement.classList.add('hide');
-        }
+        // Only hide after the last message has been displayed
+        if (currentIndex >= messages.length - 1) {
+          // Hide the animation and remove its space
+          const animationElement = container.querySelector('.loading-animation');
+          if (animationElement) {
+            animationElement.classList.add('hide');
+          }
 
-        // Remove the gap after animation is hidden
-        setTimeout(() => {
-          loadingContainer.style.gap = '0';
-        }, 300); // Match the transition duration
+          // Remove the gap after animation is hidden
+          setTimeout(() => {
+            loadingContainer.style.gap = '0';
+          }, 300); // Match the transition duration
+        }
 
         // Clear any remaining intervals
         if (interval) {

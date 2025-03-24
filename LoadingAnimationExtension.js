@@ -389,22 +389,19 @@ export const LoadingAnimationExtension = {
         // Clear any remaining timeouts
         timeouts.forEach(timeout => clearTimeout(timeout));
         
-        // Add a delay before hiding the animation for the last message
-        // This ensures the animation continues during the last message's display time
-        setTimeout(() => {
-          // Hide the animation and remove its space
-          const animationElement = container.querySelector('.loading-animation');
-          if (animationElement) {
-            animationElement.classList.add('hide');
-          }
+        // Only hide the animation after the entire sequence is complete
+        // Hide the animation and remove its space
+        const animationElement = container.querySelector('.loading-animation');
+        if (animationElement) {
+          animationElement.classList.add('hide');
+        }
 
-          // Remove the gap after animation is hidden
-          setTimeout(() => {
-            loadingContainer.style.gap = '0';
-          }, 300); // Match the transition duration
-        }, messageIntervals[messages.length - 1] || 1500); // Use the last message's duration, or default to 1.5s
+        // Remove the gap after animation is hidden
+        setTimeout(() => {
+          loadingContainer.style.gap = '0';
+        }, 300); // Match the transition duration
         
-      }, totalDuration);
+      }, totalDuration + 300); // Add a small buffer to ensure all transitions complete
 
       // Enhanced cleanup observer
       const observer = new MutationObserver((mutations) => {

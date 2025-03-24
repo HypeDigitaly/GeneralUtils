@@ -21,6 +21,9 @@ export const LoadingAnimationExtension = {
 
     // Get custom duration if provided (in seconds, convert to milliseconds)
     const customDuration = payload.durationSec ? (payload.durationSec * 1000) : null;
+    
+    // Get custom messages with durations if provided
+    const customMessagesWithDurations = payload.messagesWithDurations || null;
 
     // Define fixed durations for each phase (in milliseconds)
     const phaseDurations = {
@@ -172,24 +175,41 @@ export const LoadingAnimationExtension = {
 
     // Error handling for missing messages
     try {
-      // Use custom duration if provided, otherwise use phase duration
-      const totalDuration = customDuration || phaseDurations[phase];
-
+      // Check if we have custom messages with durations
       let messages;
-      if (phase === 'all' && (type === 'KB' || type === 'KB_WS')) {
-        messages = messageSequences[lang]?.all?.[type];
-      } else if (phase === 'output') {
-        messages = messageSequences[lang]?.output?.[type];
+      let messageIntervals = [];
+      let totalDuration;
+      
+      if (customMessagesWithDurations) {
+        // Use custom messages and their durations
+        messages = customMessagesWithDurations.map(item => item.message);
+        
+        // Convert durations from seconds to milliseconds
+        messageIntervals = customMessagesWithDurations.map(item => item.durationSec * 1000);
+        
+        // Calculate total duration as sum of all individual durations
+        totalDuration = messageIntervals.reduce((sum, duration) => sum + duration, 0);
       } else {
-        messages = messageSequences[lang]?.[phase];
+        // Use predefined messages based on phase and type
+        if (phase === 'all' && (type === 'KB' || type === 'KB_WS')) {
+          messages = messageSequences[lang]?.all?.[type];
+        } else if (phase === 'output') {
+          messages = messageSequences[lang]?.output?.[type];
+        } else {
+          messages = messageSequences[lang]?.[phase];
+        }
+        
+        if (!messages) {
+          return;
+        }
+        
+        // Use custom duration if provided, otherwise use phase duration
+        totalDuration = customDuration || phaseDurations[phase];
+        
+        // Calculate interval between messages to distribute evenly
+        const equalInterval = totalDuration / messages.length;
+        messageIntervals = new Array(messages.length).fill(equalInterval);
       }
-
-      if (!messages) {
-        return;
-      }
-
-      // Calculate interval between messages to distribute evenly
-      const messageInterval = totalDuration / (messages.length);
 
       // Create container div with class for styling
       const container = document.createElement('div');
@@ -345,20 +365,26 @@ export const LoadingAnimationExtension = {
       // Initial text update
       updateText(messages[currentIndex]);
 
-      // Set up interval for multiple messages
-      let interval;
+      // Set up intervals for multiple messages with different durations
+      let timeouts = [];
+      let cumulativeTime = 0;
+      
       if (messages.length > 1) {
-        interval = setInterval(() => {
-          if (currentIndex < messages.length - 1) {
-            currentIndex++;
-            updateText(messages[currentIndex]);
-          } else {
-            // Don't clear the interval yet, let the hide timeout handle the cleanup
-          }
-        }, messageInterval);
+        // For each message (except the first one which is already displayed),
+        // set a timeout based on the previous message's duration
+        for (let i = 1; i < messages.length; i++) {
+          cumulativeTime += messageIntervals[i-1];
+          
+          const timeout = setTimeout(() => {
+            currentIndex = i;
+            updateText(messages[i]);
+          }, cumulativeTime);
+          
+          timeouts.push(timeout);
+        }
       }
 
-      // Set up the hide timeout - only hide after all messages have been displayed
+      // Set up the hide timeout - only hide after all messages have been displayed and their durations elapsed
       const hideTimeout = setTimeout(() => {
         // Only hide after the last message has been displayed
         if (currentIndex >= messages.length - 1) {
@@ -374,10 +400,8 @@ export const LoadingAnimationExtension = {
           }, 300); // Match the transition duration
         }
 
-        // Clear any remaining intervals
-        if (interval) {
-          clearInterval(interval);
-        }
+        // Clear any remaining timeouts
+        timeouts.forEach(timeout => clearTimeout(timeout));
       }, totalDuration);
 
       // Enhanced cleanup observer
@@ -385,7 +409,7 @@ export const LoadingAnimationExtension = {
         mutations.forEach((mutation) => {
           mutation.removedNodes.forEach((node) => {
             if (node === container || node.contains(container)) {
-              if (interval) clearInterval(interval);
+              timeouts.forEach(timeout => clearTimeout(timeout));
               if (hideTimeout) clearTimeout(hideTimeout);
               observer.disconnect();
             }

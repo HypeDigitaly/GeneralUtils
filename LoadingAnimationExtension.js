@@ -386,8 +386,12 @@ export const LoadingAnimationExtension = {
 
       // Set up the hide timeout - only hide after all messages have been displayed and their durations elapsed
       const hideTimeout = setTimeout(() => {
-        // Only hide after the last message has been displayed
-        if (currentIndex >= messages.length - 1) {
+        // Clear any remaining timeouts
+        timeouts.forEach(timeout => clearTimeout(timeout));
+        
+        // Add a delay before hiding the animation for the last message
+        // This ensures the animation continues during the last message's display time
+        setTimeout(() => {
           // Hide the animation and remove its space
           const animationElement = container.querySelector('.loading-animation');
           if (animationElement) {
@@ -398,10 +402,8 @@ export const LoadingAnimationExtension = {
           setTimeout(() => {
             loadingContainer.style.gap = '0';
           }, 300); // Match the transition duration
-        }
-
-        // Clear any remaining timeouts
-        timeouts.forEach(timeout => clearTimeout(timeout));
+        }, messageIntervals[messages.length - 1] || 1500); // Use the last message's duration, or default to 1.5s
+        
       }, totalDuration);
 
       // Enhanced cleanup observer

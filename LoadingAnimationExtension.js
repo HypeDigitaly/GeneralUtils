@@ -175,7 +175,8 @@ export const LoadingAnimationExtension = {
         return;
       }
 
-      // Calculate interval between messages to distribute evenly
+      // Always use the totalDuration from the Duration parameter
+      // and distribute it evenly among all messages
       const messageInterval = totalDuration / messages.length;
 
       // Create container div with class for styling

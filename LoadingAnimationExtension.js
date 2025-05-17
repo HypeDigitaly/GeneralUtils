@@ -29,8 +29,8 @@ export const LoadingAnimationExtension = {
     // Message sequences for different phases and types
     const messageSequences = {
       cs: {
-        analysis: ['Analyzuji Váš dotaz.', 'Klasifikuji Váš dotaz.'],
-        rewrite: ['Snažím se pochopit, co přesně hledáte.'],
+        analysis: ['Analyzuji Váš dotaz.', 'Klasifikuji Váš dotaz.', 'Snažím se pochopit, co přesně hledáte.'],
+        rewrite: ['Analyzuji Váš dotaz.', 'Klasifikuji Váš dotaz.', 'Snažím se pochopit, co přesně hledáte.'],
         output: {
           SMT: ['Dokončuji odpověď.'],
           KB_WS: [
@@ -62,8 +62,8 @@ export const LoadingAnimationExtension = {
         }
       },
       en: {
-        analysis: ['I am analyzing your query.', 'I am classifying your query.'],
-        rewrite: ['I am trying to understand what you are looking for.'],
+        analysis: ['I am analyzing your query.', 'I am classifying your query.', 'I am trying to understand what you are looking for.'],
+        rewrite: ['I am analyzing your query.', 'I am classifying your query.', 'I am trying to understand what you are looking for.'],
         output: {
           SMT: ['I am completing my response.'],
           KB_WS: [
@@ -95,8 +95,8 @@ export const LoadingAnimationExtension = {
         }
       },
       de: {
-        analysis: ['Ich bin dabei, Ihre Anfrage zu analysieren.', 'Ich bin dabei, Ihre Anfrage zu klassifizieren.'],
-        rewrite: ['Ich bin dabei zu verstehen, wonach Sie suchen.'],
+        analysis: ['Ich bin dabei, Ihre Anfrage zu analysieren.', 'Ich bin dabei, Ihre Anfrage zu klassifizieren.', 'Ich bin dabei zu verstehen, wonach Sie suchen.'],
+        rewrite: ['Ich bin dabei, Ihre Anfrage zu analysieren.', 'Ich bin dabei, Ihre Anfrage zu klassifizieren.', 'Ich bin dabei zu verstehen, wonach Sie suchen.'],
         output: {
           SMT: ['Ich bin dabei, meine Antwort fertigzustellen.'],
           KB_WS: [
@@ -128,8 +128,8 @@ export const LoadingAnimationExtension = {
         }
       },
       uk: {
-        analysis: ['Зараз аналізую ваш запит.', 'Зараз класифікую ваш запит.'],
-        rewrite: ['Зараз намагаюся зрозуміти, що ви шукаєте.'],
+        analysis: ['Зараз аналізую ваш запит.', 'Зараз класифікую ваш запит.', 'Зараз намагаюся зрозуміти, що ви шукаєте.'],
+        rewrite: ['Зараз аналізую ваш запит.', 'Зараз класифікую ваш запит.', 'Зараз намагаюся зрозуміти, що ви шукаєте.'],
         output: {
           SMT: ['Зараз завершую відповідь.'],
           KB_WS: [

@@ -345,32 +345,25 @@ export const LoadingAnimationExtension = {
       let interval;
       if (messages.length > 1) {
         interval = setInterval(() => {
-          if (currentIndex < messages.length - 1) {
-            currentIndex++;
-            updateText(messages[currentIndex]);
-          } else {
-            clearInterval(interval);
-          }
+          // Loop through messages
+          currentIndex = (currentIndex + 1) % messages.length;
+          updateText(messages[currentIndex]);
         }, messageInterval);
       }
 
       // Set up the hide timeout
       const hideTimeout = setTimeout(() => {
-        // Hide the animation and remove its space
-        const animationElement = container.querySelector('.loading-animation');
-        if (animationElement) {
-          animationElement.classList.add('hide');
-        }
-
-        // Remove the gap after animation is hidden
-        setTimeout(() => {
-          loadingContainer.style.gap = '0';
-        }, 300); // Match the transition duration
-
-        // Clear any remaining intervals
+        // Clear the message rotation interval first
         if (interval) {
           clearInterval(interval);
         }
+
+        // Hide the entire container
+        // The CSS class .hide on the container will handle opacity, visibility, and pointer-events
+        container.classList.add('hide');
+
+        // The previous logic for hiding .loading-animation specifically and adjusting gap
+        // is now handled by hiding the parent container.
       }, totalDuration);
 
       // Enhanced cleanup observer

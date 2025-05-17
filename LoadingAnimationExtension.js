@@ -368,12 +368,30 @@ export const LoadingAnimationExtension = {
           clearInterval(interval);
         }
 
-        // Hide the entire container
+        // Hide the entire container (our animation content)
         // The CSS class .hide on the container will handle opacity, visibility, and pointer-events
         container.classList.add('hide');
 
-        // The previous logic for hiding .loading-animation specifically and adjusting gap
-        // is now handled by hiding the parent container.
+        // BEGIN MODIFICATION: Ensure the parent message bubble (element) collapses and becomes transparent
+        if (element) {
+          element.style.height = '0px';
+          element.style.minHeight = '0px';
+          element.style.padding = '0px';
+          element.style.margin = '0px';
+          element.style.border = 'none';
+          element.style.backgroundColor = 'transparent'; // Using transparent as it's more versatile
+          element.style.overflow = 'hidden';
+          element.style.boxShadow = 'none';
+          element.style.opacity = '0';
+          element.style.visibility = 'hidden';
+          element.style.pointerEvents = 'none';
+        }
+        // END MODIFICATION
+
+        // Disconnect the observer as the animation is complete and element is hidden
+        if (observer) {
+          observer.disconnect();
+        }
       }, totalDuration);
 
       // Enhanced cleanup observer

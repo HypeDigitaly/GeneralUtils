@@ -352,21 +352,34 @@ export const LoadingAnimationExtension = {
       updateText(messages[currentIndex]);
 
       // Set up interval for multiple messages
-      let interval;
+      let intervalId = null; // Changed variable name for clarity
       if (messages.length > 1) {
-        interval = setInterval(() => {
+        intervalId = setInterval(() => {
           // Loop through messages
           currentIndex = (currentIndex + 1) % messages.length;
           updateText(messages[currentIndex]);
         }, messageInterval);
       }
 
+      // Stop animation and message cycling after totalDuration
+      const animationTimeoutId = setTimeout(() => {
+        if (intervalId) {
+          clearInterval(intervalId);
+        }
+        // Hide only the animation, not the whole container
+        if (animationContainer) {
+          animationContainer.classList.add('hide');
+        }
+        // The last message will remain visible
+      }, totalDuration);
+
       // Enhanced cleanup observer
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
           mutation.removedNodes.forEach((node) => {
             if (node === container || node.contains(container)) {
-              if (interval) clearInterval(interval);
+              if (intervalId) clearInterval(intervalId);
+              clearTimeout(animationTimeoutId); // Clear the animation timeout as well
               observer.disconnect();
             }
           });

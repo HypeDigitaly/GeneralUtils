@@ -293,7 +293,7 @@ export const LoadingAnimationExtension = {
           position: absolute;
           width: 5px; /* Size of the thicker point */
           height: 5px;
-          background-color: #E21D1F; /* User-specified color */
+          background-color: var(--spinner-point-colour, #696969); /* Use CSS var with dark grey fallback */
           border-radius: 50%;
           /* Position it at 12 o'clock on the track's centerline */
           top: -1.5px; 
@@ -316,6 +316,15 @@ export const LoadingAnimationExtension = {
       // Create new spinner animation container
       const spinnerAnimationContainer = document.createElement('div');
       spinnerAnimationContainer.className = 'rotating-point-spinner';
+
+      // Get custom color from payload or use default
+      const mainColour = trace.payload?.mainColour;
+      if (mainColour && typeof mainColour === 'string') {
+        // Validate HEX color format (e.g., #E21D1F or #F00)
+        if (/^#([0-9A-Fa-f]{3}){1,2}$/.test(mainColour)) {
+          spinnerAnimationContainer.style.setProperty('--spinner-point-colour', mainColour);
+        }
+      }
 
       // No need to create individual dots anymore
       // The spinner is self-contained via CSS pseudo-elements

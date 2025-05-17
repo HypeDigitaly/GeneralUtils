@@ -20,11 +20,11 @@ export const LoadingAnimationExtension = {
     const type = (payload.type || 'SMT').toUpperCase();
 
     // Define fixed durations for each phase (in milliseconds)
-    const phaseDurations = {
-      analysis: 3000,  // 3 seconds
-      output: 9000,    // 9 seconds for multiple messages
-      rewrite: 3000    // 3 seconds
-    };
+    // const phaseDurations = {
+    //   analysis: 3000,  // 3 seconds
+    //   output: 9000,    // 9 seconds for multiple messages
+    //   rewrite: 3000    // 3 seconds
+    // };
 
     // Message sequences for different phases and types
     const messageSequences = {
@@ -186,24 +186,12 @@ export const LoadingAnimationExtension = {
       let totalDuration;
       if (customDurationSeconds !== undefined && typeof customDurationSeconds === 'number' && customDurationSeconds > 0) {
         totalDuration = customDurationSeconds * 1000; // Use custom duration from payload (in ms)
+        console.log(`LoadingAnimationExtension: Using custom duration from payload: ${customDurationSeconds}s (${totalDuration}ms)`);
       } else {
-        // Fallback to phase-based duration logic
-        if (phase === 'output' && messages.length === 1) {
-          totalDuration = 1500; // Specific short duration for single output message (1.5s)
-        } else if (phase === 'all') {
-          // Provide a default duration for 'all' phase if not specified by payload
-          // The original 'phaseDurations' did not cover 'all'.
-          totalDuration = 9000; // Default to 9 seconds for 'all' phase
-        } else {
-          // Use predefined durations for other phases ('analysis', 'rewrite', 'output' with multiple messages)
-          totalDuration = phaseDurations[phase];
-        }
-
-        // Final fallback if totalDuration is still not resolved or is invalid (e.g., unknown phase)
-        if (typeof totalDuration !== 'number' || totalDuration <= 0) {
-          // console.warn(`LoadingAnimationExtension: totalDuration was unresolved or invalid for phase '${phase}'. Defaulting to 3000ms.`);
-          totalDuration = 3000; // Default to 3 seconds
-        }
+        // Fallback to a default duration if payload.duration is not provided or invalid
+        // console.warn(`LoadingAnimationExtension: payload.duration is missing or invalid. Defaulting to 3000ms.`);
+        totalDuration = 3000; // Default to 3 seconds
+        console.log(`LoadingAnimationExtension: payload.duration is missing or invalid. Defaulting to fallback duration: ${totalDuration}ms`);
       }
 
       // Calculate interval between messages to distribute evenly

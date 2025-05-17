@@ -233,7 +233,7 @@ export const LoadingAnimationExtension = {
           } else if (type === 'KB') {
             totalDuration = 12000;
           } else if (type === 'KB_WS') {
-            totalDuration = 20000;
+            totalDuration = 23000;
           } else {
             totalDuration = 3000; // Default for output if type doesn't match
           }

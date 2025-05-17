@@ -368,23 +368,30 @@ export const LoadingAnimationExtension = {
           clearInterval(interval);
         }
 
-        // Hide the entire container (our animation content)
-        // The CSS class .hide on the container will handle opacity, visibility, and pointer-events
-        container.classList.add('hide');
+        // Hide the internal content of the animation first
+        // The CSS class .hide on the container will handle opacity, visibility, and pointer-events for children
+        // container.classList.add('hide'); // We will now directly manipulate container's style
 
-        // BEGIN MODIFICATION: Ensure the parent message bubble (element) collapses and becomes transparent
-        if (element) {
-          element.style.height = '0px';
-          element.style.minHeight = '0px';
-          element.style.padding = '0px';
-          element.style.margin = '0px';
-          element.style.border = 'none';
-          element.style.backgroundColor = 'transparent'; // Using transparent as it's more versatile
-          element.style.overflow = 'hidden';
-          element.style.boxShadow = 'none';
-          element.style.opacity = '0';
-          element.style.visibility = 'hidden';
-          element.style.pointerEvents = 'none';
+        // BEGIN MODIFICATION: Ensure the container itself (the message bubble g3dqfd8) collapses and becomes transparent
+        if (container) {
+          container.style.height = '0px';
+          container.style.minHeight = '0px';
+          container.style.padding = '0px';
+          container.style.margin = '0px';
+          container.style.border = 'none';
+          container.style.backgroundColor = 'transparent';
+          container.style.overflow = 'hidden';
+          container.style.boxShadow = 'none';
+          container.style.opacity = '0';
+          container.style.visibility = 'hidden';
+          container.style.pointerEvents = 'none';
+
+          // Also ensure its children (like the loading animation and text elements) are not visible
+          // though overflow:hidden and opacity:0 should mostly handle this.
+          // For robustness, explicitly hide them if necessary or ensure they are removed.
+          // The existing container.classList.add('hide') would have handled its children's opacity/visibility.
+          // Since we are overriding container's style directly, we might need to be more explicit if issues arise.
+          // For now, the direct styling of container should make it and its content effectively disappear.
         }
         // END MODIFICATION
 

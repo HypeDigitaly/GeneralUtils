@@ -220,8 +220,8 @@ export const LoadingAnimationExtension = {
         .loading-box {
           display: flex;
           align-items: center;
-          gap: 10px; /* Adjusted gap */
-          padding: 16px;
+          gap: 8px; /* Reduced gap */
+          padding: 8px 12px; /* Reduced padding */
           margin: 0;
           width: 100%;
           box-sizing: border-box;
@@ -233,7 +233,7 @@ export const LoadingAnimationExtension = {
         .loading-text {
           color: rgba(26, 30, 35, 0.7); /* Slightly darker for better contrast on new bg */
           font-size: 12px; /* Increased font size slightly */
-          line-height: 1.5; /* Adjusted line height */
+          line-height: 1.3; /* Adjusted line height for better vertical centering */
           font-family: var(--_1bof89na); /* Assuming this is a Voiceflow variable for font */
           position: relative;
           display: flex;
@@ -276,8 +276,8 @@ export const LoadingAnimationExtension = {
         }
 
         .loading-dots-animation .dot {
-          width: 7px; /* Slightly larger dots */
-          height: 7px;
+          width: 4px; /* Reduced dot size */
+          height: 4px; /* Reduced dot size */
           background-color: #6B7280; /* Perplexity's dot color */
           border-radius: 50%;
           animation: dotPulse 1.5s infinite ease-in-out;

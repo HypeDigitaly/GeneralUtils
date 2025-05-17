@@ -162,15 +162,11 @@ export const LoadingAnimationExtension = {
       }
     };
 
-    // Adjust duration if there's only one message
-    if (phase === 'output' && messageSequences[lang]?.output?.[type]?.length === 1) {
-      phaseDurations.output = 1500; // 1.5 seconds for single message
-    }
-
-    // Error handling for missing messages
+    // Error handling for missing messages or duration calculation
     try {
-      const totalDuration = phaseDurations[phase];
+      const customDurationSeconds = payload.duration; // From payload
 
+      // Determine messages based on phase and type
       let messages;
       if (phase === 'all' && (type === 'KB' || type === 'KB_WS')) {
         messages = messageSequences[lang]?.all?.[type];
@@ -180,12 +176,38 @@ export const LoadingAnimationExtension = {
         messages = messageSequences[lang]?.[phase];
       }
 
-      if (!messages) {
+      // Exit if no messages are found or if the message array is empty
+      if (!messages || messages.length === 0) {
+        // console.warn(`LoadingAnimationExtension: No messages or empty message array for lang='${lang}', phase='${phase}', type='${type}'`);
         return;
       }
 
+      // Determine totalDuration for the animation
+      let totalDuration;
+      if (customDurationSeconds !== undefined && typeof customDurationSeconds === 'number' && customDurationSeconds > 0) {
+        totalDuration = customDurationSeconds * 1000; // Use custom duration from payload (in ms)
+      } else {
+        // Fallback to phase-based duration logic
+        if (phase === 'output' && messages.length === 1) {
+          totalDuration = 1500; // Specific short duration for single output message (1.5s)
+        } else if (phase === 'all') {
+          // Provide a default duration for 'all' phase if not specified by payload
+          // The original 'phaseDurations' did not cover 'all'.
+          totalDuration = 9000; // Default to 9 seconds for 'all' phase
+        } else {
+          // Use predefined durations for other phases ('analysis', 'rewrite', 'output' with multiple messages)
+          totalDuration = phaseDurations[phase];
+        }
+
+        // Final fallback if totalDuration is still not resolved or is invalid (e.g., unknown phase)
+        if (typeof totalDuration !== 'number' || totalDuration <= 0) {
+          // console.warn(`LoadingAnimationExtension: totalDuration was unresolved or invalid for phase '${phase}'. Defaulting to 3000ms.`);
+          totalDuration = 3000; // Default to 3 seconds
+        }
+      }
+
       // Calculate interval between messages to distribute evenly
-      const messageInterval = totalDuration / (messages.length);
+      const messageInterval = totalDuration / messages.length; // messages.length is guaranteed to be > 0 here
 
       // Create container div with class for styling
       const container = document.createElement('div');

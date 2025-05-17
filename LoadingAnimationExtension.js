@@ -29,7 +29,7 @@ export const LoadingAnimationExtension = {
     // Message sequences for different phases and types
     const messageSequences = {
       cs: {
-        analysis: ['vydržte moment'],
+        analysis: ['Vydržte moment'],
         rewrite: ['Zpracovávám Váš dotaz.'],
         output: {
           SMT: ['Dokončuji odpověď.'],

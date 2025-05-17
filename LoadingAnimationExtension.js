@@ -1,3 +1,4 @@
+
 export const LoadingAnimationExtension = {
   name: 'LoadingAnimation',
   type: 'response',
@@ -6,6 +7,10 @@ export const LoadingAnimationExtension = {
   render: ({ trace, element }) => {
     const payload = trace.payload || {};
     const phase = payload.phase || 'output'; // default to output if not specified
+    
+    // Get duration from payload in seconds, default to 10 seconds if not provided
+    const totalDurationSeconds = payload.Duration || 10;
+    const totalDuration = totalDurationSeconds * 1000; // Convert to milliseconds
 
     // Normalize and detect language
     const incomingLang = (payload.lang || 'cs').toLowerCase();
@@ -18,13 +23,6 @@ export const LoadingAnimationExtension = {
 
     // Normalize type
     const type = (payload.type || 'SMT').toUpperCase();
-
-    // Define fixed durations for each phase (in milliseconds)
-    const phaseDurations = {
-      analysis: 5000,  // 5 seconds
-      output: 15000,   // 15 seconds for multiple messages
-      rewrite: 5000    // 5 seconds
-    };
 
     // Message sequences for different phases and types
     const messageSequences = {
@@ -162,15 +160,8 @@ export const LoadingAnimationExtension = {
       }
     };
 
-    // Adjust duration if there's only one message
-    if (phase === 'output' && messageSequences[lang]?.output?.[type]?.length === 1) {
-      phaseDurations.output = 3000; // 3 seconds for single message
-    }
-
     // Error handling for missing messages
     try {
-      const totalDuration = phaseDurations[phase];
-
       let messages;
       if (phase === 'all' && (type === 'KB' || type === 'KB_WS')) {
         messages = messageSequences[lang]?.all?.[type];
@@ -180,12 +171,12 @@ export const LoadingAnimationExtension = {
         messages = messageSequences[lang]?.[phase];
       }
 
-      if (!messages) {
+      if (!messages || messages.length === 0) {
         return;
       }
 
       // Calculate interval between messages to distribute evenly
-      const messageInterval = totalDuration / (messages.length);
+      const messageInterval = totalDuration / messages.length;
 
       // Create container div with class for styling
       const container = document.createElement('div');
@@ -354,9 +345,7 @@ export const LoadingAnimationExtension = {
         }, messageInterval);
       }
 
-      // Set up the hide timeout with an extended duration for the analysis phase
-      const adjustedDuration = phase === 'analysis' ? totalDuration + 2000 : totalDuration;
-      
+      // Hide animation after total duration
       const hideTimeout = setTimeout(() => {
         // Hide the animation and remove its space
         const animationElement = container.querySelector('.loading-animation');
@@ -373,7 +362,7 @@ export const LoadingAnimationExtension = {
         if (interval) {
           clearInterval(interval);
         }
-      }, adjustedDuration);
+      }, totalDuration);
 
       // Enhanced cleanup observer
       const observer = new MutationObserver((mutations) => {

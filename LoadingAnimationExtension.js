@@ -29,7 +29,14 @@ export const LoadingAnimationExtension = {
     // Message sequences for different phases and types
     const messageSequences = {
       cs: {
-        analysis: ['Vydržte moment'],
+        analysis: {
+          DEFAULT: ['Vydržte moment'],
+          SMT: ['Analyzuji dotaz.', 'Vydržte moment'],
+          SWEARS: ['Analyzuji dotaz.', 'Vydržte moment'],
+          OTHER: ['Analyzuji dotaz.', 'Vydržte moment'],
+          KB: ['Analyzuji dotaz.', 'Zpracovávám váš dotaz.', 'Vydržte moment'],
+          KB_WS: ['Analyzuji dotaz.', 'Zpracovávám váš dotaz.', 'Vydržte moment']
+        },
         rewrite: ['Zpracovávám Váš dotaz.'],
         output: {
           SMT: ['Dokončuji odpověď.'],
@@ -62,7 +69,14 @@ export const LoadingAnimationExtension = {
         }
       },
       en: {
-        analysis: ['Hold on a moment'],
+        analysis: {
+          DEFAULT: ['Hold on a moment'],
+          SMT: ['Analyzing query.', 'Hold on a moment'],
+          SWEARS: ['Analyzing query.', 'Hold on a moment'],
+          OTHER: ['Analyzing query.', 'Hold on a moment'],
+          KB: ['Analyzing query.', 'Processing your query.', 'Hold on a moment'],
+          KB_WS: ['Analyzing query.', 'Processing your query.', 'Hold on a moment']
+        },
         rewrite: ['Processing your query.'],
         output: {
           SMT: ['I am completing my response.'],
@@ -95,7 +109,14 @@ export const LoadingAnimationExtension = {
         }
       },
       de: {
-        analysis: ['Einen Moment bitte'],
+        analysis: {
+          DEFAULT: ['Einen Moment bitte'],
+          SMT: ['Anfrage wird analysiert.', 'Einen Moment bitte'],
+          SWEARS: ['Anfrage wird analysiert.', 'Einen Moment bitte'],
+          OTHER: ['Anfrage wird analysiert.', 'Einen Moment bitte'],
+          KB: ['Anfrage wird analysiert.', 'Ihre Anfrage wird bearbeitet.', 'Einen Moment bitte'],
+          KB_WS: ['Anfrage wird analysiert.', 'Ihre Anfrage wird bearbeitet.', 'Einen Moment bitte']
+        },
         rewrite: ['Ihre Anfrage wird bearbeitet.'],
         output: {
           SMT: ['Ich bin dabei, meine Antwort fertigzustellen.'],
@@ -128,7 +149,14 @@ export const LoadingAnimationExtension = {
         }
       },
       uk: {
-        analysis: ['Зачекайте хвилинку'],
+        analysis: {
+          DEFAULT: ['Зачекайте хвилинку'],
+          SMT: ['Аналізую запит.', 'Зачекайте хвилинку'],
+          SWEARS: ['Аналізую запит.', 'Зачекайте хвилинку'],
+          OTHER: ['Аналізую запит.', 'Зачекайте хвилинку'],
+          KB: ['Аналізую запит.', 'Обробляю ваш запит.', 'Зачекайте хвилинку'],
+          KB_WS: ['Аналізую запит.', 'Обробляю ваш запит.', 'Зачекайте хвилинку']
+        },
         rewrite: ['Обробляю ваш запит.'],
         output: {
           SMT: ['Зараз завершую відповідь.'],
@@ -172,6 +200,8 @@ export const LoadingAnimationExtension = {
         messages = messageSequences[lang]?.all?.[type];
       } else if (phase === 'output') {
         messages = messageSequences[lang]?.output?.[type];
+      } else if (phase === 'analysis') {
+        messages = messageSequences[lang]?.[phase]?.[type] || messageSequences[lang]?.[phase]?.DEFAULT;
       } else {
         messages = messageSequences[lang]?.[phase];
       }
@@ -188,10 +218,31 @@ export const LoadingAnimationExtension = {
         totalDuration = customDurationSeconds * 1000; // Use custom duration from payload (in ms)
         console.log(`LoadingAnimationExtension: Using custom duration from payload: ${customDurationSeconds}s (${totalDuration}ms)`);
       } else {
-        // Fallback to a default duration if payload.duration is not provided or invalid
-        // console.warn(`LoadingAnimationExtension: payload.duration is missing or invalid. Defaulting to 3000ms.`);
-        totalDuration = 3000; // Default to 3 seconds
-        console.log(`LoadingAnimationExtension: payload.duration is missing or invalid. Defaulting to fallback duration: ${totalDuration}ms`);
+        // Automatic duration calculation based on phase and type
+        if (phase === 'analysis') {
+          if (type === 'SMT' || type === 'SWEARS' || type === 'OTHER') {
+            totalDuration = 4000;
+          } else if (type === 'KB' || type === 'KB_WS') {
+            totalDuration = 12000;
+          } else {
+            totalDuration = 3000; // Default for analysis if type doesn't match
+          }
+        } else if (phase === 'output') {
+          if (type === 'SMT' || type === 'SWEARS' || type === 'OTHER') {
+            totalDuration = 4000;
+          } else if (type === 'KB') {
+            totalDuration = 12000;
+          } else if (type === 'KB_WS') {
+            totalDuration = 20000;
+          } else {
+            totalDuration = 3000; // Default for output if type doesn't match
+          }
+        } else {
+          // Fallback to a general default duration if phase is not analysis or output
+          // or if payload.duration is not provided or invalid for other phases
+          totalDuration = 3000; // Default to 3 seconds
+        }
+        console.log(`LoadingAnimationExtension: Using automatic duration for lang='${lang}', phase='${phase}', type='${type}': ${totalDuration}ms`);
       }
 
       // Calculate interval between messages to distribute evenly

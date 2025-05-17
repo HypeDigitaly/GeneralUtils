@@ -180,263 +180,216 @@ export const LoadingAnimationExtension = {
       // Log the duration for debugging
       console.log(`Animation duration: ${totalDurationSeconds}s, Message interval: ${messageInterval / 1000}s per message`);
 
-      // Create container div with class for styling
-      const container = document.createElement('div');
-      container.className = 'vfrc-message vfrc-message--extension LoadingAnimation';
-
-      const style = document.createElement('style');
-      style.textContent = `
-        .vfrc-message.vfrc-message--extension.LoadingAnimation {
-          opacity: 1;
-          transition: opacity 0.3s ease-out;
-          width: 100%;
-          display: block;
-        }
-
-        .vfrc-message.vfrc-message--extension.LoadingAnimation.hide {
-          opacity: 0;
-          visibility: hidden;
-          pointer-events: none;
-        }
-
-        .loading-container {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          padding: 6px 12px;
-          margin: 0;
-          width: 100%;
-          box-sizing: border-box;
-          background: rgba(0, 0, 0, 0.03);
-          border-radius: 6px;
-          border: 1px solid rgba(0, 0, 0, 0.08);
-        }
-
-        .loading-text {
-          color: rgba(26, 30, 35, 0.6);  /* less prominent text color */
-          font-size: 11px;
-          line-height: 16px;
-          font-family: var(--_1bof89na);
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          max-width: 100%;
-          opacity: 1;
-          transform: translateY(0);
-          transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-          flex: 1;
-          min-width: 0;
-          font-style: italic;
-        }
-
-        .loading-text.changing {
-          opacity: 0;
-          transform: translateY(-5px);
-        }
-
-        .loading-text.entering {
-          opacity: 0;
-          transform: translateY(5px);
-        }
-
-        .loading-animation {
-          position: relative;
-          width: 16px;
-          height: 16px;
-          flex: 0 0 16px;
-          opacity: 1;
-          transition: all 0.3s ease-out;
-          display: grid;
-          grid-template-columns: repeat(3, 4px);
-          grid-template-rows: repeat(3, 4px);
-          gap: 1px;
-          margin: 0;
-        }
-
-        .loading-animation.hide {
-          opacity: 0;
-          visibility: hidden;
-          width: 0;
-          margin-right: 0;
-          flex: 0 0 0;
-        }
-
-        .loading-square {
-          width: 4px;
-          height: 4px;
-          background-color: rgba(128, 128, 128, 0.6);
-          animation: wave 1s infinite;
-        }
-
-        .loading-square:nth-child(1) { animation-delay: 0s; }
-        .loading-square:nth-child(2) { animation-delay: 0.1s; }
-        .loading-square:nth-child(3) { animation-delay: 0.2s; }
-        .loading-square:nth-child(6) { animation-delay: 0.3s; }
-        .loading-square:nth-child(9) { animation-delay: 0.4s; }
-        .loading-square:nth-child(8) { animation-delay: 0.5s; }
-        .loading-square:nth-child(7) { animation-delay: 0.6s; }
-        .loading-square:nth-child(4) { animation-delay: 0.7s; }
-        .loading-square:nth-child(5) { animation-delay: 0.8s; }
-
-        @keyframes wave {
-          0%, 100% {
-            background-color: rgba(230, 230, 230, 0.6);
+      const STYLE_ID = 'loading-animation-dynamic-styles';
+      if (!document.getElementById(STYLE_ID)) {
+        const styleSheet = document.createElement('style');
+        styleSheet.id = STYLE_ID;
+        styleSheet.textContent = `
+          .loading-animation-local-text-wrapper {
+            opacity: 1;
+            transition: opacity 0.3s ease-out;
+            width: 100%;
+            display: block;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 6px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            padding: 6px 12px;
+            margin: 0;
+            box-sizing: border-box;
           }
-          50% {
+          .loading-animation-text-content {
+            color: rgba(26, 30, 35, 0.6);
+            font-size: 11px;
+            line-height: 16px;
+            font-family: var(--_1bof89na); /* Ensure this var is available globally or replace */
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            max-width: 100%;
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+            flex: 1;
+            min-width: 0;
+            font-style: italic;
+          }
+          .loading-animation-text-content.changing {
+            opacity: 0;
+            transform: translateY(-5px);
+          }
+          .loading-animation-text-content.entering {
+            opacity: 0;
+            transform: translateY(5px);
+          }
+          .loading-animation-global-dots-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 6px; /* If text was ever planned to be here */
+            padding: 6px; /* Minimal padding for the dots container */
+            border-radius: 6px;
+            /* Optional: background for the dots container if desired */
+            /* background: rgba(255, 255, 255, 0.8); */
+            /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
+          }
+          .loading-animation-global-dots-container.hide {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-out, visibility 0.01s linear 0.3s;
+          }
+          .loading-animation-dots-grid {
+            position: relative;
+            width: 16px;
+            height: 16px;
+            flex: 0 0 16px;
+            opacity: 1;
+            /* transition: all 0.3s ease-out; remove this if not needed for grid itself */
+            display: grid;
+            grid-template-columns: repeat(3, 4px);
+            grid-template-rows: repeat(3, 4px);
+            gap: 1px;
+            margin: 0;
+          }
+          /* .loading-animation-dots-grid.hide { Replaced by parent container hide logic } */
+          .loading-square {
+            width: 4px;
+            height: 4px;
             background-color: rgba(128, 128, 128, 0.6);
+            animation: wave_anim_unique 1s infinite; /* Renamed animation */
           }
-        }
-      `;
-      container.appendChild(style);
+          .loading-square:nth-child(1) { animation-delay: 0s; }
+          .loading-square:nth-child(2) { animation-delay: 0.1s; }
+          .loading-square:nth-child(3) { animation-delay: 0.2s; }
+          .loading-square:nth-child(6) { animation-delay: 0.3s; }
+          .loading-square:nth-child(9) { animation-delay: 0.4s; }
+          .loading-square:nth-child(8) { animation-delay: 0.5s; }
+          .loading-square:nth-child(7) { animation-delay: 0.6s; }
+          .loading-square:nth-child(4) { animation-delay: 0.7s; }
+          /* Square 5 is often the center, adjust if a different effect is desired */
+          .loading-square:nth-child(5) { animation-delay: 0.8s; }
 
-      // Create loading container
-      const loadingContainer = document.createElement('div');
-      loadingContainer.className = 'loading-container';
-
-      // Create animation container
-      const animationContainer = document.createElement('div');
-      animationContainer.className = 'loading-animation';
-
-      // Create nine squares in a grid
-      for (let i = 0; i < 9; i++) {
-        const square = document.createElement('div');
-        square.className = 'loading-square';
-        animationContainer.appendChild(square);
+          @keyframes wave_anim_unique { /* Renamed animation */
+            0%, 100% { background-color: rgba(230, 230, 230, 0.6); }
+            50% { background-color: rgba(128, 128, 128, 0.6); }
+          }
+        `;
+        document.head.appendChild(styleSheet);
       }
 
-      // First append the animation
-      loadingContainer.appendChild(animationContainer);
+      // --- Local Text Animation Setup ---
+      const localTextWrapper = document.createElement('div');
+      localTextWrapper.className = 'loading-animation-local-text-wrapper vfrc-message vfrc-message--extension'; // Added VF classes
 
-      // Then create and append text element
       const textElement = document.createElement('span');
-      textElement.className = 'loading-text';
-      loadingContainer.appendChild(textElement);
+      textElement.className = 'loading-animation-text-content';
+      localTextWrapper.appendChild(textElement);
 
-      container.appendChild(loadingContainer);
+      let localTextCurrentIndex = 0;
+      let localTextInterval = null;
 
-      let currentIndex = 0;
-
-      const updateText = (newText) => {
+      const updateLocalText = (newText) => {
         try {
-          const textElement = container.querySelector('.loading-text');
-          if (!textElement) {
-            if (interval) {
-                clearInterval(interval);
-                interval = null;
-            }
+          if (!textElement || !localTextWrapper.contains(textElement)) {
+            if (localTextInterval) { clearInterval(localTextInterval); localTextInterval = null; }
             return;
           }
           textElement.classList.add('changing');
-
           setTimeout(() => {
             try {
-              if (!textElement || !container.contains(textElement)) {
-                if (interval) {
-                    clearInterval(interval);
-                    interval = null;
-                }
+              if (!textElement || !localTextWrapper.contains(textElement)) {
+                if (localTextInterval) { clearInterval(localTextInterval); localTextInterval = null; }
                 return;
               }
               textElement.textContent = newText;
               textElement.classList.remove('changing');
               textElement.classList.add('entering');
-
               requestAnimationFrame(() => {
-                if (textElement && container.contains(textElement)) {
+                if (textElement && localTextWrapper.contains(textElement)) {
                   textElement.classList.remove('entering');
                 }
               });
-            } catch (e) {
-              if (interval) {
-                clearInterval(interval);
-                interval = null;
-              }
-            }
+            } catch (e) { console.error('LoadingAnimation: Error in updateLocalText setTimeout:', e); if (localTextInterval) { clearInterval(localTextInterval); localTextInterval = null; } }
           }, 300);
-        } catch (e) {
-          if (interval) {
-            clearInterval(interval);
-            interval = null;
-          }
-        }
+        } catch (e) { console.error('LoadingAnimation: Error in updateLocalText:', e); if (localTextInterval) { clearInterval(localTextInterval); localTextInterval = null; } }
       };
+      
+      updateLocalText(messages[localTextCurrentIndex]);
 
-      // Initial text update
-      updateText(messages[currentIndex]);
-
-      // Set up interval for multiple messages
-      let interval;
       if (messages.length > 1) {
-        // Ensure we're using the exact messageInterval calculated from totalDuration
-        const exactInterval = messageInterval;
-        console.log(`Setting up message rotation with ${exactInterval}ms intervals`);
-        
-        interval = setInterval(() => {
+        localTextInterval = setInterval(() => {
           try {
-            if (currentIndex < messages.length - 1) {
-              currentIndex++;
-              updateText(messages[currentIndex]);
+            if (localTextCurrentIndex < messages.length - 1) {
+              localTextCurrentIndex++;
+              updateLocalText(messages[localTextCurrentIndex]);
             } else {
-              clearInterval(interval);
-              interval = null;
+              if (localTextInterval) { clearInterval(localTextInterval); localTextInterval = null; }
             }
-          } catch (e) {
-            if (interval) {
-                clearInterval(interval);
-                interval = null;
-            }
-          }
-        }, exactInterval);
+          } catch (e) { console.error('LoadingAnimation: Error in localTextInterval callback:', e); if (localTextInterval) { clearInterval(localTextInterval); localTextInterval = null; } }
+        }, messageInterval);
       }
 
-      // Hide animation after total duration
-      const hideTimeout = setTimeout(() => {
-        // Hide the animation and remove its space
-        const animationElement = container.querySelector('.loading-animation');
-        if (animationElement) {
-          animationElement.classList.add('hide');
-        }
+      if (element) {
+        element.innerHTML = ''; // Clear previous content
+        element.appendChild(localTextWrapper);
+        void localTextWrapper.offsetHeight; // Force reflow
+      }
 
-        // Remove the gap after animation is hidden
-        setTimeout(() => {
-          loadingContainer.style.gap = '0';
-        }, 300); // Match the transition duration
+      // --- Global Dot Grid Animation Setup ---
+      const globalDotsContainer = document.createElement('div');
+      globalDotsContainer.className = 'loading-animation-global-dots-container';
 
-        // Clear any remaining intervals
-        if (interval) {
-          clearInterval(interval);
-          interval = null;
+      const dotsGridElement = document.createElement('div');
+      dotsGridElement.className = 'loading-animation-dots-grid';
+      for (let i = 0; i < 9; i++) {
+        const square = document.createElement('div');
+        square.className = 'loading-square';
+        dotsGridElement.appendChild(square);
+      }
+      globalDotsContainer.appendChild(dotsGridElement);
+      document.body.appendChild(globalDotsContainer);
+      void globalDotsContainer.offsetHeight; // Force reflow
+
+      const hideGlobalDotsTimeout = setTimeout(() => {
+        if (globalDotsContainer && globalDotsContainer.parentNode) {
+          globalDotsContainer.classList.add('hide');
+          globalDotsContainer.addEventListener('transitionend', () => {
+            if (globalDotsContainer && globalDotsContainer.parentNode) {
+              globalDotsContainer.parentNode.removeChild(globalDotsContainer);
+            }
+          }, { once: true });
         }
       }, totalDuration);
 
-      // Enhanced cleanup observer
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          mutation.removedNodes.forEach((node) => {
-            if (node === container || node.contains(container)) {
-              if (interval) {
-                clearInterval(interval);
-                interval = null;
+      // --- Cleanup Observer for Local Text ---
+      let localTextObserver = null;
+      if (element) { // Only setup observer if element is provided
+        localTextObserver = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            mutation.removedNodes.forEach((node) => {
+              if (node === element || element.contains(node) || node === localTextWrapper || localTextWrapper.contains(node)) { // Check if element or our wrapper is removed
+                if (localTextInterval) {
+                  clearInterval(localTextInterval);
+                  localTextInterval = null;
+                }
+                // Do NOT clear hideGlobalDotsTimeout here
+                if (localTextObserver) localTextObserver.disconnect(); // Disconnect this observer
               }
-              if (hideTimeout) clearTimeout(hideTimeout);
-              observer.disconnect();
-            }
+            });
           });
         });
-      });
 
-      observer.observe(element.parentElement || document.body, { 
-        childList: true,
-        subtree: true 
-      });
-
-      // Make sure we're appending to the correct element
-      if (element) {
-        element.appendChild(container);
-        void container.offsetHeight; // Force reflow
+        // Observe the parent of the VF element, or body if no parent yet.
+        const watchTarget = element.parentElement || document.body;
+        localTextObserver.observe(watchTarget, { childList: true, subtree: true });
       }
+
     } catch (error) {
-      // Silently handle errors
+      console.error('LoadingAnimation: General error in render function:', error);
+      // Silently handle errors in production, or log for debugging
     }
   }
 };

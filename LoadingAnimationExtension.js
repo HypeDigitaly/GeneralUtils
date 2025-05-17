@@ -354,7 +354,9 @@ export const LoadingAnimationExtension = {
         }, messageInterval);
       }
 
-      // Set up the hide timeout
+      // Set up the hide timeout with an extended duration for the analysis phase
+      const adjustedDuration = phase === 'analysis' ? totalDuration + 2000 : totalDuration;
+      
       const hideTimeout = setTimeout(() => {
         // Hide the animation and remove its space
         const animationElement = container.querySelector('.loading-animation');
@@ -371,7 +373,7 @@ export const LoadingAnimationExtension = {
         if (interval) {
           clearInterval(interval);
         }
-      }, totalDuration);
+      }, adjustedDuration);
 
       // Enhanced cleanup observer
       const observer = new MutationObserver((mutations) => {

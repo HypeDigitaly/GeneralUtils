@@ -361,35 +361,19 @@ export const LoadingAnimationExtension = {
         }, messageInterval);
       }
 
-      // Set up the hide timeout
-      const hideTimeout = setTimeout(() => {
-        // Clear the message rotation interval first
-        if (interval) {
-          clearInterval(interval);
-        }
-
-        // Hide the entire container
-        // The CSS class .hide on the container will handle opacity, visibility, and pointer-events
-        container.classList.add('hide');
-
-        // The previous logic for hiding .loading-animation specifically and adjusting gap
-        // is now handled by hiding the parent container.
-      }, totalDuration);
-
       // Enhanced cleanup observer
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
           mutation.removedNodes.forEach((node) => {
             if (node === container || node.contains(container)) {
               if (interval) clearInterval(interval);
-              if (hideTimeout) clearTimeout(hideTimeout);
               observer.disconnect();
             }
           });
         });
       });
 
-      observer.observe(element.parentElement || document.body, { 
+      observer.observe(element.parentElement || document.body, {
         childList: true,
         subtree: true 
       });

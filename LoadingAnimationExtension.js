@@ -216,24 +216,25 @@ export const LoadingAnimationExtension = {
           pointer-events: none;
         }
 
-        .loading-container {
+        /* Updated styling for the main loading container (inspired by Perplexity's reasoning-section) */
+        .loading-box {
           display: flex;
           align-items: center;
-          gap: 6px;
-          padding: 6px 12px;
+          gap: 10px; /* Adjusted gap */
+          padding: 16px;
           margin: 0;
           width: 100%;
           box-sizing: border-box;
-          background: rgba(0, 0, 0, 0.03);
-          border-radius: 6px;
-          border: 1px solid rgba(0, 0, 0, 0.08);
+          background-color: #F9FAFB;
+          border-radius: 12px;
+          /* border: 1px solid #E5E7EB; /* Optional: if a subtle border is desired */
         }
 
         .loading-text {
-          color: rgba(26, 30, 35, 0.6);  /* less prominent text color */
-          font-size: 11px;
-          line-height: 16px;
-          font-family: var(--_1bof89na);
+          color: rgba(26, 30, 35, 0.7); /* Slightly darker for better contrast on new bg */
+          font-size: 12px; /* Increased font size slightly */
+          line-height: 1.5; /* Adjusted line height */
+          font-family: var(--_1bof89na); /* Assuming this is a Voiceflow variable for font */
           position: relative;
           display: flex;
           flex-direction: column;
@@ -256,94 +257,90 @@ export const LoadingAnimationExtension = {
           transform: translateY(5px);
         }
 
-        .loading-animation {
-          position: relative;
-          width: 16px;
-          height: 16px;
-          flex: 0 0 16px;
+        /* New loading dots animation (inspired by Perplexity) */
+        .loading-dots-animation {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px; /* Space between dots */
+          flex-shrink: 0; /* Prevent shrinking */
+          transition: opacity 0.3s ease-out, width 0.3s ease-out; /* For hiding */
           opacity: 1;
-          transition: all 0.3s ease-out;
-          display: grid;
-          grid-template-columns: repeat(3, 4px);
-          grid-template-rows: repeat(3, 4px);
-          gap: 1px;
-          margin: 0;
         }
 
-        .loading-animation.hide {
+        .loading-dots-animation.hide {
           opacity: 0;
           visibility: hidden;
-          width: 0;
-          margin-right: 0;
-          flex: 0 0 0;
+          width: 0 !important; /* Ensure it collapses */
+          margin-right: 0 !important; /* Ensure it collapses */
+          gap: 0; /* Ensure it collapses */
         }
 
-        .loading-square {
-          width: 4px;
-          height: 4px;
-          background-color: rgba(128, 128, 128, 0.6);
-          animation: wave 1s infinite;
+        .loading-dots-animation .dot {
+          width: 7px; /* Slightly larger dots */
+          height: 7px;
+          background-color: #6B7280; /* Perplexity's dot color */
+          border-radius: 50%;
+          animation: dotPulse 1.5s infinite ease-in-out;
         }
 
-        .loading-square:nth-child(1) { animation-delay: 0s; }
-        .loading-square:nth-child(2) { animation-delay: 0.1s; }
-        .loading-square:nth-child(3) { animation-delay: 0.2s; }
-        .loading-square:nth-child(6) { animation-delay: 0.3s; }
-        .loading-square:nth-child(9) { animation-delay: 0.4s; }
-        .loading-square:nth-child(8) { animation-delay: 0.5s; }
-        .loading-square:nth-child(7) { animation-delay: 0.6s; }
-        .loading-square:nth-child(4) { animation-delay: 0.7s; }
-        .loading-square:nth-child(5) { animation-delay: 0.8s; }
+        .loading-dots-animation .dot:nth-child(1) { animation-delay: 0s; }
+        .loading-dots-animation .dot:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dots-animation .dot:nth-child(3) { animation-delay: 0.4s; }
 
-        @keyframes wave {
+        @keyframes dotPulse {
           0%, 100% {
-            background-color: rgba(230, 230, 230, 0.6);
+            opacity: 0.3;
+            transform: scale(0.8);
           }
           50% {
-            background-color: rgba(128, 128, 128, 0.6);
+            opacity: 1;
+            transform: scale(1.1);
           }
         }
       `;
       container.appendChild(style);
 
-      // Create loading container
-      const loadingContainer = document.createElement('div');
-      loadingContainer.className = 'loading-container';
+      // Create the main styled box (renamed from loadingContainer)
+      const loadingBox = document.createElement('div');
+      loadingBox.className = 'loading-box';
 
-      // Create animation container
-      const animationContainer = document.createElement('div');
-      animationContainer.className = 'loading-animation';
+      // Create new dots animation container
+      const dotsAnimationContainer = document.createElement('div');
+      dotsAnimationContainer.className = 'loading-dots-animation';
 
-      // Create nine squares in a grid
-      for (let i = 0; i < 9; i++) {
-        const square = document.createElement('div');
-        square.className = 'loading-square';
-        animationContainer.appendChild(square);
+      // Create three dots
+      for (let i = 0; i < 3; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        dotsAnimationContainer.appendChild(dot);
       }
 
-      // First append the animation
-      loadingContainer.appendChild(animationContainer);
+      // Append the dots animation first
+      loadingBox.appendChild(dotsAnimationContainer);
 
       // Then create and append text element
       const textElement = document.createElement('span');
       textElement.className = 'loading-text';
-      loadingContainer.appendChild(textElement);
+      loadingBox.appendChild(textElement);
 
-      container.appendChild(loadingContainer);
+      container.appendChild(loadingBox); // Append the styled box to the main container
 
       let currentIndex = 0;
 
       const updateText = (newText) => {
-        const textElement = container.querySelector('.loading-text');
-        textElement.classList.add('changing');
+        // Ensure textElement is the one inside loadingBox for consistency
+        const currentTextElement = loadingBox.querySelector('.loading-text');
+        if (!currentTextElement) return;
+
+        currentTextElement.classList.add('changing');
 
         setTimeout(() => {
-          textElement.textContent = newText;
-          textElement.classList.remove('changing');
-          textElement.classList.add('entering');
+          currentTextElement.textContent = newText;
+          currentTextElement.classList.remove('changing');
+          currentTextElement.classList.add('entering');
 
           requestAnimationFrame(() => {
-            textElement.classList.remove('entering');
+            currentTextElement.classList.remove('entering');
           });
         }, 300);
       };
@@ -352,23 +349,31 @@ export const LoadingAnimationExtension = {
       updateText(messages[currentIndex]);
 
       // Set up interval for multiple messages
-      let intervalId = null; // Changed variable name for clarity
+      let intervalId = null;
       if (messages.length > 1) {
         intervalId = setInterval(() => {
-          // Loop through messages
-          currentIndex = (currentIndex + 1) % messages.length;
-          updateText(messages[currentIndex]);
+          if (currentIndex < messages.length - 1) { // Check if not the last message
+            currentIndex++;
+            updateText(messages[currentIndex]);
+          } else {
+            // Reached the last message, stop cycling new messages
+            if (intervalId) {
+              clearInterval(intervalId);
+              intervalId = null; // Mark as cleared
+            }
+          }
         }, messageInterval);
       }
 
-      // Stop animation and message cycling after totalDuration
+      // Stop animation (dots) and message cycling after totalDuration
       const animationTimeoutId = setTimeout(() => {
-        if (intervalId) {
+        if (intervalId) { // If message cycling interval is still active
           clearInterval(intervalId);
+          intervalId = null;
         }
-        // Hide only the animation, not the whole container
-        if (animationContainer) {
-          animationContainer.classList.add('hide');
+        // Hide only the dots animation, not the whole container or text
+        if (dotsAnimationContainer) {
+          dotsAnimationContainer.classList.add('hide');
         }
         // The last message will remain visible
       }, totalDuration);

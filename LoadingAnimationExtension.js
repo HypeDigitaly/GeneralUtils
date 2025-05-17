@@ -257,45 +257,54 @@ export const LoadingAnimationExtension = {
           transform: translateY(5px);
         }
 
-        /* New loading dots animation (inspired by Perplexity) */
-        .loading-dots-animation {
-          display: inline-flex;
-          align-items: center;
-          gap: 5px; /* Space between dots */
-          flex-shrink: 0; /* Prevent shrinking */
-          transition: opacity 0.3s ease-out, width 0.3s ease-out; /* For hiding */
+        /* New rotating point spinner animation */
+        @keyframes loading-spinner-spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        .rotating-point-spinner {
+          position: relative;
+          width: 16px; /* Spinner size */
+          height: 16px;
+          animation: loading-spinner-spin 0.9s linear infinite;
+          flex-shrink: 0;
+          transition: opacity 0.3s ease-out, width 0.3s ease-out;
           opacity: 1;
         }
 
-        .loading-dots-animation.hide {
+        /* The track of the circle */
+        .rotating-point-spinner::before {
+          content: "";
+          box-sizing: border-box;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          border: 2px solid rgba(0, 0, 0, 0.12); /* Light grey track */
+        }
+
+        /* The thicker rotating point */
+        .rotating-point-spinner::after {
+          content: "";
+          box-sizing: border-box;
+          position: absolute;
+          width: 5px; /* Size of the thicker point */
+          height: 5px;
+          background-color: #E21D1F; /* User-specified color */
+          border-radius: 50%;
+          /* Position it at 12 o'clock on the track's centerline */
+          top: -1.5px; 
+          left: calc(50% - 2.5px); /* (ContainerWidth/2 - PointWidth/2) */
+        }
+
+        .rotating-point-spinner.hide {
           opacity: 0;
           visibility: hidden;
-          width: 0 !important; /* Ensure it collapses */
-          margin-right: 0 !important; /* Ensure it collapses */
-          gap: 0; /* Ensure it collapses */
-        }
-
-        .loading-dots-animation .dot {
-          width: 4px; /* Reduced dot size */
-          height: 4px; /* Reduced dot size */
-          background-color: #6B7280; /* Perplexity's dot color */
-          border-radius: 50%;
-          animation: dotPulse 1.5s infinite ease-in-out;
-        }
-
-        .loading-dots-animation .dot:nth-child(1) { animation-delay: 0s; }
-        .loading-dots-animation .dot:nth-child(2) { animation-delay: 0.2s; }
-        .loading-dots-animation .dot:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes dotPulse {
-          0%, 100% {
-            opacity: 0.3;
-            transform: scale(0.8);
-          }
-          50% {
-            opacity: 1;
-            transform: scale(1.1);
-          }
+          width: 0 !important;
+          /* margin-right: 0 !important; // Not strictly needed */
         }
       `;
       container.appendChild(style);
@@ -304,19 +313,15 @@ export const LoadingAnimationExtension = {
       const loadingBox = document.createElement('div');
       loadingBox.className = 'loading-box';
 
-      // Create new dots animation container
-      const dotsAnimationContainer = document.createElement('div');
-      dotsAnimationContainer.className = 'loading-dots-animation';
+      // Create new spinner animation container
+      const spinnerAnimationContainer = document.createElement('div');
+      spinnerAnimationContainer.className = 'rotating-point-spinner';
 
-      // Create three dots
-      for (let i = 0; i < 3; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'dot';
-        dotsAnimationContainer.appendChild(dot);
-      }
+      // No need to create individual dots anymore
+      // The spinner is self-contained via CSS pseudo-elements
 
-      // Append the dots animation first
-      loadingBox.appendChild(dotsAnimationContainer);
+      // Append the spinner animation first
+      loadingBox.appendChild(spinnerAnimationContainer);
 
       // Then create and append text element
       const textElement = document.createElement('span');
@@ -365,15 +370,15 @@ export const LoadingAnimationExtension = {
         }, messageInterval);
       }
 
-      // Stop animation (dots) and message cycling after totalDuration
+      // Stop animation (spinner) and message cycling after totalDuration
       const animationTimeoutId = setTimeout(() => {
         if (intervalId) { // If message cycling interval is still active
           clearInterval(intervalId);
           intervalId = null;
         }
-        // Hide only the dots animation, not the whole container or text
-        if (dotsAnimationContainer) {
-          dotsAnimationContainer.classList.add('hide');
+        // Hide only the spinner animation, not the whole container or text
+        if (spinnerAnimationContainer) {
+          spinnerAnimationContainer.classList.add('hide');
         }
         // The last message will remain visible
       }, totalDuration);

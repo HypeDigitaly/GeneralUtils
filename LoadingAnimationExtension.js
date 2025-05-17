@@ -29,8 +29,8 @@ export const LoadingAnimationExtension = {
     // Message sequences for different phases and types
     const messageSequences = {
       cs: {
-        analysis: ['Analyzuji Váš dotaz.', 'Klasifikuji Váš dotaz.'],
-        rewrite: ['Snažím se pochopit, co přesně hledáte.'],
+        analysis: ['vydržte moment'],
+        rewrite: ['Zpracovávám Váš dotaz.'],
         output: {
           SMT: ['Dokončuji odpověď.'],
           KB_WS: [
@@ -62,8 +62,8 @@ export const LoadingAnimationExtension = {
         }
       },
       en: {
-        analysis: ['I am analyzing your query.', 'I am classifying your query.'],
-        rewrite: ['I am trying to understand what you are looking for.'],
+        analysis: ['Hold on a moment'],
+        rewrite: ['Processing your query.'],
         output: {
           SMT: ['I am completing my response.'],
           KB_WS: [
@@ -95,8 +95,8 @@ export const LoadingAnimationExtension = {
         }
       },
       de: {
-        analysis: ['Ich bin dabei, Ihre Anfrage zu analysieren.', 'Ich bin dabei, Ihre Anfrage zu klassifizieren.'],
-        rewrite: ['Ich bin dabei zu verstehen, wonach Sie suchen.'],
+        analysis: ['Einen Moment bitte'],
+        rewrite: ['Ihre Anfrage wird bearbeitet.'],
         output: {
           SMT: ['Ich bin dabei, meine Antwort fertigzustellen.'],
           KB_WS: [
@@ -128,8 +128,8 @@ export const LoadingAnimationExtension = {
         }
       },
       uk: {
-        analysis: ['Зараз аналізую ваш запит.', 'Зараз класифікую ваш запит.'],
-        rewrite: ['Зараз намагаюся зрозуміти, що ви шукаєте.'],
+        analysis: ['Зачекайте хвилинку'],
+        rewrite: ['Обробляю ваш запит.'],
         output: {
           SMT: ['Зараз завершую відповідь.'],
           KB_WS: [
@@ -368,37 +368,12 @@ export const LoadingAnimationExtension = {
           clearInterval(interval);
         }
 
-        // Hide the internal content of the animation first
-        // The CSS class .hide on the container will handle opacity, visibility, and pointer-events for children
-        // container.classList.add('hide'); // We will now directly manipulate container's style
+        // Hide the entire container
+        // The CSS class .hide on the container will handle opacity, visibility, and pointer-events
+        container.classList.add('hide');
 
-        // BEGIN MODIFICATION: Ensure the container itself (the message bubble g3dqfd8) collapses and becomes transparent
-        if (container) {
-          container.style.height = '0px';
-          container.style.minHeight = '0px';
-          container.style.padding = '0px';
-          container.style.margin = '0px';
-          container.style.border = 'none';
-          container.style.backgroundColor = 'transparent';
-          container.style.overflow = 'hidden';
-          container.style.boxShadow = 'none';
-          container.style.opacity = '0';
-          container.style.visibility = 'hidden';
-          container.style.pointerEvents = 'none';
-
-          // Also ensure its children (like the loading animation and text elements) are not visible
-          // though overflow:hidden and opacity:0 should mostly handle this.
-          // For robustness, explicitly hide them if necessary or ensure they are removed.
-          // The existing container.classList.add('hide') would have handled its children's opacity/visibility.
-          // Since we are overriding container's style directly, we might need to be more explicit if issues arise.
-          // For now, the direct styling of container should make it and its content effectively disappear.
-        }
-        // END MODIFICATION
-
-        // Disconnect the observer as the animation is complete and element is hidden
-        if (observer) {
-          observer.disconnect();
-        }
+        // The previous logic for hiding .loading-animation specifically and adjusting gap
+        // is now handled by hiding the parent container.
       }, totalDuration);
 
       // Enhanced cleanup observer

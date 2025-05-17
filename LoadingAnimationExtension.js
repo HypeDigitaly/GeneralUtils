@@ -304,6 +304,7 @@ export const LoadingAnimationExtension = {
           opacity: 0;
           visibility: hidden;
           width: 0 !important;
+          display: none; /* Completely remove from layout flow */
           /* margin-right: 0 !important; // Not strictly needed */
         }
       `;

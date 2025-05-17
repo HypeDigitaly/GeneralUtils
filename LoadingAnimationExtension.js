@@ -1,4 +1,3 @@
-
 export const LoadingAnimationExtension = {
   name: 'LoadingAnimation',
   type: 'response',
@@ -318,18 +317,48 @@ export const LoadingAnimationExtension = {
       let currentIndex = 0;
 
       const updateText = (newText) => {
-        const textElement = container.querySelector('.loading-text');
-        textElement.classList.add('changing');
+        try {
+          const textElement = container.querySelector('.loading-text');
+          if (!textElement) {
+            if (interval) {
+                clearInterval(interval);
+                interval = null;
+            }
+            return;
+          }
+          textElement.classList.add('changing');
 
-        setTimeout(() => {
-          textElement.textContent = newText;
-          textElement.classList.remove('changing');
-          textElement.classList.add('entering');
+          setTimeout(() => {
+            try {
+              if (!textElement || !container.contains(textElement)) {
+                if (interval) {
+                    clearInterval(interval);
+                    interval = null;
+                }
+                return;
+              }
+              textElement.textContent = newText;
+              textElement.classList.remove('changing');
+              textElement.classList.add('entering');
 
-          requestAnimationFrame(() => {
-            textElement.classList.remove('entering');
-          });
-        }, 300);
+              requestAnimationFrame(() => {
+                if (textElement && container.contains(textElement)) {
+                  textElement.classList.remove('entering');
+                }
+              });
+            } catch (e) {
+              if (interval) {
+                clearInterval(interval);
+                interval = null;
+              }
+            }
+          }, 300);
+        } catch (e) {
+          if (interval) {
+            clearInterval(interval);
+            interval = null;
+          }
+        }
       };
 
       // Initial text update
@@ -343,11 +372,19 @@ export const LoadingAnimationExtension = {
         console.log(`Setting up message rotation with ${exactInterval}ms intervals`);
         
         interval = setInterval(() => {
-          if (currentIndex < messages.length - 1) {
-            currentIndex++;
-            updateText(messages[currentIndex]);
-          } else {
-            clearInterval(interval);
+          try {
+            if (currentIndex < messages.length - 1) {
+              currentIndex++;
+              updateText(messages[currentIndex]);
+            } else {
+              clearInterval(interval);
+              interval = null;
+            }
+          } catch (e) {
+            if (interval) {
+                clearInterval(interval);
+                interval = null;
+            }
           }
         }, exactInterval);
       }
@@ -368,6 +405,7 @@ export const LoadingAnimationExtension = {
         // Clear any remaining intervals
         if (interval) {
           clearInterval(interval);
+          interval = null;
         }
       }, totalDuration);
 
@@ -376,7 +414,10 @@ export const LoadingAnimationExtension = {
         mutations.forEach((mutation) => {
           mutation.removedNodes.forEach((node) => {
             if (node === container || node.contains(container)) {
-              if (interval) clearInterval(interval);
+              if (interval) {
+                clearInterval(interval);
+                interval = null;
+              }
               if (hideTimeout) clearTimeout(hideTimeout);
               observer.disconnect();
             }

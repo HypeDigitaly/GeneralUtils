@@ -175,9 +175,11 @@ export const LoadingAnimationExtension = {
         return;
       }
 
-      // Always use the totalDuration from the Duration parameter
-      // and distribute it evenly among all messages
+      // Calculate message interval based on total duration from Duration parameter
       const messageInterval = totalDuration / messages.length;
+      
+      // Log the duration for debugging
+      console.log(`Animation duration: ${totalDurationSeconds}s, Message interval: ${messageInterval / 1000}s per message`);
 
       // Create container div with class for styling
       const container = document.createElement('div');
@@ -336,6 +338,10 @@ export const LoadingAnimationExtension = {
       // Set up interval for multiple messages
       let interval;
       if (messages.length > 1) {
+        // Ensure we're using the exact messageInterval calculated from totalDuration
+        const exactInterval = messageInterval;
+        console.log(`Setting up message rotation with ${exactInterval}ms intervals`);
+        
         interval = setInterval(() => {
           if (currentIndex < messages.length - 1) {
             currentIndex++;
@@ -343,7 +349,7 @@ export const LoadingAnimationExtension = {
           } else {
             clearInterval(interval);
           }
-        }, messageInterval);
+        }, exactInterval);
       }
 
       // Hide animation after total duration

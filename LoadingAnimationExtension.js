@@ -216,7 +216,7 @@ export const LoadingAnimationExtension = {
       let totalDuration;
       if (customDurationSeconds !== undefined && typeof customDurationSeconds === 'number' && customDurationSeconds > 0) {
         totalDuration = customDurationSeconds * 1000; // Use custom duration from payload (in ms)
-        console.log(`LoadingAnimationExtension: Using custom duration from payload: ${customDurationSeconds}s (${totalDuration}ms)`);
+        // console.log(`LoadingAnimationExtension: Using custom duration from payload: ${customDurationSeconds}s (${totalDuration}ms)`);
       } else {
         // Automatic duration calculation based on phase and type
         if (phase === 'analysis') {
@@ -242,7 +242,7 @@ export const LoadingAnimationExtension = {
           // or if payload.duration is not provided or invalid for other phases
           totalDuration = 3000; // Default to 3 seconds
         }
-        console.log(`LoadingAnimationExtension: Using automatic duration for lang='${lang}', phase='${phase}', type='${type}': ${totalDuration}ms`);
+        // console.log(`LoadingAnimationExtension: Using automatic duration for lang='${lang}', phase='${phase}', type='${type}': ${totalDuration}ms`);
       }
 
       // Calculate interval between messages to distribute evenly

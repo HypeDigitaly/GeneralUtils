@@ -14,6 +14,8 @@ export const LoadingAnimationExtension = {
     else if (incomingLang.includes('en')) lang = 'en';
     else if (incomingLang.includes('de')) lang = 'de';
     else if (incomingLang.includes('uk')) lang = 'uk';
+    else if (incomingLang.includes('sl')) lang = 'sl';
+    else if (incomingLang.includes('pl')) lang = 'pl';
     else lang = 'cs'; // default to Czech
 
     // Normalize type
@@ -185,6 +187,86 @@ export const LoadingAnimationExtension = {
             'Шукаю веб-джерела.',
             'Перевіряю інформацію.',
             'Готую свою відповідь.'
+          ]
+        }
+      },
+      sl: {
+        analysis: {
+          DEFAULT: ['Počkajte chvíľu'],
+          SMT: ['Analyzujem dotaz.', 'Počkajte chvíľu'],
+          SWEARS: ['Analyzujem dotaz.', 'Počkajte chvíľu'],
+          OTHER: ['Analyzujem dotaz.', 'Počkajte chvíľu'],
+          KB: ['Analyzujem dotaz.', 'Spracúvam váš dotaz.', 'Počkajte chvíľu'],
+          KB_WS: ['Analyzujem dotaz.', 'Spracúvam váš dotaz.', 'Počkajte chvíľu']
+        },
+        rewrite: ['Spracúvam váš dotaz.'],
+        output: {
+          SMT: ['Dokončujem odpoveď.'],
+          KB_WS: [
+            'Hľadám v databáze.',
+            'Prehľadávam webové zdroje.',
+            'Pripravujem odpoveď.',
+            'Píšem odpoveď.'
+          ],
+          OTHER: ['Nachádzam nevhodný výraz.'],
+          SWEARS: ['Nachádzam nevhodný výraz.'],
+          KB: [
+            'Hľadám v databáze.',
+            'Pripravujem odpoveď.',
+            'Píšem odpoveď.'
+          ]
+        },
+        all: {
+          KB: [
+            'Prehľadávam svoju databázu.',
+            'Overujem informácie.',
+            'Pripravujem svoju odpoveď.'
+          ],
+          KB_WS: [
+            'Prehľadávam svoju databázu.',
+            'Prehľadávam webové zdroje.',
+            'Overujem informácie.',
+            'Pripravujem svoju odpoveď.'
+          ]
+        }
+      },
+      pl: {
+        analysis: {
+          DEFAULT: ['Poczekaj chwilę'],
+          SMT: ['Analizuję zapytanie.', 'Poczekaj chwilę'],
+          SWEARS: ['Analizuję zapytanie.', 'Poczekaj chwilę'],
+          OTHER: ['Analizuję zapytanie.', 'Poczekaj chwilę'],
+          KB: ['Analizuję zapytanie.', 'Przetwarzam twoje zapytanie.', 'Poczekaj chwilę'],
+          KB_WS: ['Analizuję zapytanie.', 'Przetwarzam twoje zapytanie.', 'Poczekaj chwilę']
+        },
+        rewrite: ['Przetwarzam twoje zapytanie.'],
+        output: {
+          SMT: ['Kończę odpowiedź.'],
+          KB_WS: [
+            'Szukam w bazie danych.',
+            'Przeszukuję źródła internetowe.',
+            'Przygotowuję odpowiedź.',
+            'Piszę odpowiedź.'
+          ],
+          OTHER: ['Wykrywam nieodpowiednie treści.'],
+          SWEARS: ['Wykrywam nieodpowiednie treści.'],
+          KB: [
+            'Szukam w bazie danych.',
+            'Przygotowuję odpowiedź.',
+            'Piszę odpowiedź.'
+          ]
+        },
+        all: {
+          KB: [
+            'Przeszukuję moją bazę danych.',
+            'Weryfikuję informacje.',
+            'Przygotowuję moją odpowiedź.'
+          ],
+          KB_WS: [
+            'Przeszukuję moją bazę danych.',
+            'Przeszukuję źródła internetowe.',
+            'Weryfikuję informacje.',
+            'Przygotowuję moją odpowiedź.'
           ]
         }
       }

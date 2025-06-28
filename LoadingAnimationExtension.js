@@ -14,7 +14,7 @@ export const LoadingAnimationExtension = {
     else if (incomingLang.includes('en')) lang = 'en';
     else if (incomingLang.includes('de')) lang = 'de';
     else if (incomingLang.includes('uk')) lang = 'uk';
-    else if (incomingLang.includes('sl')) lang = 'sl';
+    else if (incomingLang.includes('sk')) lang = 'sk';
     else if (incomingLang.includes('pl')) lang = 'pl';
     else lang = 'cs'; // default to Czech
 
@@ -190,7 +190,7 @@ export const LoadingAnimationExtension = {
           ]
         }
       },
-      sl: {
+      sk: {
         analysis: {
           DEFAULT: ['Počkajte chvíľu'],
           SMT: ['Analyzujem dotaz.', 'Počkajte chvíľu'],

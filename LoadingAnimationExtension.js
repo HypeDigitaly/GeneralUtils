@@ -39,7 +39,6 @@ export const LoadingAnimationExtension = {
           KB: ['Analyzuji dotaz.', 'Zpracovávám váš dotaz.', 'Vydržte moment'],
           KB_WS: ['Analyzuji dotaz.', 'Zpracovávám váš dotaz.', 'Vydržte moment']
         },
-        thinking: ['Přemýšlím, prosím počkejte', 'Zde je finální odpověď'],
         rewrite: ['Zpracovávám Váš dotaz.'],
         output: {
           SMT: ['Dokončuji odpověď.'],
@@ -47,6 +46,7 @@ export const LoadingAnimationExtension = {
             'Hledám v databázi.',
             'Prohledávám webové zdroje.',
             'Připravuji odpověď.',
+            'Přemýšlím, prosím čekejte',
             'Píši odpověď.'
           ],
           OTHER: ['Nacházím nevhodný výraz.'],
@@ -54,6 +54,7 @@ export const LoadingAnimationExtension = {
           KB: [
             'Hledám v databázi.',
             'Připravuji odpověď.',
+            'Přemýšlím, prosím čekejte',
             'Píši odpověď.'
           ]
         },
@@ -80,7 +81,6 @@ export const LoadingAnimationExtension = {
           KB: ['Analyzing query.', 'Processing your query.', 'Hold on a moment'],
           KB_WS: ['Analyzing query.', 'Processing your query.', 'Hold on a moment']
         },
-        thinking: ['I am thinking, please wait', 'Here is the final answer'],
         rewrite: ['Processing your query.'],
         output: {
           SMT: ['I am completing my response.'],
@@ -88,6 +88,7 @@ export const LoadingAnimationExtension = {
             'I am searching the database.',
             'I am searching web sources.',
             'I am preparing my response.',
+            'I am thinking, please wait',
             'I am writing my response.'
           ],
           OTHER: ['I am detecting inappropriate content.'],
@@ -95,6 +96,7 @@ export const LoadingAnimationExtension = {
           KB: [
             'I am searching the database.',
             'I am preparing my response.',
+            'I am thinking, please wait',
             'I am writing my response.'
           ]
         },
@@ -121,7 +123,6 @@ export const LoadingAnimationExtension = {
           KB: ['Anfrage wird analysiert.', 'Ihre Anfrage wird bearbeitet.', 'Einen Moment bitte'],
           KB_WS: ['Anfrage wird analysiert.', 'Ihre Anfrage wird bearbeitet.', 'Einen Moment bitte']
         },
-        thinking: ['Ich denke nach, bitte warten Sie', 'Hier ist die endgültige Antwort'],
         rewrite: ['Ihre Anfrage wird bearbeitet.'],
         output: {
           SMT: ['Ich bin dabei, meine Antwort fertigzustellen.'],
@@ -129,6 +130,7 @@ export const LoadingAnimationExtension = {
             'Ich bin dabei, die Datenbank zu durchsuchen.',
             'Ich bin dabei, Web-Quellen zu durchsuchen.',
             'Ich bin dabei, meine Antwort vorzubereiten.',
+            'Ich denke nach, bitte warten',
             'Ich bin dabei, meine Antwort zu schreiben.'
           ],
           OTHER: ['Ich bin dabei, unangemessenen Inhalt zu erkennen.'],
@@ -136,6 +138,7 @@ export const LoadingAnimationExtension = {
           KB: [
             'Ich bin dabei, die Datenbank zu durchsuchen.',
             'Ich bin dabei, meine Antwort vorzubereiten.',
+            'Ich denke nach, bitte warten',
             'Ich bin dabei, meine Antwort zu schreiben.'
           ]
         },
@@ -162,7 +165,6 @@ export const LoadingAnimationExtension = {
           KB: ['Аналізую запит.', 'Обробляю ваш запит.', 'Зачекайте хвилинку'],
           KB_WS: ['Аналізую запит.', 'Обробляю ваш запит.', 'Зачекайте хвилинку']
         },
-        thinking: ['Думаю, будь ласка, зачекайте', 'Ось остаточна відповідь'],
         rewrite: ['Обробляю ваш запит.'],
         output: {
           SMT: ['Зараз завершую відповідь.'],
@@ -170,6 +172,7 @@ export const LoadingAnimationExtension = {
             'Зараз шукаю в базі даних.',
             'Зараз шукаю веб-джерела.',
             'Зараз готую відповідь.',
+            'Думаю, будь ласка, зачекайте',
             'Зараз пишу відповідь.'
           ],
           OTHER: ['Зараз виявляю недоречний зміст.'],
@@ -177,6 +180,7 @@ export const LoadingAnimationExtension = {
           KB: [
             'Зараз шукаю в базі даних.',
             'Зараз готую відповідь.',
+            'Думаю, будь ласка, зачекайте',
             'Зараз пишу відповідь.'
           ]
         },
@@ -203,7 +207,6 @@ export const LoadingAnimationExtension = {
           KB: ['Analyzujem dotaz.', 'Spracúvam váš dotaz.', 'Počkajte chvíľu'],
           KB_WS: ['Analyzujem dotaz.', 'Spracúvam váš dotaz.', 'Počkajte chvíľu']
         },
-        thinking: ['Premýšľam, prosím počkajte', 'Tu je finálna odpoveď'],
         rewrite: ['Spracúvam váš dotaz.'],
         output: {
           SMT: ['Dokončujem odpoveď.'],
@@ -211,6 +214,7 @@ export const LoadingAnimationExtension = {
             'Hľadám v databáze.',
             'Prehľadávam webové zdroje.',
             'Pripravujem odpoveď.',
+            'Premýšľam, prosím čakajte',
             'Píšem odpoveď.'
           ],
           OTHER: ['Nachádzam nevhodný výraz.'],
@@ -218,6 +222,7 @@ export const LoadingAnimationExtension = {
           KB: [
             'Hľadám v databáze.',
             'Pripravujem odpoveď.',
+            'Premýšľam, prosím čakajte',
             'Píšem odpoveď.'
           ]
         },
@@ -244,7 +249,6 @@ export const LoadingAnimationExtension = {
           KB: ['Analizuję zapytanie.', 'Przetwarzam twoje zapytanie.', 'Poczekaj chwilę'],
           KB_WS: ['Analizuję zapytanie.', 'Przetwarzam twoje zapytanie.', 'Poczekaj chwilę']
         },
-        thinking: ['Myślę, proszę czekać', 'Oto ostateczna odpowiedź'],
         rewrite: ['Przetwarzam twoje zapytanie.'],
         output: {
           SMT: ['Kończę odpowiedź.'],
@@ -252,6 +256,7 @@ export const LoadingAnimationExtension = {
             'Szukam w bazie danych.',
             'Przeszukuję źródła internetowe.',
             'Przygotowuję odpowiedź.',
+            'Myślę, proszę czekać',
             'Piszę odpowiedź.'
           ],
           OTHER: ['Wykrywam nieodpowiednie treści.'],
@@ -259,6 +264,7 @@ export const LoadingAnimationExtension = {
           KB: [
             'Szukam w bazie danych.',
             'Przygotowuję odpowiedź.',
+            'Myślę, proszę czekać',
             'Piszę odpowiedź.'
           ]
         },

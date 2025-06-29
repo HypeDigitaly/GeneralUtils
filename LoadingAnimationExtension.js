@@ -39,6 +39,7 @@ export const LoadingAnimationExtension = {
           KB: ['Analyzuji dotaz.', 'Zpracovávám váš dotaz.', 'Vydržte moment'],
           KB_WS: ['Analyzuji dotaz.', 'Zpracovávám váš dotaz.', 'Vydržte moment']
         },
+        thinking: ['Přemýšlím, prosím počkejte', 'Zde je finální odpověď'],
         rewrite: ['Zpracovávám Váš dotaz.'],
         output: {
           SMT: ['Dokončuji odpověď.'],
@@ -79,6 +80,7 @@ export const LoadingAnimationExtension = {
           KB: ['Analyzing query.', 'Processing your query.', 'Hold on a moment'],
           KB_WS: ['Analyzing query.', 'Processing your query.', 'Hold on a moment']
         },
+        thinking: ['I am thinking, please wait', 'Here is the final answer'],
         rewrite: ['Processing your query.'],
         output: {
           SMT: ['I am completing my response.'],
@@ -119,6 +121,7 @@ export const LoadingAnimationExtension = {
           KB: ['Anfrage wird analysiert.', 'Ihre Anfrage wird bearbeitet.', 'Einen Moment bitte'],
           KB_WS: ['Anfrage wird analysiert.', 'Ihre Anfrage wird bearbeitet.', 'Einen Moment bitte']
         },
+        thinking: ['Ich denke nach, bitte warten Sie', 'Hier ist die endgültige Antwort'],
         rewrite: ['Ihre Anfrage wird bearbeitet.'],
         output: {
           SMT: ['Ich bin dabei, meine Antwort fertigzustellen.'],
@@ -159,6 +162,7 @@ export const LoadingAnimationExtension = {
           KB: ['Аналізую запит.', 'Обробляю ваш запит.', 'Зачекайте хвилинку'],
           KB_WS: ['Аналізую запит.', 'Обробляю ваш запит.', 'Зачекайте хвилинку']
         },
+        thinking: ['Думаю, будь ласка, зачекайте', 'Ось остаточна відповідь'],
         rewrite: ['Обробляю ваш запит.'],
         output: {
           SMT: ['Зараз завершую відповідь.'],
@@ -199,6 +203,7 @@ export const LoadingAnimationExtension = {
           KB: ['Analyzujem dotaz.', 'Spracúvam váš dotaz.', 'Počkajte chvíľu'],
           KB_WS: ['Analyzujem dotaz.', 'Spracúvam váš dotaz.', 'Počkajte chvíľu']
         },
+        thinking: ['Premýšľam, prosím počkajte', 'Tu je finálna odpoveď'],
         rewrite: ['Spracúvam váš dotaz.'],
         output: {
           SMT: ['Dokončujem odpoveď.'],
@@ -239,6 +244,7 @@ export const LoadingAnimationExtension = {
           KB: ['Analizuję zapytanie.', 'Przetwarzam twoje zapytanie.', 'Poczekaj chwilę'],
           KB_WS: ['Analizuję zapytanie.', 'Przetwarzam twoje zapytanie.', 'Poczekaj chwilę']
         },
+        thinking: ['Myślę, proszę czekać', 'Oto ostateczna odpowiedź'],
         rewrite: ['Przetwarzam twoje zapytanie.'],
         output: {
           SMT: ['Kończę odpowiedź.'],

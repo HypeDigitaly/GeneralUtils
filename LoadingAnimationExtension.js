@@ -33,11 +33,11 @@ export const LoadingAnimationExtension = {
       cs: {
         analysis: {
           DEFAULT: ['Vydržte moment'],
-          SMT: ['Analyzuji dotaz.', 'Vydržte moment'],
-          SWEARS: ['Analyzuji dotaz.', 'Vydržte moment'],
-          OTHER: ['Analyzuji dotaz.', 'Vydržte moment'],
-          KB: ['Analyzuji dotaz.', 'Zpracovávám váš dotaz.', 'Vydržte moment'],
-          KB_WS: ['Analyzuji dotaz.', 'Zpracovávám váš dotaz.', 'Vydržte moment']
+          SMT: ['Vydržte moment'],
+          SWEARS: ['Vydržte moment'],
+          OTHER: ['Vydržte moment'],
+          KB: ['Vydržte moment'],
+          KB_WS: ['Vydržte moment']
         },
         rewrite: ['Zpracovávám Váš dotaz.'],
         output: {
@@ -87,11 +87,11 @@ export const LoadingAnimationExtension = {
       en: {
         analysis: {
           DEFAULT: ['Hold on a moment'],
-          SMT: ['Analyzing query.', 'Hold on a moment'],
-          SWEARS: ['Analyzing query.', 'Hold on a moment'],
-          OTHER: ['Analyzing query.', 'Hold on a moment'],
-          KB: ['Analyzing query.', 'Processing your query.', 'Hold on a moment'],
-          KB_WS: ['Analyzing query.', 'Processing your query.', 'Hold on a moment']
+          SMT: ['Hold on a moment'],
+          SWEARS: ['Hold on a moment'],
+          OTHER: ['Hold on a moment'],
+          KB: ['Hold on a moment'],
+          KB_WS: ['Hold on a moment']
         },
         rewrite: ['Processing your query.'],
         output: {
@@ -129,11 +129,11 @@ export const LoadingAnimationExtension = {
       de: {
         analysis: {
           DEFAULT: ['Einen Moment bitte'],
-          SMT: ['Anfrage wird analysiert.', 'Einen Moment bitte'],
-          SWEARS: ['Anfrage wird analysiert.', 'Einen Moment bitte'],
-          OTHER: ['Anfrage wird analysiert.', 'Einen Moment bitte'],
-          KB: ['Anfrage wird analysiert.', 'Ihre Anfrage wird bearbeitet.', 'Einen Moment bitte'],
-          KB_WS: ['Anfrage wird analysiert.', 'Ihre Anfrage wird bearbeitet.', 'Einen Moment bitte']
+          SMT: ['Einen Moment bitte'],
+          SWEARS: ['Einen Moment bitte'],
+          OTHER: ['Einen Moment bitte'],
+          KB: ['Einen Moment bitte'],
+          KB_WS: ['Einen Moment bitte']
         },
         rewrite: ['Ihre Anfrage wird bearbeitet.'],
         output: {
@@ -171,11 +171,11 @@ export const LoadingAnimationExtension = {
       uk: {
         analysis: {
           DEFAULT: ['Зачекайте хвилинку'],
-          SMT: ['Аналізую запит.', 'Зачекайте хвилинку'],
-          SWEARS: ['Аналізую запит.', 'Зачекайте хвилинку'],
-          OTHER: ['Аналізую запит.', 'Зачекайте хвилинку'],
-          KB: ['Аналізую запит.', 'Обробляю ваш запит.', 'Зачекайте хвилинку'],
-          KB_WS: ['Аналізую запит.', 'Обробляю ваш запит.', 'Зачекайте хвилинку']
+          SMT: ['Зачекайте хвилинку'],
+          SWEARS: ['Зачекайте хвилинку'],
+          OTHER: ['Зачекайте хвилинку'],
+          KB: ['Зачекайте хвилинку'],
+          KB_WS: ['Зачекайте хвилинку']
         },
         rewrite: ['Обробляю ваш запит.'],
         output: {
@@ -213,11 +213,11 @@ export const LoadingAnimationExtension = {
       sk: {
         analysis: {
           DEFAULT: ['Počkajte chvíľu'],
-          SMT: ['Analyzujem dotaz.', 'Počkajte chvíľu'],
-          SWEARS: ['Analyzujem dotaz.', 'Počkajte chvíľu'],
-          OTHER: ['Analyzujem dotaz.', 'Počkajte chvíľu'],
-          KB: ['Analyzujem dotaz.', 'Spracúvam váš dotaz.', 'Počkajte chvíľu'],
-          KB_WS: ['Analyzujem dotaz.', 'Spracúvam váš dotaz.', 'Počkajte chvíľu']
+          SMT: ['Počkajte chvíľu'],
+          SWEARS: ['Počkajte chvíľu'],
+          OTHER: ['Počkajte chvíľu'],
+          KB: ['Počkajte chvíľu'],
+          KB_WS: ['Počkajte chvíľu']
         },
         rewrite: ['Spracúvam váš dotaz.'],
         output: {
@@ -255,11 +255,11 @@ export const LoadingAnimationExtension = {
       pl: {
         analysis: {
           DEFAULT: ['Poczekaj chwilę'],
-          SMT: ['Analizuję zapytanie.', 'Poczekaj chwilę'],
-          SWEARS: ['Analizuję zapytanie.', 'Poczekaj chwilę'],
-          OTHER: ['Analizuję zapytanie.', 'Poczekaj chwilę'],
-          KB: ['Analizuję zapytanie.', 'Przetwarzam twoje zapytanie.', 'Poczekaj chwilę'],
-          KB_WS: ['Analizuję zapytanie.', 'Przetwarzam twoje zapytanie.', 'Poczekaj chwilę']
+          SMT: ['Poczekaj chwilę'],
+          SWEARS: ['Poczekaj chwilę'],
+          OTHER: ['Poczekaj chwilę'],
+          KB: ['Poczekaj chwilę'],
+          KB_WS: ['Poczekaj chwilę']
         },
         rewrite: ['Przetwarzam twoje zapytanie.'],
         output: {

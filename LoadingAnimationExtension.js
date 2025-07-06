@@ -369,8 +369,10 @@ export const LoadingAnimationExtension = {
         .vfrc-message.vfrc-message--extension.LoadingAnimation {
           opacity: 1;
           transition: opacity 0.3s ease-out;
-          width: 100%;
+          width: auto; /* Auto width instead of 100% */
           display: block;
+          margin: 0 !important; /* Force no margin */
+          padding: 0 !important; /* Force no padding */
         }
 
         .vfrc-message.vfrc-message--extension.LoadingAnimation.hide {
@@ -379,25 +381,23 @@ export const LoadingAnimationExtension = {
           pointer-events: none;
         }
 
-        /* Updated styling for the main loading container (inspired by Perplexity's reasoning-section) */
+        /* Completely minimized styling for the main loading container */
         .loading-box {
           display: flex;
           align-items: center;
-          gap: 8px; /* Reduced gap */
-          padding: 8px 12px; /* Reduced padding */
+          gap: 0; /* No gap at all */
+          padding: 0; /* No padding at all */
           margin: 0;
-          width: 100%;
+          width: auto; /* Auto width instead of 100% */
           box-sizing: border-box;
-          background-color: #F9FAFB;
-          border-radius: 12px;
-          /* border: 1px solid #E5E7EB; /* Optional: if a subtle border is desired */
+          /* Removed background-color and border-radius for minimal appearance */
         }
 
         .loading-text {
-          color: rgba(26, 30, 35, 0.7); /* Slightly darker for better contrast on new bg */
-          font-size: 12px; /* Increased font size slightly */
-          line-height: 1.3; /* Adjusted line height for better vertical centering */
-          font-family: var(--_1bof89na); /* Assuming this is a Voiceflow variable for font */
+          color: rgba(26, 30, 35, 0.7);
+          font-size: 11px; /* Smaller font size */
+          line-height: 1.1; /* Tighter line height */
+          font-family: var(--_1bof89na);
           position: relative;
           display: flex;
           flex-direction: column;
@@ -408,6 +408,8 @@ export const LoadingAnimationExtension = {
           flex: 1;
           min-width: 0;
           font-style: italic;
+          margin: 0; /* Remove any default margins */
+          padding: 0; /* Remove any default padding */
         }
 
         .loading-text.changing {
@@ -428,8 +430,8 @@ export const LoadingAnimationExtension = {
 
         .rotating-point-spinner {
           position: relative;
-          width: 16px; /* Spinner size */
-          height: 16px;
+          width: 12px; /* Smaller spinner size */
+          height: 12px;
           animation: loading-spinner-spin 0.9s linear infinite;
           flex-shrink: 0;
           transition: opacity 0.3s ease-out, width 0.3s ease-out;
@@ -454,13 +456,13 @@ export const LoadingAnimationExtension = {
           content: "";
           box-sizing: border-box;
           position: absolute;
-          width: 5px; /* Size of the thicker point */
-          height: 5px;
+          width: 3px; /* Smaller point size */
+          height: 3px;
           background-color: var(--spinner-point-colour, #696969); /* Use CSS var with dark grey fallback */
           border-radius: 50%;
           /* Position it at 12 o'clock on the track's centerline */
-          top: -1.5px; 
-          left: calc(50% - 2.5px); /* (ContainerWidth/2 - PointWidth/2) */
+          top: -0.5px; 
+          left: calc(50% - 1.5px); /* (ContainerWidth/2 - PointWidth/2) */
         }
 
         .rotating-point-spinner.hide {

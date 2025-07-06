@@ -385,7 +385,7 @@ export const LoadingAnimationExtension = {
         .loading-box {
           display: flex;
           align-items: center;
-          gap: 8px; /* Better gap between spinner and text */
+          gap: 4px; /* Small gap between spinner and text */
           padding: 0; /* No padding at all */
           margin: 0;
           width: auto; /* Auto width instead of 100% */
@@ -396,11 +396,12 @@ export const LoadingAnimationExtension = {
         .loading-text {
           color: rgba(26, 30, 35, 0.7);
           font-size: 11px; /* Smaller font size */
-          line-height: 1.1; /* Tighter line height */
+          line-height: 1.2; /* Slightly increased for better vertical centering */
           font-family: var(--_1bof89na);
           position: relative;
           display: flex;
           flex-direction: column;
+          justify-content: center; /* Center content vertically */
           max-width: 100%;
           opacity: 1;
           transform: translateY(0);
@@ -410,6 +411,7 @@ export const LoadingAnimationExtension = {
           font-style: italic;
           margin: 0; /* Remove any default margins */
           padding: 0; /* Remove any default padding */
+          height: 14px; /* Match spinner height for better alignment */
         }
 
         .loading-text.changing {
@@ -430,12 +432,13 @@ export const LoadingAnimationExtension = {
 
         .rotating-point-spinner {
           position: relative;
-          width: 14px; /* Optimal spinner size */
+          width: 14px; /* Medium spinner size */
           height: 14px;
           animation: loading-spinner-spin 0.9s linear infinite;
           flex-shrink: 0;
           transition: opacity 0.3s ease-out, width 0.3s ease-out;
           opacity: 1;
+          margin-right: 6px; /* Extra space between spinner and text */
         }
 
         /* The track of the circle */
@@ -545,16 +548,17 @@ export const LoadingAnimationExtension = {
         }, messageInterval);
       }
 
-      // Hide entire extension after totalDuration
+      // Stop animation (spinner) and message cycling after totalDuration
       const animationTimeoutId = setTimeout(() => {
         if (intervalId) { // If message cycling interval is still active
           clearInterval(intervalId);
           intervalId = null;
         }
-        // Hide the entire extension container
-        if (container) {
-          container.classList.add('hide');
+        // Hide only the spinner animation, not the whole container or text
+        if (spinnerAnimationContainer) {
+          spinnerAnimationContainer.classList.add('hide');
         }
+        // The last message will remain visible
       }, totalDuration);
 
       // Enhanced cleanup observer

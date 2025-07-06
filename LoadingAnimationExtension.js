@@ -70,7 +70,19 @@ export const LoadingAnimationExtension = {
             'Ověřuji informace.',
             'Připravuji svoji odpověď.'
           ]
-        }
+        },
+        KB_Search: [
+          'Zanalyzoval jsem Váš dotaz.',
+          'Optimalizuji Váš dotaz.',
+          'Filtruji svou interní databázi.',
+          'Prohledávám svou interní databázi'
+        ],
+        Web_Search: [
+          'Spouštím webové vyhledávání.',
+          'Prohledávám naší webovou stránku.',
+          'Spouštím další webové vyhledáváče.',
+          'Dokončuji prohledávání dalších stránek.'
+        ]
       },
       en: {
         analysis: {
@@ -296,6 +308,8 @@ export const LoadingAnimationExtension = {
         messages = messageSequences[lang]?.output?.[type];
       } else if (phase === 'analysis') {
         messages = messageSequences[lang]?.[phase]?.[type] || messageSequences[lang]?.[phase]?.DEFAULT;
+      } else if (phase === 'KB_Search' || phase === 'Web_Search') {
+        messages = messageSequences[lang]?.[phase];
       } else {
         messages = messageSequences[lang]?.[phase];
       }
@@ -331,6 +345,10 @@ export const LoadingAnimationExtension = {
           } else {
             totalDuration = 3000; // Default for output if type doesn't match
           }
+        } else if (phase === 'KB_Search') {
+          totalDuration = 16000; // 16 seconds for KB_Search (4 messages)
+        } else if (phase === 'Web_Search') {
+          totalDuration = 16000; // 16 seconds for Web_Search (4 messages)
         } else {
           // Fallback to a general default duration if phase is not analysis or output
           // or if payload.duration is not provided or invalid for other phases

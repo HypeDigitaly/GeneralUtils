@@ -385,7 +385,7 @@ export const LoadingAnimationExtension = {
         .loading-box {
           display: flex;
           align-items: center;
-          gap: 0; /* No gap at all */
+          gap: 4px; /* Small gap between spinner and text */
           padding: 0; /* No padding at all */
           margin: 0;
           width: auto; /* Auto width instead of 100% */
@@ -430,8 +430,8 @@ export const LoadingAnimationExtension = {
 
         .rotating-point-spinner {
           position: relative;
-          width: 12px; /* Smaller spinner size */
-          height: 12px;
+          width: 16px; /* Original spinner size */
+          height: 16px;
           animation: loading-spinner-spin 0.9s linear infinite;
           flex-shrink: 0;
           transition: opacity 0.3s ease-out, width 0.3s ease-out;
@@ -456,13 +456,13 @@ export const LoadingAnimationExtension = {
           content: "";
           box-sizing: border-box;
           position: absolute;
-          width: 3px; /* Smaller point size */
-          height: 3px;
+          width: 5px; /* Original point size */
+          height: 5px;
           background-color: var(--spinner-point-colour, #696969); /* Use CSS var with dark grey fallback */
           border-radius: 50%;
           /* Position it at 12 o'clock on the track's centerline */
-          top: -0.5px; 
-          left: calc(50% - 1.5px); /* (ContainerWidth/2 - PointWidth/2) */
+          top: -1.5px; 
+          left: calc(50% - 2.5px); /* (ContainerWidth/2 - PointWidth/2) */
         }
 
         .rotating-point-spinner.hide {

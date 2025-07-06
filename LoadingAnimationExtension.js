@@ -74,14 +74,14 @@ export const LoadingAnimationExtension = {
         KB_Search: [
           'Zanalyzoval jsem Váš dotaz.',
           'Optimalizuji Váš dotaz.',
-          'Filtruji svou interní databázi.',
-          'Prohledávám svou interní databázi'
+          'Prohledávám svou interní databázi.',
+          'Níže je má finální odpověď.'
         ],
         Web_Search: [
           'Spouštím webové vyhledávání.',
           'Prohledávám naší webovou stránku.',
-          'Spouštím další webové vyhledáváče.',
-          'Dokončuji prohledávání dalších stránek.'
+          'Prohledávám ostatní webové zdroje.',
+          'Níže je má finální odpověď.'
         ]
       },
       en: {

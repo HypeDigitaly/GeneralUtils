@@ -385,7 +385,7 @@ export const LoadingAnimationExtension = {
         .loading-box {
           display: flex;
           align-items: center;
-          gap: 4px; /* Small gap between spinner and text */
+          gap: 8px; /* Better gap between spinner and text */
           padding: 0; /* No padding at all */
           margin: 0;
           width: auto; /* Auto width instead of 100% */
@@ -430,8 +430,8 @@ export const LoadingAnimationExtension = {
 
         .rotating-point-spinner {
           position: relative;
-          width: 16px; /* Original spinner size */
-          height: 16px;
+          width: 14px; /* Optimal spinner size */
+          height: 14px;
           animation: loading-spinner-spin 0.9s linear infinite;
           flex-shrink: 0;
           transition: opacity 0.3s ease-out, width 0.3s ease-out;
@@ -456,13 +456,13 @@ export const LoadingAnimationExtension = {
           content: "";
           box-sizing: border-box;
           position: absolute;
-          width: 5px; /* Original point size */
-          height: 5px;
+          width: 4px; /* Adjusted point size for 14px spinner */
+          height: 4px;
           background-color: var(--spinner-point-colour, #696969); /* Use CSS var with dark grey fallback */
           border-radius: 50%;
           /* Position it at 12 o'clock on the track's centerline */
-          top: -1.5px; 
-          left: calc(50% - 2.5px); /* (ContainerWidth/2 - PointWidth/2) */
+          top: -1px; 
+          left: calc(50% - 2px); /* (ContainerWidth/2 - PointWidth/2) */
         }
 
         .rotating-point-spinner.hide {
@@ -545,17 +545,16 @@ export const LoadingAnimationExtension = {
         }, messageInterval);
       }
 
-      // Stop animation (spinner) and message cycling after totalDuration
+      // Hide entire extension after totalDuration
       const animationTimeoutId = setTimeout(() => {
         if (intervalId) { // If message cycling interval is still active
           clearInterval(intervalId);
           intervalId = null;
         }
-        // Hide only the spinner animation, not the whole container or text
-        if (spinnerAnimationContainer) {
-          spinnerAnimationContainer.classList.add('hide');
+        // Hide the entire extension container
+        if (container) {
+          container.classList.add('hide');
         }
-        // The last message will remain visible
       }, totalDuration);
 
       // Enhanced cleanup observer

@@ -7,16 +7,75 @@ export const LoadingAnimationExtension = {
     const payload = trace.payload || {};
     const phase = payload.phase || 'output'; // default to output if not specified
 
-    // Normalize and detect language
-    const incomingLang = (payload.lang || 'cs').toLowerCase();
-    let lang;
-    if (incomingLang.includes('cs')) lang = 'cs';
-    else if (incomingLang.includes('en')) lang = 'en';
-    else if (incomingLang.includes('de')) lang = 'de';
-    else if (incomingLang.includes('uk')) lang = 'uk';
-    else if (incomingLang.includes('sk')) lang = 'sk';
-    else if (incomingLang.includes('pl')) lang = 'pl';
-    else lang = 'cs'; // default to Czech
+    // Normalize and detect language - supports both codes and full language names
+    const incomingLang = (payload.lang || 'cs').toLowerCase().trim();
+    
+    // Language mapping function to handle various formats (case insensitive)
+    const detectLanguage = (langInput) => {
+      const normalized = langInput.toLowerCase().trim();
+      
+      // Czech language detection
+      if (normalized.includes('cs') || 
+          normalized.includes('czech') || 
+          normalized.includes('čeština') || 
+          normalized.includes('cestina')) {
+        return 'cs';
+      }
+      
+      // English language detection  
+      if (normalized.includes('en') || 
+          normalized.includes('english') || 
+          normalized.includes('anglický') ||
+          normalized.includes('anglictina')) {
+        return 'en';
+      }
+      
+      // German language detection
+      if (normalized.includes('de') || 
+          normalized.includes('german') || 
+          normalized.includes('deutsch') ||
+          normalized.includes('nemčina') ||
+          normalized.includes('nemcina')) {
+        return 'de';
+      }
+      
+      // Ukrainian language detection
+      if (normalized.includes('uk') || 
+          normalized.includes('ua') ||
+          normalized.includes('ukrainian') || 
+          normalized.includes('українська') ||
+          normalized.includes('украинська') ||
+          normalized.includes('ukrajinčina') ||
+          normalized.includes('ukrajincina')) {
+        return 'uk';
+      }
+      
+      // Slovak language detection
+      if (normalized.includes('sk') || 
+          normalized.includes('slovak') || 
+          normalized.includes('slovenčina') ||
+          normalized.includes('slovencina') ||
+          normalized.includes('slovenština') ||
+          normalized.includes('slovenstina')) {
+        return 'sk';
+      }
+      
+      // Polish language detection
+      if (normalized.includes('pl') || 
+          normalized.includes('polish') || 
+          normalized.includes('polski') ||
+          normalized.includes('polština') ||
+          normalized.includes('polstina') ||
+          normalized.includes('poľština') ||
+          normalized.includes('polstina')) {
+        return 'pl';
+      }
+      
+      // Default to Czech if no match found
+      return 'cs';
+    };
+    
+    const lang = detectLanguage(incomingLang);
 
     // Normalize type
     const type = (payload.type || 'SMT').toUpperCase();

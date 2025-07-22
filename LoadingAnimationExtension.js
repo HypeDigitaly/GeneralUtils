@@ -183,7 +183,19 @@ export const LoadingAnimationExtension = {
             'I am verifying information.',
             'I am preparing my response.'
           ]
-        }
+        },
+        KB_Search: [
+          'I have analyzed your query.',
+          'I am optimizing your query.',
+          'I am searching my internal database.',
+          'Search completed.'
+        ],
+        Web_Search: [
+          'Continuing with web search.',
+          'I am searching for an answer on our website.',
+          'I am searching other web sources.',
+          'Below is my final answer.'
+        ]
       },
       de: {
         analysis: {
@@ -225,7 +237,19 @@ export const LoadingAnimationExtension = {
             'Ich überprüfe die Informationen.',
             'Ich bereite meine Antwort vor.'
           ]
-        }
+        },
+        KB_Search: [
+          'Ich habe Ihre Anfrage analysiert.',
+          'Ich optimiere Ihre Anfrage.',
+          'Ich durchsuche meine interne Datenbank.',
+          'Suche abgeschlossen.'
+        ],
+        Web_Search: [
+          'Ich setze mit der Websuche fort.',
+          'Ich suche nach einer Antwort auf unserer Website.',
+          'Ich durchsuche andere Web-Quellen.',
+          'Unten ist meine endgültige Antwort.'
+        ]
       },
       uk: {
         analysis: {
@@ -267,7 +291,19 @@ export const LoadingAnimationExtension = {
             'Перевіряю інформацію.',
             'Готую свою відповідь.'
           ]
-        }
+        },
+        KB_Search: [
+          'Я проаналізував ваш запит.',
+          'Оптимізую ваш запит.',
+          'Шукаю у своїй внутрішній базі даних.',
+          'Пошук завершено.'
+        ],
+        Web_Search: [
+          'Продовжую веб-пошуком.',
+          'Шукаю відповідь на нашому сайті.',
+          'Шукаю в інших веб-джерелах.',
+          'Нижче моя остаточна відповідь.'
+        ]
       },
       sk: {
         analysis: {
@@ -309,7 +345,19 @@ export const LoadingAnimationExtension = {
             'Overujem informácie.',
             'Pripravujem svoju odpoveď.'
           ]
-        }
+        },
+        KB_Search: [
+          'Analyzoval som váš dotaz.',
+          'Optimalizujem váš dotaz.',
+          'Prehľadávam svoju internú databázu.',
+          'Vyhľadávanie dokončené.'
+        ],
+        Web_Search: [
+          'Pokračujem webovým vyhľadávaním.',
+          'Hľadám odpoveď na našom webe.',
+          'Prehľadávam ostatné webové zdroje.',
+          'Nižšie je moja finálna odpoveď.'
+        ]
       },
       pl: {
         analysis: {
@@ -351,7 +399,19 @@ export const LoadingAnimationExtension = {
             'Weryfikuję informacje.',
             'Przygotowuję moją odpowiedź.'
           ]
-        }
+        },
+        KB_Search: [
+          'Przeanalizowałem twoje zapytanie.',
+          'Optymalizuję twoje zapytanie.',
+          'Przeszukuję moją wewnętrzną bazę danych.',
+          'Wyszukiwanie zakończone.'
+        ],
+        Web_Search: [
+          'Kontynuuję wyszukiwanie w internecie.',
+          'Szukam odpowiedzi na naszej stronie.',
+          'Przeszukuję inne źródła internetowe.',
+          'Poniżej jest moja końcowa odpowiedź.'
+        ]
       }
     };
 

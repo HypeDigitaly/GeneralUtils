@@ -14,35 +14,45 @@ export const LoadingAnimationExtension = {
     const detectLanguage = (langInput) => {
       const normalized = langInput.toLowerCase().trim();
       
+      // More specific Polish language detection first (to avoid "sk" in "polski" matching Slovak)
+      if (normalized === 'pl' || 
+          normalized === 'polish' || 
+          normalized === 'polski' ||
+          normalized.includes('polština') ||
+          normalized.includes('polstina') ||
+          normalized.includes('poľština')) {
+        return 'pl';
+      }
+      
       // Czech language detection
-      if (normalized.includes('cs') || 
-          normalized.includes('czech') || 
+      if (normalized === 'cs' || 
+          normalized === 'czech' || 
           normalized.includes('čeština') || 
           normalized.includes('cestina')) {
         return 'cs';
       }
       
       // English language detection  
-      if (normalized.includes('en') || 
-          normalized.includes('english') || 
+      if (normalized === 'en' || 
+          normalized === 'english' || 
           normalized.includes('anglický') ||
           normalized.includes('anglictina')) {
         return 'en';
       }
       
       // German language detection
-      if (normalized.includes('de') || 
-          normalized.includes('german') || 
-          normalized.includes('deutsch') ||
+      if (normalized === 'de' || 
+          normalized === 'german' || 
+          normalized === 'deutsch' ||
           normalized.includes('nemčina') ||
           normalized.includes('nemcina')) {
         return 'de';
       }
       
       // Ukrainian language detection
-      if (normalized.includes('uk') || 
-          normalized.includes('ua') ||
-          normalized.includes('ukrainian') || 
+      if (normalized === 'uk' || 
+          normalized === 'ua' ||
+          normalized === 'ukrainian' || 
           normalized.includes('українська') ||
           normalized.includes('украинська') ||
           normalized.includes('ukrajinčina') ||
@@ -51,24 +61,13 @@ export const LoadingAnimationExtension = {
       }
       
       // Slovak language detection
-      if (normalized.includes('sk') || 
-          normalized.includes('slovak') || 
+      if (normalized === 'sk' || 
+          normalized === 'slovak' || 
           normalized.includes('slovenčina') ||
           normalized.includes('slovencina') ||
           normalized.includes('slovenština') ||
           normalized.includes('slovenstina')) {
         return 'sk';
-      }
-      
-      // Polish language detection
-      if (normalized.includes('pl') || 
-          normalized.includes('polish') || 
-          normalized.includes('polski') ||
-          normalized.includes('polština') ||
-          normalized.includes('polstina') ||
-          normalized.includes('poľština') ||
-          normalized.includes('polstina')) {
-        return 'pl';
       }
       
       // Default to Czech if no match found

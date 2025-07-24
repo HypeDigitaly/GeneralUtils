@@ -218,7 +218,7 @@ export const generateFingerprint = async () => {
     const components = fingerprinter.getAllComponents();
 
     // Only log the fingerprint value
-    console.log("Generated Device Fingerprint:", fingerprint);
+    //console.log("Generated Device Fingerprint:", fingerprint);
     
     return {
         fingerprint,
